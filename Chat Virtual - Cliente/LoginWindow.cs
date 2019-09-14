@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente {
-    public partial class Form1 : Form {
-        public Form1() {
+    public partial class LoginWindow : Form {
+        public LoginWindow() {
             InitializeComponent();
         }
     }
