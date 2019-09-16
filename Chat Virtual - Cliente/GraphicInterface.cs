@@ -31,7 +31,7 @@ namespace Chat_Virtual___Cliente {
                 this.Stream = this.Client.GetStream();
                 this.Writer = new StreamWriter(this.Client.GetStream());
                 this.Reader = new StreamReader(this.Client.GetStream());
-                this.Writer.WriteLine("Ricardo");
+                this.Writer.WriteLine("Juan Diego");
                 this.Writer.Flush();
             }catch(Exception ex) {
 
