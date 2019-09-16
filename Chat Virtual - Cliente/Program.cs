@@ -14,6 +14,7 @@ namespace Chat_Virtual___Cliente {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GraphicInterface());
+
         }
     }
 }
