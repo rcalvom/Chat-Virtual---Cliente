@@ -68,6 +68,9 @@
     <EmbeddedResource Include="GraphicInterface.resx">
       <DependentUpon>GraphicInterface.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LoginWindow.resx">
+      <DependentUpon>LoginWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -19,3 +19,15 @@ C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\ob
 C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.pdb
 C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Bunifu_UI_v1.5.3.dll
 C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CopyComplete
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.exe.config
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.exe
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.pdb
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csprojAssemblyReference.cache
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.GraphicInterface.resources
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.LoginWindow.resources
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Properties.Resources.resources
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.GenerateResource.cache
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CoreCompileInputs.cache
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CopyComplete
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.exe
+C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.pdb
