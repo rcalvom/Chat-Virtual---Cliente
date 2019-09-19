@@ -25,6 +25,17 @@ namespace Chat_Virtual___Cliente {
 
         private void SingUp_Click(object sender, EventArgs e)
         {
+            user.ForeColor = System.Drawing.Color.Black;
+            password.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void User_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Password_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

@@ -35,23 +35,31 @@
             this.user.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.user.Location = new System.Drawing.Point(296, 160);
+            this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.user.ForeColor = System.Drawing.Color.Gray;
+            this.user.Location = new System.Drawing.Point(239, 166);
             this.user.Name = "user";
-            this.user.Size = new System.Drawing.Size(130, 20);
+            this.user.Size = new System.Drawing.Size(221, 24);
             this.user.TabIndex = 0;
+            this.user.Text = "Ususario";
+            this.user.TextChanged += new System.EventHandler(this.User_TextChanged);
             // 
             // password
             // 
-            this.password.Location = new System.Drawing.Point(296, 196);
+            this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.password.ForeColor = System.Drawing.Color.Gray;
+            this.password.Location = new System.Drawing.Point(239, 196);
             this.password.Name = "password";
-            this.password.Size = new System.Drawing.Size(130, 20);
+            this.password.Size = new System.Drawing.Size(221, 24);
             this.password.TabIndex = 1;
+            this.password.Text = "Contraseña";
+            this.password.TextChanged += new System.EventHandler(this.Password_TextChanged);
             // 
             // SingUp
             // 
-            this.SingUp.Location = new System.Drawing.Point(261, 244);
+            this.SingUp.Location = new System.Drawing.Point(239, 226);
             this.SingUp.Name = "SingUp";
-            this.SingUp.Size = new System.Drawing.Size(72, 24);
+            this.SingUp.Size = new System.Drawing.Size(108, 24);
             this.SingUp.TabIndex = 2;
             this.SingUp.Text = "Registrarse";
             this.SingUp.UseVisualStyleBackColor = true;
@@ -59,9 +67,9 @@
             // 
             // SingIn
             // 
-            this.SingIn.Location = new System.Drawing.Point(377, 244);
+            this.SingIn.Location = new System.Drawing.Point(353, 226);
             this.SingIn.Name = "SingIn";
-            this.SingIn.Size = new System.Drawing.Size(83, 23);
+            this.SingIn.Size = new System.Drawing.Size(107, 24);
             this.SingIn.TabIndex = 3;
             this.SingIn.Text = "Iniciar sesión";
             this.SingIn.UseVisualStyleBackColor = true;
