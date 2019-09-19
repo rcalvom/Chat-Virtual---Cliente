@@ -32,14 +32,12 @@
             // 
             // user
             // 
-            this.user.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.user.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.user.ForeColor = System.Drawing.Color.Gray;
-            this.user.Location = new System.Drawing.Point(239, 166);
+            this.user.Location = new System.Drawing.Point(144, 126);
             this.user.Name = "user";
-            this.user.Size = new System.Drawing.Size(221, 24);
+            this.user.Size = new System.Drawing.Size(222, 24);
             this.user.TabIndex = 0;
             this.user.Text = "Ususario";
             this.user.TextChanged += new System.EventHandler(this.User_TextChanged);
@@ -48,7 +46,7 @@
             // 
             this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.password.ForeColor = System.Drawing.Color.Gray;
-            this.password.Location = new System.Drawing.Point(239, 196);
+            this.password.Location = new System.Drawing.Point(145, 156);
             this.password.Name = "password";
             this.password.Size = new System.Drawing.Size(221, 24);
             this.password.TabIndex = 1;
@@ -57,7 +55,7 @@
             // 
             // SingUp
             // 
-            this.SingUp.Location = new System.Drawing.Point(239, 226);
+            this.SingUp.Location = new System.Drawing.Point(144, 197);
             this.SingUp.Name = "SingUp";
             this.SingUp.Size = new System.Drawing.Size(108, 24);
             this.SingUp.TabIndex = 2;
@@ -67,7 +65,7 @@
             // 
             // SingIn
             // 
-            this.SingIn.Location = new System.Drawing.Point(353, 226);
+            this.SingIn.Location = new System.Drawing.Point(259, 197);
             this.SingIn.Name = "SingIn";
             this.SingIn.Size = new System.Drawing.Size(107, 24);
             this.SingIn.TabIndex = 3;
@@ -81,7 +79,7 @@
             this.topPane.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPane.Location = new System.Drawing.Point(0, 0);
             this.topPane.Name = "topPane";
-            this.topPane.Size = new System.Drawing.Size(800, 58);
+            this.topPane.Size = new System.Drawing.Size(522, 39);
             this.topPane.TabIndex = 4;
             // 
             // LoginWindow
@@ -89,7 +87,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(522, 276);
             this.Controls.Add(this.topPane);
             this.Controls.Add(this.SingIn);
             this.Controls.Add(this.SingUp);
