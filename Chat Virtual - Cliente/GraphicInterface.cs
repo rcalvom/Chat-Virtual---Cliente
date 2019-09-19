@@ -55,6 +55,7 @@ namespace Chat_Virtual___Cliente {
             else
             {
                 SlidePanel.Visible = false;
+                SlidePanel.Width = 250;
                 Animation2.Show(SlidePanel);
             }
         }
