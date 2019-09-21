@@ -32,8 +32,10 @@
             this.labelUser = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.singUp = new System.Windows.Forms.LinkLabel();
-            this.labelMSJ = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelMSJ0 = new System.Windows.Forms.Label();
+            this.labelMSJ1 = new System.Windows.Forms.Label();
+            this.errorServerCon = new System.Windows.Forms.Label();
+            this.passwordUserWrong = new System.Windows.Forms.Label();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
@@ -51,7 +53,6 @@
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(267, 24);
             this.user.TabIndex = 0;
-            this.user.TextChanged += new System.EventHandler(this.User_TextChanged);
             // 
             // password
             // 
@@ -66,7 +67,6 @@
             this.password.TabIndex = 1;
             this.password.TabStop = false;
             this.password.UseSystemPasswordChar = true;
-            this.password.TextChanged += new System.EventHandler(this.Password_TextChanged);
             // 
             // SingIn
             // 
@@ -156,28 +156,53 @@
             this.singUp.Text = "registrarte";
             this.singUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SingUp_LinkClicked);
             // 
-            // labelMSJ
+            // labelMSJ0
             // 
-            this.labelMSJ.AutoSize = true;
-            this.labelMSJ.BackColor = System.Drawing.Color.Transparent;
-            this.labelMSJ.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMSJ.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelMSJ.Location = new System.Drawing.Point(73, 257);
-            this.labelMSJ.Name = "labelMSJ";
-            this.labelMSJ.Size = new System.Drawing.Size(103, 18);
-            this.labelMSJ.TabIndex = 8;
-            this.labelMSJ.Text = "O bien puedes";
+            this.labelMSJ0.AutoSize = true;
+            this.labelMSJ0.BackColor = System.Drawing.Color.Transparent;
+            this.labelMSJ0.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMSJ0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labelMSJ0.Location = new System.Drawing.Point(73, 257);
+            this.labelMSJ0.Name = "labelMSJ0";
+            this.labelMSJ0.Size = new System.Drawing.Size(103, 18);
+            this.labelMSJ0.TabIndex = 8;
+            this.labelMSJ0.Text = "O bien puedes";
             // 
-            // label1
+            // labelMSJ1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label1.Location = new System.Drawing.Point(244, 257);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(191, 18);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "si no tienes una cuenta aún.";
+            this.labelMSJ1.AutoSize = true;
+            this.labelMSJ1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMSJ1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labelMSJ1.Location = new System.Drawing.Point(244, 257);
+            this.labelMSJ1.Name = "labelMSJ1";
+            this.labelMSJ1.Size = new System.Drawing.Size(191, 18);
+            this.labelMSJ1.TabIndex = 9;
+            this.labelMSJ1.Text = "si no tienes una cuenta aún.";
+            // 
+            // errorServerCon
+            // 
+            this.errorServerCon.AutoSize = true;
+            this.errorServerCon.BackColor = System.Drawing.Color.Transparent;
+            this.errorServerCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorServerCon.ForeColor = System.Drawing.Color.DarkRed;
+            this.errorServerCon.Location = new System.Drawing.Point(73, 221);
+            this.errorServerCon.Name = "errorServerCon";
+            this.errorServerCon.Size = new System.Drawing.Size(234, 18);
+            this.errorServerCon.TabIndex = 10;
+            this.errorServerCon.Text = "Fallo al conectarse con el servidor";
+            this.errorServerCon.Visible = false;
+            // 
+            // passwordUserWrong
+            // 
+            this.passwordUserWrong.AutoSize = true;
+            this.passwordUserWrong.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordUserWrong.ForeColor = System.Drawing.Color.DarkRed;
+            this.passwordUserWrong.Location = new System.Drawing.Point(73, 221);
+            this.passwordUserWrong.Name = "passwordUserWrong";
+            this.passwordUserWrong.Size = new System.Drawing.Size(230, 18);
+            this.passwordUserWrong.TabIndex = 11;
+            this.passwordUserWrong.Text = "Usuario o contraseña incorrectos";
+            this.passwordUserWrong.Visible = false;
             // 
             // LoginWindow
             // 
@@ -185,8 +210,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(522, 326);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.labelMSJ);
+            this.Controls.Add(this.passwordUserWrong);
+            this.Controls.Add(this.labelMSJ1);
+            this.Controls.Add(this.labelMSJ0);
             this.Controls.Add(this.singUp);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUser);
@@ -194,6 +220,7 @@
             this.Controls.Add(this.SingIn);
             this.Controls.Add(this.password);
             this.Controls.Add(this.user);
+            this.Controls.Add(this.errorServerCon);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LoginWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -218,7 +245,9 @@
         private System.Windows.Forms.Label labelUser;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.LinkLabel singUp;
-        private System.Windows.Forms.Label labelMSJ;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelMSJ0;
+        private System.Windows.Forms.Label labelMSJ1;
+        private System.Windows.Forms.Label errorServerCon;
+        private System.Windows.Forms.Label passwordUserWrong;
     }
 }
