@@ -50,7 +50,7 @@
             this.user.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.user.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.user.ForeColor = System.Drawing.Color.Black;
+            this.user.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.user.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.user.Location = new System.Drawing.Point(168, 157);
             this.user.Name = "user";
@@ -62,7 +62,7 @@
             this.password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.password.ForeColor = System.Drawing.Color.Black;
+            this.password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.password.Location = new System.Drawing.Point(168, 187);
             this.password.Name = "password";
             this.password.PasswordChar = '*';
