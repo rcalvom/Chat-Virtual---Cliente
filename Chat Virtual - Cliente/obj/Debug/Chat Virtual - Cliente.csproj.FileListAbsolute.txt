@@ -31,3 +31,4 @@ C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Ch
 C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CopyComplete
 C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.exe
 C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.pdb
+C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.LoginWindow.resources
