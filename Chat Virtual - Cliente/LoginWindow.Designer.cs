@@ -151,7 +151,7 @@
             this.singUp.BackColor = System.Drawing.Color.Transparent;
             this.singUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.singUp.LinkColor = System.Drawing.Color.Teal;
-            this.singUp.Location = new System.Drawing.Point(173, 257);
+            this.singUp.Location = new System.Drawing.Point(142, 257);
             this.singUp.Name = "singUp";
             this.singUp.Size = new System.Drawing.Size(74, 18);
             this.singUp.TabIndex = 7;
@@ -167,16 +167,16 @@
             this.labelMSJ0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.labelMSJ0.Location = new System.Drawing.Point(73, 257);
             this.labelMSJ0.Name = "labelMSJ0";
-            this.labelMSJ0.Size = new System.Drawing.Size(103, 18);
+            this.labelMSJ0.Size = new System.Drawing.Size(72, 18);
             this.labelMSJ0.TabIndex = 8;
-            this.labelMSJ0.Text = "O bien puedes";
+            this.labelMSJ0.Text = "O puedes";
             // 
             // labelMSJ1
             // 
             this.labelMSJ1.AutoSize = true;
             this.labelMSJ1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMSJ1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelMSJ1.Location = new System.Drawing.Point(244, 257);
+            this.labelMSJ1.Location = new System.Drawing.Point(213, 257);
             this.labelMSJ1.Name = "labelMSJ1";
             this.labelMSJ1.Size = new System.Drawing.Size(191, 18);
             this.labelMSJ1.TabIndex = 9;
