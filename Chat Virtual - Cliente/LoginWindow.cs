@@ -41,9 +41,7 @@ namespace Chat_Virtual___Cliente {
                 this.Writer.WriteLine(username);
                 this.Writer.WriteLine(userPassword);
                 this.Writer.Flush();
-                /*if (respuesta del server){
-                    passwordUserWrong.Visible = true;
-                }*/
+                //if (respuesta del server) passwordUserWrong.Visible = true;
             }
             catch (Exception ex)
             {
