@@ -35,14 +35,13 @@ namespace Chat_Virtual___Cliente {
                 this.Writer = new StreamWriter(this.Client.GetStream());
                 this.Reader = new StreamReader(this.Client.GetStream());
                 this.Writer.WriteLine(username);
-                //this.Writer.WriteLine(userPassword);
+                this.Writer.WriteLine(userPassword);
                 this.Writer.Flush();
             }
             catch (Exception ex)
             {
 
             }
-
         }
 
         private void SingIn_Click(object sender, EventArgs e)
@@ -52,12 +51,6 @@ namespace Chat_Virtual___Cliente {
             user.Clear();
             password.Clear();
             Connect();
-        }
-
-        private void SingUp_Click(object sender, EventArgs e)
-        {
-            user.ForeColor = System.Drawing.Color.Black;
-            password.ForeColor = System.Drawing.Color.Black;
         }
 
         private void User_TextChanged(object sender, EventArgs e)
@@ -75,14 +68,14 @@ namespace Chat_Virtual___Cliente {
             Application.Exit();
         }
 
-        private void ResizeButton_Click(object sender, EventArgs e)
-        {
-            //WindowState = FormWindowState.Minimized;
-        }
-
         private void MinButton_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
+        }
+
+        private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            //cosas magicas van a pasa aqui xd
         }
     }
 }
