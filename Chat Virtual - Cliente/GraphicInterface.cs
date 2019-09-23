@@ -7,14 +7,30 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente {
+
     public partial class GraphicInterface : Form {
 
-        public GraphicInterface() {
+        private NetworkStream Stream;
+        private StreamWriter Writer;
+        private StreamReader Reader;
+        private TcpClient Client;
+
+        public GraphicInterface(NetworkStream Stream, StreamWriter Writer, StreamReader Reader, TcpClient Client) {
             this.InitializeComponent();
+            this.Stream = Stream;
+            this.Writer = Writer;
+            this.Reader = Reader;
+            this.Client = Client;
+            Thread t = new Thread(ChatLectura)
+            {
+                IsBackground = true,
+            };
+            t.Start();
         }
 
         private void GraphicInterface_Load(object sender, EventArgs e)
@@ -71,6 +87,23 @@ namespace Chat_Virtual___Cliente {
         private void Panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void ChatLectura()
+        {
+            while (this.Visible)
+            {
+                try
+                {
+                    chat.AppendText(Reader.ReadLine());
+                } catch(Exception ex) {}
+            }
+        }
+
+        private void Send_Click(object sender, EventArgs e)
+        {
+            this.Writer.WriteLine(mensaje.Text);
+            mensaje.Clear();
         }
     }
 }

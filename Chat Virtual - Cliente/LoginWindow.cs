@@ -29,11 +29,10 @@ namespace Chat_Virtual___Cliente {
 
         public void Connect()
         {
-            try
-            {
+            try {
                 errorServerCon.Visible = false;
                 passwordUserWrong.Visible = false;
-                this.Client.Connect("localhost", 7777);
+                this.Client.Connect("25.7.220.122", 7777);
                 this.Stream = this.Client.GetStream();
                 this.Writer = new StreamWriter(this.Client.GetStream());
                 this.Reader = new StreamReader(this.Client.GetStream());
@@ -42,9 +41,11 @@ namespace Chat_Virtual___Cliente {
                 this.Writer.WriteLine(userPassword);
                 this.Writer.Flush();
                 //if (respuesta del server) passwordUserWrong.Visible = true;
+                GraphicInterface g = new GraphicInterface(Stream, Writer, Reader, Client);
+                g.Show();
+                this.Close();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 errorServerCon.Visible = true;
             }
         }
