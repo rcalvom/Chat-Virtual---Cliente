@@ -13,14 +13,14 @@ using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente {
 
-    public partial class GraphicInterface : Form {
+    public partial class MainView : Form {
 
         private NetworkStream Stream;
         private StreamWriter Writer;
         private StreamReader Reader;
         private TcpClient Client;
 
-        public GraphicInterface(NetworkStream Stream, StreamWriter Writer, StreamReader Reader, TcpClient Client) {
+        public MainView(NetworkStream Stream, StreamWriter Writer, StreamReader Reader, TcpClient Client) {
             this.InitializeComponent();
             this.Stream = Stream;
             this.Writer = Writer;

@@ -40,10 +40,14 @@
             this.passwordUserWrong = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.minButtonPanel = new System.Windows.Forms.Panel();
+            this.closeButtonPanel = new System.Windows.Forms.Panel();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.minButtonPanel.SuspendLayout();
+            this.closeButtonPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // user
@@ -70,7 +74,6 @@
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(267, 24);
             this.password.TabIndex = 1;
-            this.password.TabStop = false;
             this.password.UseSystemPasswordChar = true;
             // 
             // SingIn
@@ -95,8 +98,8 @@
             // topPane
             // 
             this.topPane.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
-            this.topPane.Controls.Add(this.minButton);
-            this.topPane.Controls.Add(this.exitButton);
+            this.topPane.Controls.Add(this.closeButtonPanel);
+            this.topPane.Controls.Add(this.minButtonPanel);
             this.topPane.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPane.Location = new System.Drawing.Point(0, 0);
             this.topPane.Name = "topPane";
@@ -105,25 +108,33 @@
             // 
             // minButton
             // 
+            this.minButton.BackColor = System.Drawing.Color.Transparent;
+            this.minButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.minButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Minimize_Window_2_48px;
-            this.minButton.Location = new System.Drawing.Point(462, 3);
+            this.minButton.Location = new System.Drawing.Point(3, 3);
             this.minButton.Name = "minButton";
             this.minButton.Size = new System.Drawing.Size(25, 25);
             this.minButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.minButton.TabIndex = 7;
             this.minButton.TabStop = false;
             this.minButton.Click += new System.EventHandler(this.MinButton_Click);
+            this.minButton.MouseEnter += new System.EventHandler(this.MinButton_MouseEnter);
+            this.minButton.MouseLeave += new System.EventHandler(this.MinButton_MouseLeave);
             // 
             // exitButton
             // 
+            this.exitButton.BackColor = System.Drawing.Color.Transparent;
+            this.exitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exitButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Close_Window__2_48px;
-            this.exitButton.Location = new System.Drawing.Point(493, 3);
+            this.exitButton.Location = new System.Drawing.Point(4, 3);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(25, 25);
             this.exitButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.exitButton.TabIndex = 5;
             this.exitButton.TabStop = false;
             this.exitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            this.exitButton.MouseEnter += new System.EventHandler(this.ExitButton_MouseEnter);
+            this.exitButton.MouseLeave += new System.EventHandler(this.ExitButton_MouseLeave);
             // 
             // labelUser
             // 
@@ -226,6 +237,26 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
+            // minButtonPanel
+            // 
+            this.minButtonPanel.BackColor = System.Drawing.Color.Transparent;
+            this.minButtonPanel.Controls.Add(this.minButton);
+            this.minButtonPanel.Location = new System.Drawing.Point(458, 0);
+            this.minButtonPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.minButtonPanel.Name = "minButtonPanel";
+            this.minButtonPanel.Size = new System.Drawing.Size(32, 34);
+            this.minButtonPanel.TabIndex = 13;
+            // 
+            // closeButtonPanel
+            // 
+            this.closeButtonPanel.BackColor = System.Drawing.Color.Transparent;
+            this.closeButtonPanel.Controls.Add(this.exitButton);
+            this.closeButtonPanel.Location = new System.Drawing.Point(490, 0);
+            this.closeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.closeButtonPanel.Name = "closeButtonPanel";
+            this.closeButtonPanel.Size = new System.Drawing.Size(32, 34);
+            this.closeButtonPanel.TabIndex = 14;
+            // 
             // LoginWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,6 +283,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.minButtonPanel.ResumeLayout(false);
+            this.closeButtonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,5 +307,7 @@
         private System.Windows.Forms.Label passwordUserWrong;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
+        private System.Windows.Forms.Panel minButtonPanel;
+        private System.Windows.Forms.Panel closeButtonPanel;
     }
 }

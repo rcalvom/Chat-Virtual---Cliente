@@ -1,5 +1,5 @@
 ﻿namespace Chat_Virtual___Cliente {
-    partial class GraphicInterface {
+    partial class MainView {
         /// <summary>
         /// Variable del diseñador necesaria.
         /// </summary>
@@ -25,7 +25,7 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             BunifuAnimatorNS.Animation animation1 = new BunifuAnimatorNS.Animation();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GraphicInterface));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
             BunifuAnimatorNS.Animation animation3 = new BunifuAnimatorNS.Animation();
             this.TopPanel = new System.Windows.Forms.Panel();
             this.Restaurar = new System.Windows.Forms.PictureBox();

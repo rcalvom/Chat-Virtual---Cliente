@@ -16,5 +16,28 @@ namespace Chat_Virtual___Cliente
         {
             InitializeComponent();
         }
+
+        private void ExitButton_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
+
+        private void MinButton_Click(object sender, EventArgs e) {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void MinButton_MouseEnter(object sender, EventArgs e) {
+            minButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
+        }
+        private void MinButton_MouseLeave(object sender, EventArgs e) {
+            minButtonPanel.BackColor = topPane.BackColor;
+        }
+
+        private void ExitButton_MouseEnter(object sender, EventArgs e) {
+            closeButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
+        }
+
+        private void ExitButton_MouseLeave(object sender, EventArgs e) {
+            closeButtonPanel.BackColor = topPane.BackColor;
+        }
     }
 }

@@ -20,15 +20,18 @@ namespace Chat_Virtual___Cliente {
         private TcpClient Client;
         private string username;
         private string userPassword;
-        private string solicitud;
 
         public LoginWindow() {
             InitializeComponent();
             this.Client = new TcpClient();
         }
 
-        public void Connect()
-        {
+        public void Connect() {
+            Cursor = Cursors.WaitCursor;
+            username = user.Text;
+            userPassword = password.Text;
+            user.Clear();
+            password.Clear();
             try {
                 errorServerCon.Visible = false;
                 passwordUserWrong.Visible = false;
@@ -36,33 +39,31 @@ namespace Chat_Virtual___Cliente {
                 this.Stream = this.Client.GetStream();
                 this.Writer = new StreamWriter(this.Client.GetStream());
                 this.Reader = new StreamReader(this.Client.GetStream());
-                this.Writer.WriteLine(solicitud);
-                this.Writer.WriteLine(username);
-                this.Writer.WriteLine(userPassword);
-                this.Writer.Flush();
-                string respuesta = this.Reader.ReadLine();
-                Console.Write("\n\n\n" + respuesta + "\n\n");
-                if (respuesta == "NO") passwordUserWrong.Visible = true;
-                else if (respuesta == "SI") {
-                    GraphicInterface g = new GraphicInterface(Stream, Writer, Reader, Client);
-                    g.Show();
-                    Close();
-                }
             }
             catch (Exception ex) {
                 errorServerCon.Visible = true;
             }
+
+            try {
+
+                this.Writer.WriteLine("InicioSesion");
+                this.Writer.WriteLine(username);
+                this.Writer.WriteLine(userPassword);
+                this.Writer.Flush();
+                string serverAnswer = this.Reader.ReadLine();
+                if (serverAnswer == "NO") passwordUserWrong.Visible = true;
+                else if (serverAnswer == "SI") {
+                    MainView mainView = new MainView(Stream, Writer, Reader, Client);
+                    mainView.Show();
+                    Close();
+                }
+            } catch (Exception ex) { }
+
             Cursor = Cursors.Default;
         }
 
         private void SingIn_Click(object sender, EventArgs e)
         {
-            Cursor = Cursors.WaitCursor;
-            solicitud = "InicioSesion";
-            username = user.Text;
-            userPassword = password.Text;
-            user.Clear();
-            password.Clear();
             Connect();
         }
 
@@ -71,14 +72,29 @@ namespace Chat_Virtual___Cliente {
             Application.Exit();
         }
 
-        private void MinButton_Click(object sender, EventArgs e)
-        {
+        private void MinButton_Click(object sender, EventArgs e) {
             WindowState = FormWindowState.Minimized;
         }
 
-        private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            solicitud = "Registro";
+        private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            SingUp singUp = new SingUp();
+            singUp.Show();
+            Close();
+        }
+
+        private void MinButton_MouseEnter(object sender, EventArgs e) {
+            minButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
+        }
+        private void MinButton_MouseLeave(object sender, EventArgs e) {
+            minButtonPanel.BackColor = topPane.BackColor;
+        }
+
+        private void ExitButton_MouseEnter(object sender, EventArgs e) {
+            closeButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
+        }
+
+        private void ExitButton_MouseLeave(object sender, EventArgs e) {
+            closeButtonPanel.BackColor = topPane.BackColor;
         }
     }
 }
