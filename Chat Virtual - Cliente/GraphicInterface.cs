@@ -102,7 +102,7 @@ namespace Chat_Virtual___Cliente {
 
         private void Send_Click(object sender, EventArgs e)
         {
-            this.Writer.WriteLine(mensaje.Text);
+            this.Writer.WriteLine("Mensaje\n" + mensaje.Text);
             mensaje.Clear();
         }
     }

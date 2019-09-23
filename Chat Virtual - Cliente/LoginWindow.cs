@@ -40,18 +40,24 @@ namespace Chat_Virtual___Cliente {
                 this.Writer.WriteLine(username);
                 this.Writer.WriteLine(userPassword);
                 this.Writer.Flush();
-                //if (respuesta del server) passwordUserWrong.Visible = true;
-                GraphicInterface g = new GraphicInterface(Stream, Writer, Reader, Client);
-                g.Show();
-                this.Close();
+                string respuesta = this.Reader.ReadLine();
+                Console.Write("\n\n\n" + respuesta + "\n\n");
+                if (respuesta == "NO") passwordUserWrong.Visible = true;
+                else if (respuesta == "SI") {
+                    GraphicInterface g = new GraphicInterface(Stream, Writer, Reader, Client);
+                    g.Show();
+                    Close();
+                }
             }
             catch (Exception ex) {
                 errorServerCon.Visible = true;
             }
+            Cursor = Cursors.Default;
         }
 
         private void SingIn_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             solicitud = "InicioSesion";
             username = user.Text;
             userPassword = password.Text;
