@@ -13,8 +13,8 @@ namespace Chat_Virtual___Cliente {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            LoginWindow v = new LoginWindow();
-            v.Show();
+            LoginWindow login = new LoginWindow();
+            login.Show();
             Application.Run();
         }
     }

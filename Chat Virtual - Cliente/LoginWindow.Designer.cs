@@ -29,8 +29,10 @@
             this.password = new System.Windows.Forms.TextBox();
             this.SingIn = new System.Windows.Forms.Button();
             this.topPane = new System.Windows.Forms.Panel();
-            this.minButton = new System.Windows.Forms.PictureBox();
+            this.closeButtonPanel = new System.Windows.Forms.Panel();
             this.exitButton = new System.Windows.Forms.PictureBox();
+            this.minButtonPanel = new System.Windows.Forms.Panel();
+            this.minButton = new System.Windows.Forms.PictureBox();
             this.labelUser = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.singUp = new System.Windows.Forms.LinkLabel();
@@ -40,14 +42,12 @@
             this.passwordUserWrong = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.minButtonPanel = new System.Windows.Forms.Panel();
-            this.closeButtonPanel = new System.Windows.Forms.Panel();
             this.topPane.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.minButtonPanel.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
+            this.minButtonPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // user
@@ -58,7 +58,7 @@
             this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.user.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.user.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.user.Location = new System.Drawing.Point(168, 157);
+            this.user.Location = new System.Drawing.Point(168, 159);
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(267, 24);
             this.user.TabIndex = 0;
@@ -106,20 +106,16 @@
             this.topPane.Size = new System.Drawing.Size(522, 34);
             this.topPane.TabIndex = 4;
             // 
-            // minButton
+            // closeButtonPanel
             // 
-            this.minButton.BackColor = System.Drawing.Color.Transparent;
-            this.minButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.minButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Minimize_Window_2_48px;
-            this.minButton.Location = new System.Drawing.Point(3, 3);
-            this.minButton.Name = "minButton";
-            this.minButton.Size = new System.Drawing.Size(25, 25);
-            this.minButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.minButton.TabIndex = 7;
-            this.minButton.TabStop = false;
-            this.minButton.Click += new System.EventHandler(this.MinButton_Click);
-            this.minButton.MouseEnter += new System.EventHandler(this.MinButton_MouseEnter);
-            this.minButton.MouseLeave += new System.EventHandler(this.MinButton_MouseLeave);
+            this.closeButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.closeButtonPanel.BackColor = System.Drawing.Color.Transparent;
+            this.closeButtonPanel.Controls.Add(this.exitButton);
+            this.closeButtonPanel.Location = new System.Drawing.Point(488, 0);
+            this.closeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.closeButtonPanel.Name = "closeButtonPanel";
+            this.closeButtonPanel.Size = new System.Drawing.Size(32, 34);
+            this.closeButtonPanel.TabIndex = 14;
             // 
             // exitButton
             // 
@@ -135,6 +131,32 @@
             this.exitButton.Click += new System.EventHandler(this.ExitButton_Click);
             this.exitButton.MouseEnter += new System.EventHandler(this.ExitButton_MouseEnter);
             this.exitButton.MouseLeave += new System.EventHandler(this.ExitButton_MouseLeave);
+            // 
+            // minButtonPanel
+            // 
+            this.minButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.minButtonPanel.BackColor = System.Drawing.Color.Transparent;
+            this.minButtonPanel.Controls.Add(this.minButton);
+            this.minButtonPanel.Location = new System.Drawing.Point(456, 0);
+            this.minButtonPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.minButtonPanel.Name = "minButtonPanel";
+            this.minButtonPanel.Size = new System.Drawing.Size(32, 34);
+            this.minButtonPanel.TabIndex = 13;
+            // 
+            // minButton
+            // 
+            this.minButton.BackColor = System.Drawing.Color.Transparent;
+            this.minButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.minButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Minimize_Window_2_48px;
+            this.minButton.Location = new System.Drawing.Point(3, 3);
+            this.minButton.Name = "minButton";
+            this.minButton.Size = new System.Drawing.Size(25, 25);
+            this.minButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.minButton.TabIndex = 7;
+            this.minButton.TabStop = false;
+            this.minButton.Click += new System.EventHandler(this.MinButton_Click);
+            this.minButton.MouseEnter += new System.EventHandler(this.MinButton_MouseEnter);
+            this.minButton.MouseLeave += new System.EventHandler(this.MinButton_MouseLeave);
             // 
             // labelUser
             // 
@@ -237,26 +259,6 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
-            // minButtonPanel
-            // 
-            this.minButtonPanel.BackColor = System.Drawing.Color.Transparent;
-            this.minButtonPanel.Controls.Add(this.minButton);
-            this.minButtonPanel.Location = new System.Drawing.Point(458, 0);
-            this.minButtonPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.minButtonPanel.Name = "minButtonPanel";
-            this.minButtonPanel.Size = new System.Drawing.Size(32, 34);
-            this.minButtonPanel.TabIndex = 13;
-            // 
-            // closeButtonPanel
-            // 
-            this.closeButtonPanel.BackColor = System.Drawing.Color.Transparent;
-            this.closeButtonPanel.Controls.Add(this.exitButton);
-            this.closeButtonPanel.Location = new System.Drawing.Point(490, 0);
-            this.closeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.closeButtonPanel.Name = "closeButtonPanel";
-            this.closeButtonPanel.Size = new System.Drawing.Size(32, 34);
-            this.closeButtonPanel.TabIndex = 14;
-            // 
             // LoginWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,11 +282,11 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Loggin";
             this.topPane.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.minButtonPanel.ResumeLayout(false);
             this.closeButtonPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
+            this.minButtonPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

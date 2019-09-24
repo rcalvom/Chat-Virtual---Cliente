@@ -43,22 +43,26 @@ namespace Chat_Virtual___Cliente {
             catch (Exception ex) {
                 errorServerCon.Visible = true;
             }
-
+            
             try {
-
                 this.Writer.WriteLine("InicioSesion");
                 this.Writer.WriteLine(username);
                 this.Writer.WriteLine(userPassword);
                 this.Writer.Flush();
                 string serverAnswer = this.Reader.ReadLine();
-                if (serverAnswer == "NO") passwordUserWrong.Visible = true;
-                else if (serverAnswer == "SI") {
+                if (serverAnswer == "NO") {
+                    this.Client.Close();
+                    this.Client = new TcpClient();
+                    passwordUserWrong.Visible = true;
+                } else if (serverAnswer == "SI") {
                     MainView mainView = new MainView(Stream, Writer, Reader, Client);
                     mainView.Show();
                     Close();
                 }
-            } catch (Exception ex) { }
-
+            } catch (Exception ex) {
+                Console.WriteLine("Fallo de envio de datos al servidor");
+            }
+            
             Cursor = Cursors.Default;
         }
 

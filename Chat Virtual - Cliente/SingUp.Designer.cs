@@ -55,7 +55,7 @@
             // 
             this.closeButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.closeButtonPanel.Controls.Add(this.exitButton);
-            this.closeButtonPanel.Location = new System.Drawing.Point(768, 0);
+            this.closeButtonPanel.Location = new System.Drawing.Point(766, 0);
             this.closeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.closeButtonPanel.Name = "closeButtonPanel";
             this.closeButtonPanel.Size = new System.Drawing.Size(32, 34);
@@ -80,7 +80,7 @@
             // 
             this.minButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.minButtonPanel.Controls.Add(this.minButton);
-            this.minButtonPanel.Location = new System.Drawing.Point(736, 0);
+            this.minButtonPanel.Location = new System.Drawing.Point(734, 0);
             this.minButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.minButtonPanel.Name = "minButtonPanel";
             this.minButtonPanel.Size = new System.Drawing.Size(32, 34);

@@ -33,3 +33,16 @@ C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Ch
 C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.LoginWindow.resources
 C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.SingUp.resources
 C:\Users\Juan Diego\Documents\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.MainView.resources
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.exe.config
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.exe
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.pdb
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csprojAssemblyReference.cache
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.SingUp.resources
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.MainView.resources
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.LoginWindow.resources
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Properties.Resources.resources
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.GenerateResource.cache
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CoreCompileInputs.cache
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CopyComplete
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.exe
+C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.pdb
