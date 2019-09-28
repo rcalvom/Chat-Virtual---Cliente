@@ -20,6 +20,8 @@ namespace Chat_Virtual___Cliente {
         private StreamReader Reader;
         private TcpClient Client;
 
+        private delegate void DChatAppend(string text);
+
         public MainView(NetworkStream Stream, StreamWriter Writer, StreamReader Reader, TcpClient Client) {
             this.InitializeComponent();
             this.Stream = Stream;
@@ -91,19 +93,29 @@ namespace Chat_Virtual___Cliente {
 
         private void ChatLectura()
         {
-            while (this.Visible)
+            while (true)
             {
-                try
-                {
-                    chat.AppendText(Reader.ReadLine());
-                } catch(Exception ex) {}
+                if(this.Reader.BaseStream.CanRead && this.Visible) { 
+                    ChatAppend(Reader.ReadLine()+"\n");
+                }
             }
         }
 
         private void Send_Click(object sender, EventArgs e)
         {
-            this.Writer.WriteLine("Mensaje\n" + mensaje.Text);
+            this.Writer.WriteLine(mensaje.Text);
+            this.Writer.Flush();
             mensaje.Clear();
         }
+
+        private void ChatAppend(string text) {
+            if(this.chat.InvokeRequired) {
+                var d = new DChatAppend(this.ChatAppend);
+                this.chat.Invoke(d, new object[] { text });
+            } else {
+                this.chat.AppendText(text);
+            }
+        }
+
     }
 }
