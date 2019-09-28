@@ -9,66 +9,58 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Chat_Virtual___Cliente.Backend;
+using Chat_Virtual___Cliente.Exceptions;
 
 namespace Chat_Virtual___Cliente {
 
     public partial class LoginWindow : Form {
 
-        private NetworkStream Stream;
-        private StreamWriter Writer;
-        private StreamReader Reader;
-        private TcpClient Client;
+        private Model model;
         private string username;
         private string userPassword;
 
         public LoginWindow() {
             InitializeComponent();
-            this.Client = new TcpClient();
+            this.model = new Model();
+            do {
+                try {
+                    model.Connect();
+                    errorServerCon.Visible = false;
+                } catch (ConnectException ce) {
+                    errorServerCon.Visible = true;
+                }
+            } while (/*!model.IsConnected()*/ false);
         }
 
-        public void Connect() {
+        private void SingIn_Click(object sender, EventArgs e)
+        {
             Cursor = Cursors.WaitCursor;
             username = user.Text;
             userPassword = password.Text;
             user.Clear();
             password.Clear();
+            passwordUserWrong.Visible = false;
+
             try {
-                errorServerCon.Visible = false;
-                passwordUserWrong.Visible = false;
-                this.Client.Connect("25.7.220.122", 7777);
-                this.Stream = this.Client.GetStream();
-                this.Writer = new StreamWriter(this.Client.GetStream());
-                this.Reader = new StreamReader(this.Client.GetStream());
-            }
-            catch (Exception ex) {
-                errorServerCon.Visible = true;
-            }
-            
-            try {
-                this.Writer.WriteLine("InicioSesion");
-                this.Writer.WriteLine(username);
-                this.Writer.WriteLine(userPassword);
-                this.Writer.Flush();
-                string serverAnswer = this.Reader.ReadLine();
-                if (serverAnswer == "NO") {
-                    this.Client.Close();
-                    this.Client = new TcpClient();
+                List<string> messages = new List<string>();
+                messages.Add("InicioSesion");
+                messages.Add(username);
+                messages.Add(userPassword);
+                model.Write(messages);
+                string serverAnswer = model.Read().First();
+                if (serverAnswer == "NO") 
                     passwordUserWrong.Visible = true;
-                } else if (serverAnswer == "SI") {
-                    MainView mainView = new MainView(Stream, Writer, Reader, Client);
+                else if (serverAnswer == "SI") {
+                    //MainView mainView = new MainView();
                     mainView.Show();
                     Close();
                 }
             } catch (Exception ex) {
                 Console.WriteLine("Fallo de envio de datos al servidor");
             }
-            
-            Cursor = Cursors.Default;
-        }
 
-        private void SingIn_Click(object sender, EventArgs e)
-        {
-            Connect();
+            Cursor = Cursors.Default;
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
