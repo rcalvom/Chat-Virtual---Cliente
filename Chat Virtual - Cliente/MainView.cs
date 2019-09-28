@@ -95,16 +95,19 @@ namespace Chat_Virtual___Cliente {
         {
             while (true)
             {
-                if(this.Reader.BaseStream.CanRead && this.Visible) { 
+                if(this.Stream.DataAvailable && this.Visible) { 
                     ChatAppend(Reader.ReadLine()+"\n");
                 }
             }
         }
 
-        private void Send_Click(object sender, EventArgs e)
-        {
-            this.Writer.WriteLine(mensaje.Text);
-            this.Writer.Flush();
+        private void Send_Click(object sender, EventArgs e){
+            try {
+                this.Writer.WriteLine(mensaje.Text);
+                this.Writer.Flush();
+            } catch {
+
+            }
             mensaje.Clear();
         }
 
