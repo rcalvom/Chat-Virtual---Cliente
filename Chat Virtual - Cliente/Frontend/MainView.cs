@@ -20,6 +20,10 @@ namespace Chat_Virtual___Cliente {
         public MainView(TcpClient client, NetworkStream stream) {
             this.InitializeComponent();
             model = new Model(client, stream);
+            Thread t = new Thread(ChatLectura) {
+                IsBackground = true,
+            };
+            t.Start();
         }
 
         public MainView(NetworkStream Stream, StreamWriter Writer, StreamReader Reader, TcpClient Client) {
@@ -95,19 +99,14 @@ namespace Chat_Virtual___Cliente {
         {
             while (true)
             {
-                if(this.Stream.DataAvailable && this.Visible) { 
-                    ChatAppend(Reader.ReadLine()+"\n");
+                if(this.model.getStream().DataAvailable && this.Visible) { 
+                    ChatAppend(this.model.ReadSingle()+"\n");
                 }
             }
         }
 
         private void Send_Click(object sender, EventArgs e){
-            try {
-                this.Writer.WriteLine(mensaje.Text);
-                this.Writer.Flush();
-            } catch {
-
-            }
+            this.model.Write(mensaje.Text);
             mensaje.Clear();
         }
 
