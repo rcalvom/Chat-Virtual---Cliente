@@ -42,6 +42,7 @@
             this.passwordUserWrong = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.Reconnect = new System.Windows.Forms.LinkLabel();
             this.topPane.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
@@ -186,7 +187,7 @@
             this.singUp.BackColor = System.Drawing.Color.Transparent;
             this.singUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.singUp.LinkColor = System.Drawing.Color.Teal;
-            this.singUp.Location = new System.Drawing.Point(142, 257);
+            this.singUp.Location = new System.Drawing.Point(142, 269);
             this.singUp.Name = "singUp";
             this.singUp.Size = new System.Drawing.Size(74, 18);
             this.singUp.TabIndex = 7;
@@ -200,7 +201,7 @@
             this.labelMSJ0.BackColor = System.Drawing.Color.Transparent;
             this.labelMSJ0.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMSJ0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelMSJ0.Location = new System.Drawing.Point(73, 257);
+            this.labelMSJ0.Location = new System.Drawing.Point(73, 269);
             this.labelMSJ0.Name = "labelMSJ0";
             this.labelMSJ0.Size = new System.Drawing.Size(72, 18);
             this.labelMSJ0.TabIndex = 8;
@@ -211,7 +212,7 @@
             this.labelMSJ1.AutoSize = true;
             this.labelMSJ1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMSJ1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelMSJ1.Location = new System.Drawing.Point(213, 257);
+            this.labelMSJ1.Location = new System.Drawing.Point(213, 269);
             this.labelMSJ1.Name = "labelMSJ1";
             this.labelMSJ1.Size = new System.Drawing.Size(191, 18);
             this.labelMSJ1.TabIndex = 9;
@@ -259,12 +260,27 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
+            // Reconnect
+            // 
+            this.Reconnect.AutoSize = true;
+            this.Reconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Reconnect.LinkColor = System.Drawing.Color.Teal;
+            this.Reconnect.Location = new System.Drawing.Point(73, 239);
+            this.Reconnect.Name = "Reconnect";
+            this.Reconnect.Size = new System.Drawing.Size(113, 18);
+            this.Reconnect.TabIndex = 13;
+            this.Reconnect.TabStop = true;
+            this.Reconnect.Text = "Volver a intentar";
+            this.Reconnect.Visible = false;
+            this.Reconnect.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Reconnect_LinkClicked);
+            // 
             // LoginWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(522, 326);
+            this.Controls.Add(this.Reconnect);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.passwordUserWrong);
             this.Controls.Add(this.labelMSJ1);
@@ -311,5 +327,6 @@
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
         private System.Windows.Forms.Panel minButtonPanel;
         private System.Windows.Forms.Panel closeButtonPanel;
+        private System.Windows.Forms.LinkLabel Reconnect;
     }
 }

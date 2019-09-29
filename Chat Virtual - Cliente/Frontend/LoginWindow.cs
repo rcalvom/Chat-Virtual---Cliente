@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
 using Chat_Virtual___Cliente.Exceptions;
@@ -24,13 +24,21 @@ namespace Chat_Virtual___Cliente {
             InitializeComponent();
             this.model = new Model();
             do {
-                try {
-                    model.Connect();
-                    errorServerCon.Visible = false;
-                } catch (ConnectException ce) {
-                    errorServerCon.Visible = true;
-                }
+                Thread t = new Thread(StartConnection);
+                t.Start();
+                StartConnection();
             } while (/*!model.IsConnected()*/ false);
+        }
+
+        public void StartConnection() {
+            try {
+                model.Connect();
+                errorServerCon.Visible = false;
+                Reconnect.Visible = false;
+            } catch (ConnectException ce) {
+                errorServerCon.Visible = true;
+                Reconnect.Visible = true;
+            }
         }
 
         private void SingIn_Click(object sender, EventArgs e)
@@ -43,16 +51,14 @@ namespace Chat_Virtual___Cliente {
             passwordUserWrong.Visible = false;
 
             try {
-                List<string> messages = new List<string>();
-                messages.Add("InicioSesion");
-                messages.Add(username);
-                messages.Add(userPassword);
-                model.Write(messages);
-                string serverAnswer = model.Read().First();
+                model.Write("InicioSesion");
+                model.Write(username);
+                model.Write(userPassword);
+                string serverAnswer = model.ReadSingle();
                 if (serverAnswer == "NO") 
                     passwordUserWrong.Visible = true;
                 else if (serverAnswer == "SI") {
-                    //MainView mainView = new MainView();
+                    MainView mainView = new MainView(model.getClient(), model.getStream());
                     mainView.Show();
                     Close();
                 }
@@ -91,6 +97,10 @@ namespace Chat_Virtual___Cliente {
 
         private void ExitButton_MouseLeave(object sender, EventArgs e) {
             closeButtonPanel.BackColor = topPane.BackColor;
+        }
+
+        private void Reconnect_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            StartConnection();
         }
     }
 }

@@ -21,6 +21,19 @@ namespace Chat_Virtual___Cliente.Backend {
             this.client = new TcpClient();
         }
 
+        public Model(TcpClient client, NetworkStream stream) {
+            this.client = client;
+            this.stream = stream;
+        }
+
+        public TcpClient getClient() {
+            return client;
+        }
+
+        public NetworkStream getStream() {
+            return stream;
+        }
+
         public bool IsConnected() {
             return client.Connected;
         }
@@ -47,6 +60,17 @@ namespace Chat_Virtual___Cliente.Backend {
             }
         }
 
+        public bool Write(string message) {
+            try {
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(message);
+                writer.Flush();
+                return true;
+            } catch (Exception ex) {
+                return false;
+            }
+        }
+
         //despus se cambia a una colita :3
         public List<string> Read() {
             List<string> read = new List<string>();
@@ -59,6 +83,15 @@ namespace Chat_Virtual___Cliente.Backend {
                 return null;
             }
             return read;
+        }
+
+        public string ReadSingle() {
+            StreamReader reader = new StreamReader(client.GetStream());
+            try {
+                return reader.ReadLine();
+            } catch (Exception ex) {
+                return null;
+            }
         }
     }
 

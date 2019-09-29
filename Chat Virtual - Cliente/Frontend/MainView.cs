@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Chat_Virtual___Cliente.Backend;
 
 namespace Chat_Virtual___Cliente {
 
@@ -19,8 +13,13 @@ namespace Chat_Virtual___Cliente {
         private StreamWriter Writer;
         private StreamReader Reader;
         private TcpClient Client;
+        private Model model;
 
         private delegate void DChatAppend(string text);
+
+        public MainView(TcpClient client, NetworkStream stream) {
+            model = new Model(client, stream);
+        }
 
         public MainView(NetworkStream Stream, StreamWriter Writer, StreamReader Reader, TcpClient Client) {
             this.InitializeComponent();
