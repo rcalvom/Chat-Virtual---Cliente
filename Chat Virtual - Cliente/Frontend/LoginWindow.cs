@@ -14,6 +14,9 @@ namespace Chat_Virtual___Cliente {
         private string username;
         private string userPassword;
 
+        private delegate void DErrorLabelV(bool flag);
+        private delegate void DReconnectLabelV(bool flag);
+
         //falta crear un hilo que se intente conectar al sevidor y que cambie los estados de los controles mediante un delegado
         public LoginWindow() {
             InitializeComponent();
@@ -21,8 +24,8 @@ namespace Chat_Virtual___Cliente {
             bool stateCon = StartConnection(1);
             if (!stateCon)
                 errorMessage("Error al conectarse con el servidor");
-            errorLabel.Visible = !stateCon;
-            reconnect.Visible = !stateCon;
+            ErrorVisible(!stateCon);
+            ReconnectVisible(!stateCon);
         }
 
         private void SingIn_Click(object sender, EventArgs e)
@@ -146,6 +149,24 @@ namespace Chat_Virtual___Cliente {
         public void errorMessage(string error) {
             errorLabel.Text = error;
             errorLabel.Visible = true;
+        }
+
+        private void ErrorVisible(bool flag) {
+            if(this.errorLabel.InvokeRequired) {
+                var d = new DErrorLabelV(this.ErrorVisible);
+                this.errorLabel.Invoke(d, new object[] { flag });
+            } else {
+                this.errorLabel.Visible = flag;
+            }
+        }
+
+        private void ReconnectVisible(bool flag) {
+            if(this.reconnect.InvokeRequired) {
+                var d = new DReconnectLabelV(this.ReconnectVisible);
+                this.reconnect.Invoke(d, new object[] { flag });
+            } else {
+                this.reconnect.Visible = flag;
+            }
         }
     }
 }
