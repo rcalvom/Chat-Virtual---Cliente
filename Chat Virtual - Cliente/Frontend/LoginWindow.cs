@@ -79,7 +79,7 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            SingUp singUp = new SingUp();
+            SingUp singUp = new SingUp(model.getClient(), model.getStream());
             singUp.Show();
             Close();
         }

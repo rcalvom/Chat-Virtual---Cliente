@@ -18,6 +18,7 @@ namespace Chat_Virtual___Cliente {
         private delegate void DChatAppend(string text);
 
         public MainView(TcpClient client, NetworkStream stream) {
+            this.InitializeComponent();
             model = new Model(client, stream);
         }
 

@@ -33,6 +33,7 @@
             this.exitButton = new System.Windows.Forms.PictureBox();
             this.minButtonPanel = new System.Windows.Forms.Panel();
             this.minButton = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.topPane.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
@@ -101,6 +102,16 @@
             this.minButton.MouseEnter += new System.EventHandler(this.MinButton_MouseEnter);
             this.minButton.MouseLeave += new System.EventHandler(this.MinButton_MouseLeave);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(206, 182);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // SingUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -108,6 +119,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(801, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.topPane);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "SingUp";
@@ -129,5 +141,6 @@
         private System.Windows.Forms.PictureBox exitButton;
         private System.Windows.Forms.Panel minButtonPanel;
         private System.Windows.Forms.PictureBox minButton;
+        private System.Windows.Forms.Button button1;
     }
 }
