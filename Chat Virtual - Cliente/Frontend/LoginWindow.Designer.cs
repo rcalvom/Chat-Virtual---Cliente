@@ -56,7 +56,7 @@
             this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.user.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.user.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.user.Location = new System.Drawing.Point(168, 159);
+            this.user.Location = new System.Drawing.Point(170, 143);
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(267, 24);
             this.user.TabIndex = 0;
@@ -67,7 +67,7 @@
             this.password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.password.Location = new System.Drawing.Point(168, 187);
+            this.password.Location = new System.Drawing.Point(170, 173);
             this.password.Name = "password";
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(267, 24);
@@ -85,7 +85,7 @@
             this.SingIn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SingIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SingIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SingIn.Location = new System.Drawing.Point(323, 217);
+            this.SingIn.Location = new System.Drawing.Point(325, 203);
             this.SingIn.Name = "SingIn";
             this.SingIn.Size = new System.Drawing.Size(112, 27);
             this.SingIn.TabIndex = 3;
@@ -161,7 +161,7 @@
             this.labelUser.AutoSize = true;
             this.labelUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelUser.Location = new System.Drawing.Point(73, 159);
+            this.labelUser.Location = new System.Drawing.Point(75, 145);
             this.labelUser.Name = "labelUser";
             this.labelUser.Size = new System.Drawing.Size(64, 18);
             this.labelUser.TabIndex = 5;
@@ -172,7 +172,7 @@
             this.labelPassword.AutoSize = true;
             this.labelPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelPassword.Location = new System.Drawing.Point(73, 189);
+            this.labelPassword.Location = new System.Drawing.Point(75, 175);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(89, 18);
             this.labelPassword.TabIndex = 6;
@@ -181,7 +181,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(176, 69);
+            this.pictureBox1.Location = new System.Drawing.Point(178, 55);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(181, 60);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -201,7 +201,7 @@
             this.reconnect.AutoSize = true;
             this.reconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.reconnect.LinkColor = System.Drawing.Color.Teal;
-            this.reconnect.Location = new System.Drawing.Point(73, 269);
+            this.reconnect.Location = new System.Drawing.Point(75, 255);
             this.reconnect.Name = "reconnect";
             this.reconnect.Size = new System.Drawing.Size(113, 18);
             this.reconnect.TabIndex = 13;
@@ -221,7 +221,7 @@
             this.SingUp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SingUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SingUp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SingUp.Location = new System.Drawing.Point(205, 217);
+            this.SingUp.Location = new System.Drawing.Point(207, 203);
             this.SingUp.Name = "SingUp";
             this.SingUp.Size = new System.Drawing.Size(112, 27);
             this.SingUp.TabIndex = 14;
@@ -234,7 +234,7 @@
             this.errorLabel.AutoSize = true;
             this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorLabel.Location = new System.Drawing.Point(73, 251);
+            this.errorLabel.Location = new System.Drawing.Point(75, 237);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(230, 18);
             this.errorLabel.TabIndex = 11;
@@ -246,7 +246,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(522, 326);
+            this.ClientSize = new System.Drawing.Size(522, 300);
             this.Controls.Add(this.SingUp);
             this.Controls.Add(this.reconnect);
             this.Controls.Add(this.pictureBox1);
