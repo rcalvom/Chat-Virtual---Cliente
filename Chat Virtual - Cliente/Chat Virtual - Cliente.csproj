@@ -36,6 +36,12 @@
     <Reference Include="Bunifu_UI_v1.5.3">
       <HintPath>..\..\..\..\Downloads\Design Dashboard Modern\BUNIFU UI\Bunifu_UI_v1.5.3.dll</HintPath>
     </Reference>
+    <Reference Include="DataStructures">
+      <HintPath>lib\DataStructures.dll</HintPath>
+    </Reference>
+    <Reference Include="Data_Structures">
+      <HintPath>lib\Data_Structures.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />

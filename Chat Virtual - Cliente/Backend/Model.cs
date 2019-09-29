@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
+using DataStructures;
 
 namespace Chat_Virtual___Cliente.Backend {
 
@@ -35,20 +36,20 @@ namespace Chat_Virtual___Cliente.Backend {
             try {
                 this.client.Connect("25.7.220.122", 7777);
                 this.stream = this.client.GetStream();
-            } catch (Exception ex) {
+            } catch (Exception) {
                 throw new ConnectException();
             }
         }
 
-        public bool Write(List<string> messages) {
+        public bool Write(LinkedQueue<string> messages) {
             try {
                 StreamWriter writer = new StreamWriter(client.GetStream());
-                foreach (string message in messages) {
-                    writer.WriteLine(message);
+                while (!messages.IsEmpty()) {
+                    writer.WriteLine(messages.GetFrontElement());
                     writer.Flush();
                 }
                 return true;
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return false;
             }
         }
@@ -59,20 +60,19 @@ namespace Chat_Virtual___Cliente.Backend {
                 writer.WriteLine(message);
                 writer.Flush();
                 return true;
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return false;
             }
         }
 
-        //despus se cambia a una colita :3
-        public List<string> Read() {
-            List<string> read = new List<string>();
+        public LinkedQueue<string> Read() {
+            LinkedQueue<string> read = new LinkedQueue<string>();
             StreamReader reader = new StreamReader(client.GetStream());
             try {
                 while(this.client.Available > 0){
-                    read.Add(reader.ReadLine());
+                    read.Put(reader.ReadLine());
                 }
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return null;
             }
             return read;
@@ -82,7 +82,7 @@ namespace Chat_Virtual___Cliente.Backend {
             StreamReader reader = new StreamReader(client.GetStream());
             try {
                 return reader.ReadLine();
-            } catch (Exception ex) {
+            } catch (Exception) {
                 return null;
             }
         }
