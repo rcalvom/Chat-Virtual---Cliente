@@ -24,8 +24,7 @@ namespace Chat_Virtual___Cliente {
             bool stateCon = StartConnection(1);
             if (!stateCon)
                 errorMessage("Error al conectarse con el servidor");
-            ErrorVisible(!stateCon);
-            ReconnectVisible(!stateCon);
+            reconnect.Visible = !stateCon;
         }
 
         private void SingIn_Click(object sender, EventArgs e)
@@ -39,8 +38,8 @@ namespace Chat_Virtual___Cliente {
 
             bool shipping = true;
             shipping &= model.Write("InicioSesion");
-            shipping &= model.Write(user.Text);
-            shipping &= model.Write(password.Text);
+            shipping &= model.Write(username);
+            shipping &= model.Write(userPassword);
 
             if (!shipping) {
                 errorMessage("Error al enviar los datos al servidor");
@@ -94,11 +93,14 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void Reconnect_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Cursor = Cursors.WaitCursor;
+            errorLabel.Visible = false;
+            reconnect.Visible = false;
             bool stateCon = StartConnection(3);
             if (!stateCon)
                 errorMessage("Error al conectarse con el servidor");
-            errorLabel.Visible = !stateCon;
             reconnect.Visible = !stateCon;
+            Cursor = Cursors.Default;
         }
 
         private bool StartConnection(int nAttemps) {
@@ -149,24 +151,6 @@ namespace Chat_Virtual___Cliente {
         public void errorMessage(string error) {
             errorLabel.Text = error;
             errorLabel.Visible = true;
-        }
-
-        private void ErrorVisible(bool flag) {
-            if(this.errorLabel.InvokeRequired) {
-                var d = new DErrorLabelV(this.ErrorVisible);
-                this.errorLabel.Invoke(d, new object[] { flag });
-            } else {
-                this.errorLabel.Visible = flag;
-            }
-        }
-
-        private void ReconnectVisible(bool flag) {
-            if(this.reconnect.InvokeRequired) {
-                var d = new DReconnectLabelV(this.ReconnectVisible);
-                this.reconnect.Invoke(d, new object[] { flag });
-            } else {
-                this.reconnect.Visible = flag;
-            }
         }
     }
 }
