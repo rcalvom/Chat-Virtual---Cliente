@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
@@ -20,25 +14,15 @@ namespace Chat_Virtual___Cliente {
         private string username;
         private string userPassword;
 
+        //falta crear un hilo que se intente conectar al sevidor y que cambie los estados de los controles mediante un delegado
         public LoginWindow() {
             InitializeComponent();
             this.model = new Model();
-            do {
-                Thread t = new Thread(StartConnection);
-                t.Start();
-                StartConnection();
-            } while (/*!model.IsConnected()*/ false);
-        }
-
-        public void StartConnection() {
-            try {
-                model.Connect();
-                errorServerCon.Visible = false;
-                Reconnect.Visible = false;
-            } catch (ConnectException ce) {
-                errorServerCon.Visible = true;
-                Reconnect.Visible = true;
-            }
+            bool stateCon = StartConnection(1);
+            if (!stateCon)
+                errorMessage("Error al conectarse con el servidor");
+            errorLabel.Visible = !stateCon;
+            reconnect.Visible = !stateCon;
         }
 
         private void SingIn_Click(object sender, EventArgs e)
@@ -48,22 +32,35 @@ namespace Chat_Virtual___Cliente {
             userPassword = password.Text;
             user.Clear();
             password.Clear();
-            passwordUserWrong.Visible = false;
+            errorLabel.Visible = false;
 
-            try {
-                model.Write("InicioSesion");
-                model.Write(username);
-                model.Write(userPassword);
-                string serverAnswer = model.ReadSingle();
-                if (serverAnswer == "NO") 
-                    passwordUserWrong.Visible = true;
-                else if (serverAnswer == "SI") {
+            bool shipping = true;
+            shipping &= model.Write("InicioSesion");
+            shipping &= model.Write(user.Text);
+            shipping &= model.Write(password.Text);
+
+            if (!shipping) {
+                errorMessage("Error al enviar los datos al servidor");
+                Cursor = Cursors.Default;
+                return;
+            }
+
+            string answer = model.ReadSingle();
+            switch (answer) {
+                case null:
+                    errorMessage("No se ha obtenido respuesta del servidor");
+                    break;
+                case "SI":
                     MainView mainView = new MainView(model.getClient(), model.getStream());
                     mainView.Show();
                     Close();
-                }
-            } catch (Exception ex) {
-                Console.WriteLine("Fallo de envio de datos al servidor");
+                    break;
+                case "NO":
+                    errorMessage("Usuario o contraseña incorrectos");
+                    break;
+                default:
+                    errorMessage("Error desconocido");
+                    break;
             }
 
             Cursor = Cursors.Default;
@@ -76,12 +73,6 @@ namespace Chat_Virtual___Cliente {
 
         private void MinButton_Click(object sender, EventArgs e) {
             WindowState = FormWindowState.Minimized;
-        }
-
-        private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            SingUp singUp = new SingUp(model.getClient(), model.getStream());
-            singUp.Show();
-            Close();
         }
 
         private void MinButton_MouseEnter(object sender, EventArgs e) {
@@ -100,7 +91,61 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void Reconnect_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            StartConnection();
+            bool stateCon = StartConnection(3);
+            if (!stateCon)
+                errorMessage("Error al conectarse con el servidor");
+            errorLabel.Visible = !stateCon;
+            reconnect.Visible = !stateCon;
+        }
+
+        private bool StartConnection(int nAttemps) {
+            int attemps = 0;
+            do {
+                try {
+                    model.Connect();
+                    return true;
+                } catch (ConnectException) {
+                } finally {
+                    attemps++;
+                    Console.WriteLine("Intentos de conexion: " + attemps);
+                }
+            } while (!model.IsConnected() && attemps < nAttemps);
+            return false;
+        }
+
+        private void SingUp_Click(object sender, EventArgs e) {
+            errorLabel.Visible = false;
+            bool shipping = true;
+            shipping &= model.Write("Registro");
+            shipping &= model.Write(user.Text);
+            shipping &= model.Write(password.Text);
+
+            if (!shipping) {
+                errorMessage("No se han podido enviar los datos al servidor");
+                return;
+            }
+
+            string answer = model.ReadSingle();
+            switch (answer) {
+                case null:
+                    errorMessage("No se ha obtenido respuesta del servidor");
+                    break;
+                case "SI":
+                    user.Clear();
+                    password.Clear();
+                    break;
+                case "NO":
+                    errorMessage("El nombre de ususario ya está en uso");
+                    break;
+                default:
+                    errorMessage("Error desconocido");
+                    break;
+            }
+        }
+
+        public void errorMessage(string error) {
+            errorLabel.Text = error;
+            errorLabel.Visible = true;
         }
     }
 }

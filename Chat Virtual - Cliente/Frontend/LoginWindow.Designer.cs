@@ -35,14 +35,11 @@
             this.minButton = new System.Windows.Forms.PictureBox();
             this.labelUser = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
-            this.singUp = new System.Windows.Forms.LinkLabel();
-            this.labelMSJ0 = new System.Windows.Forms.Label();
-            this.labelMSJ1 = new System.Windows.Forms.Label();
-            this.errorServerCon = new System.Windows.Forms.Label();
-            this.passwordUserWrong = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.Reconnect = new System.Windows.Forms.LinkLabel();
+            this.reconnect = new System.Windows.Forms.LinkLabel();
+            this.SingUp = new System.Windows.Forms.Button();
+            this.errorLabel = new System.Windows.Forms.Label();
             this.topPane.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
@@ -181,68 +178,6 @@
             this.labelPassword.TabIndex = 6;
             this.labelPassword.Text = "Contraseña:";
             // 
-            // singUp
-            // 
-            this.singUp.AutoSize = true;
-            this.singUp.BackColor = System.Drawing.Color.Transparent;
-            this.singUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.singUp.LinkColor = System.Drawing.Color.Teal;
-            this.singUp.Location = new System.Drawing.Point(142, 269);
-            this.singUp.Name = "singUp";
-            this.singUp.Size = new System.Drawing.Size(74, 18);
-            this.singUp.TabIndex = 7;
-            this.singUp.TabStop = true;
-            this.singUp.Text = "registrarte";
-            this.singUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SingUp_LinkClicked);
-            // 
-            // labelMSJ0
-            // 
-            this.labelMSJ0.AutoSize = true;
-            this.labelMSJ0.BackColor = System.Drawing.Color.Transparent;
-            this.labelMSJ0.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMSJ0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelMSJ0.Location = new System.Drawing.Point(73, 269);
-            this.labelMSJ0.Name = "labelMSJ0";
-            this.labelMSJ0.Size = new System.Drawing.Size(72, 18);
-            this.labelMSJ0.TabIndex = 8;
-            this.labelMSJ0.Text = "O puedes";
-            // 
-            // labelMSJ1
-            // 
-            this.labelMSJ1.AutoSize = true;
-            this.labelMSJ1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMSJ1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelMSJ1.Location = new System.Drawing.Point(213, 269);
-            this.labelMSJ1.Name = "labelMSJ1";
-            this.labelMSJ1.Size = new System.Drawing.Size(191, 18);
-            this.labelMSJ1.TabIndex = 9;
-            this.labelMSJ1.Text = "si no tienes una cuenta aún.";
-            // 
-            // errorServerCon
-            // 
-            this.errorServerCon.AutoSize = true;
-            this.errorServerCon.BackColor = System.Drawing.Color.Transparent;
-            this.errorServerCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorServerCon.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorServerCon.Location = new System.Drawing.Point(73, 221);
-            this.errorServerCon.Name = "errorServerCon";
-            this.errorServerCon.Size = new System.Drawing.Size(234, 18);
-            this.errorServerCon.TabIndex = 10;
-            this.errorServerCon.Text = "Fallo al conectarse con el servidor";
-            this.errorServerCon.Visible = false;
-            // 
-            // passwordUserWrong
-            // 
-            this.passwordUserWrong.AutoSize = true;
-            this.passwordUserWrong.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordUserWrong.ForeColor = System.Drawing.Color.DarkRed;
-            this.passwordUserWrong.Location = new System.Drawing.Point(73, 221);
-            this.passwordUserWrong.Name = "passwordUserWrong";
-            this.passwordUserWrong.Size = new System.Drawing.Size(230, 18);
-            this.passwordUserWrong.TabIndex = 11;
-            this.passwordUserWrong.Text = "Usuario o contraseña incorrectos";
-            this.passwordUserWrong.Visible = false;
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -260,19 +195,51 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
-            // Reconnect
+            // reconnect
             // 
-            this.Reconnect.AutoSize = true;
-            this.Reconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Reconnect.LinkColor = System.Drawing.Color.Teal;
-            this.Reconnect.Location = new System.Drawing.Point(73, 239);
-            this.Reconnect.Name = "Reconnect";
-            this.Reconnect.Size = new System.Drawing.Size(113, 18);
-            this.Reconnect.TabIndex = 13;
-            this.Reconnect.TabStop = true;
-            this.Reconnect.Text = "Volver a intentar";
-            this.Reconnect.Visible = false;
-            this.Reconnect.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Reconnect_LinkClicked);
+            this.reconnect.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.reconnect.AutoSize = true;
+            this.reconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reconnect.LinkColor = System.Drawing.Color.Teal;
+            this.reconnect.Location = new System.Drawing.Point(73, 269);
+            this.reconnect.Name = "reconnect";
+            this.reconnect.Size = new System.Drawing.Size(113, 18);
+            this.reconnect.TabIndex = 13;
+            this.reconnect.TabStop = true;
+            this.reconnect.Text = "Volver a intentar";
+            this.reconnect.Visible = false;
+            this.reconnect.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Reconnect_LinkClicked);
+            // 
+            // SingUp
+            // 
+            this.SingUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.SingUp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SingUp.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.SingUp.FlatAppearance.BorderSize = 0;
+            this.SingUp.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.SingUp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.SingUp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.SingUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SingUp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.SingUp.Location = new System.Drawing.Point(205, 217);
+            this.SingUp.Name = "SingUp";
+            this.SingUp.Size = new System.Drawing.Size(112, 27);
+            this.SingUp.TabIndex = 14;
+            this.SingUp.Text = "Registrarse";
+            this.SingUp.UseVisualStyleBackColor = false;
+            this.SingUp.Click += new System.EventHandler(this.SingUp_Click);
+            // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.errorLabel.Location = new System.Drawing.Point(73, 251);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(230, 18);
+            this.errorLabel.TabIndex = 11;
+            this.errorLabel.Text = "Usuario o contraseña incorrectos";
+            this.errorLabel.Visible = false;
             // 
             // LoginWindow
             // 
@@ -280,19 +247,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(522, 326);
-            this.Controls.Add(this.Reconnect);
+            this.Controls.Add(this.SingUp);
+            this.Controls.Add(this.reconnect);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.passwordUserWrong);
-            this.Controls.Add(this.labelMSJ1);
-            this.Controls.Add(this.labelMSJ0);
-            this.Controls.Add(this.singUp);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUser);
             this.Controls.Add(this.topPane);
             this.Controls.Add(this.SingIn);
             this.Controls.Add(this.password);
             this.Controls.Add(this.user);
-            this.Controls.Add(this.errorServerCon);
+            this.Controls.Add(this.errorLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LoginWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -318,15 +282,12 @@
         private System.Windows.Forms.PictureBox exitButton;
         private System.Windows.Forms.Label labelUser;
         private System.Windows.Forms.Label labelPassword;
-        private System.Windows.Forms.LinkLabel singUp;
-        private System.Windows.Forms.Label labelMSJ0;
-        private System.Windows.Forms.Label labelMSJ1;
-        private System.Windows.Forms.Label errorServerCon;
-        private System.Windows.Forms.Label passwordUserWrong;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
         private System.Windows.Forms.Panel minButtonPanel;
         private System.Windows.Forms.Panel closeButtonPanel;
-        private System.Windows.Forms.LinkLabel Reconnect;
+        private System.Windows.Forms.LinkLabel reconnect;
+        private System.Windows.Forms.Button SingUp;
+        private System.Windows.Forms.Label errorLabel;
     }
 }

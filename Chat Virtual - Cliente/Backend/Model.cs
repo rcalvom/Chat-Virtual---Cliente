@@ -1,15 +1,8 @@
 ﻿using Chat_Virtual___Cliente.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Backend {
 
@@ -94,6 +87,4 @@ namespace Chat_Virtual___Cliente.Backend {
             }
         }
     }
-
-    //this.writer = new StreamWriter(this.client.GetStream());
 }
