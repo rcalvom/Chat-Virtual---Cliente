@@ -37,9 +37,10 @@
             this.labelPassword = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.reconnect = new System.Windows.Forms.LinkLabel();
             this.SingUp = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
+            this.Refresh = new System.ComponentModel.BackgroundWorker();
+            this.ServerDisconnected = new System.Windows.Forms.Label();
             this.topPane.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
@@ -195,21 +196,6 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
-            // reconnect
-            // 
-            this.reconnect.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.reconnect.AutoSize = true;
-            this.reconnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reconnect.LinkColor = System.Drawing.Color.Teal;
-            this.reconnect.Location = new System.Drawing.Point(75, 255);
-            this.reconnect.Name = "reconnect";
-            this.reconnect.Size = new System.Drawing.Size(113, 18);
-            this.reconnect.TabIndex = 13;
-            this.reconnect.TabStop = true;
-            this.reconnect.Text = "Volver a intentar";
-            this.reconnect.Visible = false;
-            this.reconnect.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Reconnect_LinkClicked);
-            // 
             // SingUp
             // 
             this.SingUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -234,12 +220,29 @@
             this.errorLabel.AutoSize = true;
             this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorLabel.Location = new System.Drawing.Point(75, 237);
+            this.errorLabel.Location = new System.Drawing.Point(75, 241);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(230, 18);
+            this.errorLabel.Size = new System.Drawing.Size(117, 18);
             this.errorLabel.TabIndex = 11;
-            this.errorLabel.Text = "Usuario o contraseña incorrectos";
+            this.errorLabel.Text = "Aqui hay un label";
             this.errorLabel.Visible = false;
+            // 
+            // Refresh
+            // 
+            this.Refresh.DoWork += new System.ComponentModel.DoWorkEventHandler(this.Refresh_DoWork);
+            this.Refresh.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.Refresh_RunWorkerCompleted);
+            // 
+            // ServerDisconnected
+            // 
+            this.ServerDisconnected.AutoSize = true;
+            this.ServerDisconnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerDisconnected.ForeColor = System.Drawing.Color.DarkRed;
+            this.ServerDisconnected.Location = new System.Drawing.Point(75, 273);
+            this.ServerDisconnected.Name = "ServerDisconnected";
+            this.ServerDisconnected.Size = new System.Drawing.Size(234, 18);
+            this.ServerDisconnected.TabIndex = 15;
+            this.ServerDisconnected.Text = "Usted se encuentra desconectado";
+            this.ServerDisconnected.Visible = false;
             // 
             // LoginWindow
             // 
@@ -247,8 +250,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(522, 300);
+            this.Controls.Add(this.ServerDisconnected);
             this.Controls.Add(this.SingUp);
-            this.Controls.Add(this.reconnect);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUser);
@@ -286,8 +289,9 @@
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
         private System.Windows.Forms.Panel minButtonPanel;
         private System.Windows.Forms.Panel closeButtonPanel;
-        private System.Windows.Forms.LinkLabel reconnect;
         private System.Windows.Forms.Button SingUp;
         private System.Windows.Forms.Label errorLabel;
+        private System.ComponentModel.BackgroundWorker Refresh;
+        private System.Windows.Forms.Label ServerDisconnected;
     }
 }

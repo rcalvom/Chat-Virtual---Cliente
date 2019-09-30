@@ -1,5 +1,4 @@
-﻿using Chat_Virtual___Cliente.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
@@ -37,7 +36,7 @@ namespace Chat_Virtual___Cliente.Backend {
                 this.client.Connect("25.7.220.122", 7777);
                 this.stream = this.client.GetStream();
             } catch (Exception) {
-                throw new ConnectException();
+                
             }
         }
 
