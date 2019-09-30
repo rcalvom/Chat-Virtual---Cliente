@@ -183,6 +183,7 @@
             this.mensaje.Name = "mensaje";
             this.mensaje.Size = new System.Drawing.Size(432, 21);
             this.mensaje.TabIndex = 1;
+            this.mensaje.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Mensaje_KeyPress);
             // 
             // chat
             // 
@@ -256,7 +257,7 @@
             animation3.TransparencyCoeff = 0F;
             this.Animation2.DefaultAnimation = animation3;
             // 
-            // GraphicInterface
+            // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -268,7 +269,7 @@
             this.Animation2.SetDecoration(this, BunifuAnimatorNS.DecorationType.None);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "GraphicInterface";
+            this.Name = "MainView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.GraphicInterface_Load);

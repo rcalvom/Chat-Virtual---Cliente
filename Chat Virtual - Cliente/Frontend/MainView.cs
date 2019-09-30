@@ -119,5 +119,10 @@ namespace Chat_Virtual___Cliente {
             }
         }
 
+        private void Mensaje_KeyPress(object sender, KeyPressEventArgs e) {
+            if(e.KeyChar == (int)Keys.Enter) {
+                Send_Click(sender, e);
+            }
+        }
     }
 }
