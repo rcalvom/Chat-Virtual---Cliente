@@ -13,7 +13,9 @@ namespace Chat_Virtual___Cliente {
         private string username;
         private string userPassword;
 
-        //falta crear un hilo que se intente conectar al sevidor y que cambie los estados de los controles mediante un delegado
+        private delegate void SetVisible(bool state);
+        private delegate void SetAvailable(bool state, Button button);
+
         public LoginWindow() {
             InitializeComponent();
             username = "";
@@ -146,14 +148,20 @@ namespace Chat_Virtual___Cliente {
                 connected = model.IsConnected();
                 if (connected != lastEstate) {
                     if (!connected) {
-                        ServerDisconnected.Visible = true;
-                        SingIn.Enabled = false;
-                        SingUp.Enabled = false;
+                        SetVisibleControl(true);
+                        SetStateButton(false, SingIn);
+                        SetStateButton(false, SingUp);
+                        //ServerDisconnected.Visible = true;
+                        //SingIn.Enabled = false;
+                        //SingUp.Enabled = false;
                         model.Connect();
                     } else {
-                        ServerDisconnected.Visible = false;
-                        SingIn.Enabled = true;
-                        SingUp.Enabled = true;
+                        SetVisibleControl(false);
+                        SetStateButton(true, SingIn);
+                        SetStateButton(true, SingUp);
+                        //ServerDisconnected.Visible = false;
+                        //SingIn.Enabled = true;
+                        //SingUp.Enabled = true;
                     }
                 }
                 lastEstate = connected;
@@ -165,5 +173,42 @@ namespace Chat_Virtual___Cliente {
                 Refresh.RunWorkerAsync();
             }
         }
+
+        private void SetVisibleControl(bool state) {
+            if (this.ServerDisconnected.InvokeRequired) {
+                var d = new SetVisible(this.SetVisibleControl);
+                this.SingIn.Invoke(d, state);
+            } else {
+                this.ServerDisconnected.Visible = state; ;
+            }
+        }
+
+        private void SetStateButton(bool state, Button button) {
+            if (button.InvokeRequired) {
+                var d = new SetAvailable(this.SetStateButton);
+                this.SingIn.Invoke(d, state, button);
+            } else {
+                button.Enabled = state; ;
+            }
+        }
+
+        /*
+        private void SetStateSingUp(bool state) {
+            if (this.SingUp.InvokeRequired) {
+                var d = new DChatAppend(this.SetStateSingUp);
+                this.chat.Invoke(d, new object[] { text }, new Object[] { control });
+            } else {
+                this.chat.AppendText(text);
+            }
+        }
+
+        private void SetStateServerDisconnected(bool state) {
+            if (this.ServerDisconnected.InvokeRequired) {
+                var d = new DChatAppend(this.SetStateServerDisconnected);
+                this.chat.Invoke(d, new object[] { text });
+            } else {
+                this.chat.AppendText(text);
+            }
+        }*/
     }
 }
