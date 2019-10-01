@@ -9,10 +9,6 @@ namespace Chat_Virtual___Cliente {
 
     public partial class MainView : Form {
 
-        private NetworkStream Stream;
-        private StreamWriter Writer;
-        private StreamReader Reader;
-        private TcpClient Client;
         private Model model;
 
         private delegate void DChatAppend(string text);
@@ -24,24 +20,6 @@ namespace Chat_Virtual___Cliente {
                 IsBackground = true,
             };
             t.Start();
-        }
-
-        public MainView(NetworkStream Stream, StreamWriter Writer, StreamReader Reader, TcpClient Client) {
-            this.InitializeComponent();
-            this.Stream = Stream;
-            this.Writer = Writer;
-            this.Reader = Reader;
-            this.Client = Client;
-            Thread t = new Thread(ChatLectura)
-            {
-                IsBackground = true,
-            };
-            t.Start();
-        }
-
-        private void GraphicInterface_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -83,16 +61,6 @@ namespace Chat_Virtual___Cliente {
             Restaurar.Visible = false;
             Maximize.Visible = true;
             
-        }
-
-        private void Slider_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void ChatLectura()

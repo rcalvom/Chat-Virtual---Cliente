@@ -272,7 +272,6 @@
             this.Name = "MainView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.GraphicInterface_Load);
             this.TopPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Restaurar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Close)).EndInit();
