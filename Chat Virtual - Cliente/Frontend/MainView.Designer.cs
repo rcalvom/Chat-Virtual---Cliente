@@ -192,6 +192,7 @@
             this.chat.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chat.Location = new System.Drawing.Point(8, 5);
             this.chat.Name = "chat";
+            this.chat.ReadOnly = true;
             this.chat.Size = new System.Drawing.Size(480, 296);
             this.chat.TabIndex = 0;
             this.chat.Text = "";

@@ -49,3 +49,4 @@ C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - 
 C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.LoginWindow.resources
 C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CopyComplete
 C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\DataStructures.dll
+C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\DataStructures.dll
