@@ -33,6 +33,7 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public void Connect() {
             try {
+		        this.client = new TcpClient();
                 this.client.Connect("25.7.220.122", 7777);
                 this.stream = this.client.GetStream();
             } catch (Exception) {

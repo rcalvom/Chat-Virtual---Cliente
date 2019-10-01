@@ -12,6 +12,7 @@ namespace Chat_Virtual___Cliente {
         private Model model;
         private string username;
         private string userPassword;
+        private bool subProcess;
 
         private delegate void SetVisible(bool state);
         private delegate void SetAvailable(bool state, Button button);
@@ -21,6 +22,7 @@ namespace Chat_Virtual___Cliente {
             username = "";
             userPassword = "";
             this.model = new Model();
+            subProcess = true;
             Refresh.RunWorkerAsync();
         }
 
@@ -58,7 +60,7 @@ namespace Chat_Virtual___Cliente {
                     ErrorMessage("No se ha obtenido respuesta del servidor");
                     break;
                 case "SI":
-                    Refresh.CancelAsync();
+                    subProcess = false;
                     MainView mainView = new MainView(model.getClient(), model.getStream());
                     mainView.Show();
                     Close();
@@ -144,9 +146,10 @@ namespace Chat_Virtual___Cliente {
         private void Refresh_DoWork(object sender, DoWorkEventArgs e) {
             bool lastEstate = true;
             bool connected = false;
-            while (true) {
+            while (subProcess) {
+                Console.WriteLine("Buscando cambios en la conexion al servidor...");
                 connected = model.IsConnected();
-                if (connected != lastEstate) {
+                if (connected != lastEstate || !connected) {
                     if (!connected) {
                         SetVisibleControl(true);
                         SetStateButton(false, SingIn);
@@ -165,12 +168,6 @@ namespace Chat_Virtual___Cliente {
                     }
                 }
                 lastEstate = connected;
-            }
-        }
-
-        private void Refresh_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-            if (e.Error != null) {
-                Refresh.RunWorkerAsync();
             }
         }
 

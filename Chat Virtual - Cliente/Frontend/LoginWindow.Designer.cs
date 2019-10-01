@@ -230,7 +230,6 @@
             // Refresh
             // 
             this.Refresh.DoWork += new System.ComponentModel.DoWorkEventHandler(this.Refresh_DoWork);
-            this.Refresh.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.Refresh_RunWorkerCompleted);
             // 
             // ServerDisconnected
             // 
