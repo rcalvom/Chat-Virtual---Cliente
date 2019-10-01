@@ -144,30 +144,23 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void Refresh_DoWork(object sender, DoWorkEventArgs e) {
-            bool lastEstate = true;
+            //bool lastEstate = true;
             bool connected = false;
-            while (subProcess) {
-                Console.WriteLine("Buscando cambios en la conexion al servidor...");
+            while (!connected) {
                 connected = model.IsConnected();
-                if (connected != lastEstate || !connected) {
+                //if (connected != lastEstate || !connected) {
                     if (!connected) {
                         SetVisibleControl(true);
                         SetStateButton(false, SingIn);
                         SetStateButton(false, SingUp);
-                        //ServerDisconnected.Visible = true;
-                        //SingIn.Enabled = false;
-                        //SingUp.Enabled = false;
                         model.Connect();
                     } else {
                         SetVisibleControl(false);
                         SetStateButton(true, SingIn);
                         SetStateButton(true, SingUp);
-                        //ServerDisconnected.Visible = false;
-                        //SingIn.Enabled = true;
-                        //SingUp.Enabled = true;
                     }
-                }
-                lastEstate = connected;
+                //}
+                //lastEstate = connected;
             }
         }
 
@@ -188,24 +181,5 @@ namespace Chat_Virtual___Cliente {
                 button.Enabled = state; ;
             }
         }
-
-        /*
-        private void SetStateSingUp(bool state) {
-            if (this.SingUp.InvokeRequired) {
-                var d = new DChatAppend(this.SetStateSingUp);
-                this.chat.Invoke(d, new object[] { text }, new Object[] { control });
-            } else {
-                this.chat.AppendText(text);
-            }
-        }
-
-        private void SetStateServerDisconnected(bool state) {
-            if (this.ServerDisconnected.InvokeRequired) {
-                var d = new DChatAppend(this.SetStateServerDisconnected);
-                this.chat.Invoke(d, new object[] { text });
-            } else {
-                this.chat.AppendText(text);
-            }
-        }*/
     }
 }
