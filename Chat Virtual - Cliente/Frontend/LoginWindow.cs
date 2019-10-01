@@ -144,11 +144,11 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void Refresh_DoWork(object sender, DoWorkEventArgs e) {
-            //bool lastEstate = true;
+            bool lastEstate = true;
             bool connected = false;
-            while (!connected) {
+            while (subProcess) {
                 connected = model.IsConnected();
-                //if (connected != lastEstate || !connected) {
+                if (connected != lastEstate || !connected) {
                     if (!connected) {
                         SetVisibleControl(true);
                         SetStateButton(false, SingIn);
@@ -159,8 +159,9 @@ namespace Chat_Virtual___Cliente {
                         SetStateButton(true, SingIn);
                         SetStateButton(true, SingUp);
                     }
-                //}
-                //lastEstate = connected;
+                }
+                lastEstate = connected;
+                Thread.Sleep(1000);
             }
         }
 
