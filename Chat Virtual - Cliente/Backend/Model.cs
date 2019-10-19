@@ -48,6 +48,10 @@ namespace Chat_Virtual___Cliente.Backend {
             }
         }
 
+        public void Disconnect() {
+            this.client = new TcpClient();
+        }
+
         public bool Write(LinkedQueue<string> messages) {
             try {
                 StreamWriter writer = new StreamWriter(client.GetStream());

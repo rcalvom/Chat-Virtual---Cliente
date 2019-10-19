@@ -72,6 +72,12 @@
     <Compile Include="Frontend\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frontend\SingUpView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frontend\SingUpView.Designer.cs">
+      <DependentUpon>SingUpView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frontend\MainView.resx">
@@ -79,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\LoginWindow.resx">
       <DependentUpon>LoginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frontend\SingUpView.resx">
+      <DependentUpon>SingUpView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

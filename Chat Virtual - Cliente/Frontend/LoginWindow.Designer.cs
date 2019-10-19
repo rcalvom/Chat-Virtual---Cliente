@@ -37,10 +37,12 @@
             this.labelPassword = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.SingUp = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.Refresh = new System.ComponentModel.BackgroundWorker();
             this.ServerDisconnected = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.SingUp = new System.Windows.Forms.LinkLabel();
             this.topPane.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
@@ -51,24 +53,25 @@
             // 
             // user
             // 
-            this.user.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.user.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.user.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.user.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.user.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.user.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.user.Location = new System.Drawing.Point(170, 143);
+            this.user.Location = new System.Drawing.Point(168, 133);
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(267, 24);
             this.user.TabIndex = 0;
             // 
             // password
             // 
+            this.password.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.password.Location = new System.Drawing.Point(170, 173);
+            this.password.Location = new System.Drawing.Point(168, 163);
             this.password.Name = "password";
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(267, 24);
@@ -77,6 +80,7 @@
             // 
             // SingIn
             // 
+            this.SingIn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.SingIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.SingIn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SingIn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -86,7 +90,7 @@
             this.SingIn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SingIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SingIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SingIn.Location = new System.Drawing.Point(325, 203);
+            this.SingIn.Location = new System.Drawing.Point(323, 193);
             this.SingIn.Name = "SingIn";
             this.SingIn.Size = new System.Drawing.Size(112, 27);
             this.SingIn.TabIndex = 3;
@@ -159,10 +163,11 @@
             // 
             // labelUser
             // 
+            this.labelUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelUser.AutoSize = true;
             this.labelUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelUser.Location = new System.Drawing.Point(75, 145);
+            this.labelUser.Location = new System.Drawing.Point(73, 135);
             this.labelUser.Name = "labelUser";
             this.labelUser.Size = new System.Drawing.Size(64, 18);
             this.labelUser.TabIndex = 5;
@@ -170,10 +175,11 @@
             // 
             // labelPassword
             // 
+            this.labelPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelPassword.AutoSize = true;
             this.labelPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelPassword.Location = new System.Drawing.Point(75, 175);
+            this.labelPassword.Location = new System.Drawing.Point(73, 165);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(89, 18);
             this.labelPassword.TabIndex = 6;
@@ -196,31 +202,13 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
-            // SingUp
-            // 
-            this.SingUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.SingUp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SingUp.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.SingUp.FlatAppearance.BorderSize = 0;
-            this.SingUp.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.SingUp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.SingUp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.SingUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SingUp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SingUp.Location = new System.Drawing.Point(207, 203);
-            this.SingUp.Name = "SingUp";
-            this.SingUp.Size = new System.Drawing.Size(112, 27);
-            this.SingUp.TabIndex = 14;
-            this.SingUp.Text = "Registrarse";
-            this.SingUp.UseVisualStyleBackColor = false;
-            this.SingUp.Click += new System.EventHandler(this.SingUp_Click);
-            // 
             // errorLabel
             // 
+            this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.errorLabel.AutoSize = true;
             this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorLabel.Location = new System.Drawing.Point(75, 241);
+            this.errorLabel.Location = new System.Drawing.Point(73, 258);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(117, 18);
             this.errorLabel.TabIndex = 11;
@@ -233,24 +221,68 @@
             // 
             // ServerDisconnected
             // 
+            this.ServerDisconnected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ServerDisconnected.AutoSize = true;
             this.ServerDisconnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerDisconnected.ForeColor = System.Drawing.Color.DarkRed;
-            this.ServerDisconnected.Location = new System.Drawing.Point(75, 273);
+            this.ServerDisconnected.Location = new System.Drawing.Point(276, 288);
             this.ServerDisconnected.Name = "ServerDisconnected";
             this.ServerDisconnected.Size = new System.Drawing.Size(234, 18);
             this.ServerDisconnected.TabIndex = 15;
             this.ServerDisconnected.Text = "Usted se encuentra desconectado";
             this.ServerDisconnected.Visible = false;
             // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.label1.Location = new System.Drawing.Point(74, 226);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 18);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "O puedes";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.label2.Location = new System.Drawing.Point(220, 226);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(191, 18);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "si no tienes una cuenta aún.";
+            // 
+            // SingUp
+            // 
+            this.SingUp.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.SingUp.AutoSize = true;
+            this.SingUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SingUp.LinkColor = System.Drawing.Color.DarkCyan;
+            this.SingUp.Location = new System.Drawing.Point(146, 226);
+            this.SingUp.Margin = new System.Windows.Forms.Padding(0);
+            this.SingUp.Name = "SingUp";
+            this.SingUp.Size = new System.Drawing.Size(74, 18);
+            this.SingUp.TabIndex = 18;
+            this.SingUp.TabStop = true;
+            this.SingUp.Text = "registrarte";
+            this.SingUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SingUp_LinkClicked);
+            // 
             // LoginWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(522, 300);
-            this.Controls.Add(this.ServerDisconnected);
+            this.ClientSize = new System.Drawing.Size(522, 315);
             this.Controls.Add(this.SingUp);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ServerDisconnected);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUser);
@@ -288,9 +320,11 @@
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
         private System.Windows.Forms.Panel minButtonPanel;
         private System.Windows.Forms.Panel closeButtonPanel;
-        private System.Windows.Forms.Button SingUp;
         private System.Windows.Forms.Label errorLabel;
         private System.ComponentModel.BackgroundWorker Refresh;
         private System.Windows.Forms.Label ServerDisconnected;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.LinkLabel SingUp;
     }
 }

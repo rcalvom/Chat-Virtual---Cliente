@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
+using Chat_Virtual___Cliente.Frontend;
 
 namespace Chat_Virtual___Cliente {
 
@@ -15,7 +16,7 @@ namespace Chat_Virtual___Cliente {
         private bool subProcess;
 
         private delegate void SetVisible(bool state);
-        private delegate void SetAvailable(bool state, Button button);
+        private delegate void SetAvailable(bool state, Control button);
 
         public LoginWindow() {
             InitializeComponent();
@@ -100,42 +101,10 @@ namespace Chat_Virtual___Cliente {
             closeButtonPanel.BackColor = topPane.BackColor;
         }
 
-        private void SingUp_Click(object sender, EventArgs e) {
-            errorLabel.Visible = false;
-
-            if (username.Length == 0 || userPassword.Length == 0) {
-                ErrorMessage("Los campos de nombre de usuario y contraseña\nno pueden estar vacios");
-                Cursor = Cursors.Default;
-                return;
-            }
-
-            bool shipping = true;
-            shipping &= model.Write("Registro");
-            shipping &= model.Write(user.Text);
-            shipping &= model.Write(password.Text);
-
-            if (!shipping) {
-                ErrorMessage("No se han podido enviar los datos al servidor");
-                Cursor = Cursors.Default;
-                return;
-            }
-
-            string answer = model.ReadSingle();
-            switch (answer) {
-                case null:
-                    ErrorMessage("No se ha obtenido respuesta del servidor");
-                    break;
-                case "SI":
-                    user.Clear();
-                    password.Clear();
-                    break;
-                case "NO":
-                    ErrorMessage("El nombre de ususario ya está en uso");
-                    break;
-                default:
-                    ErrorMessage("Error desconocido");
-                    break;
-            }
+        private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            SingUpView singUpView = new SingUpView(model.getClient(), model.getStream());
+            singUpView.Show();
+            Close();
         }
 
         public void ErrorMessage(string error) {
@@ -168,18 +137,18 @@ namespace Chat_Virtual___Cliente {
         private void SetVisibleControl(bool state) {
             if (this.ServerDisconnected.InvokeRequired) {
                 var d = new SetVisible(this.SetVisibleControl);
-                this.SingIn.Invoke(d, state);
+                ServerDisconnected.Invoke(d, state);
             } else {
-                this.ServerDisconnected.Visible = state; ;
+                this.ServerDisconnected.Visible = state;
             }
         }
 
-        private void SetStateButton(bool state, Button button) {
-            if (button.InvokeRequired) {
+        private void SetStateButton(bool state, Control option) {
+            if (option.InvokeRequired) {
                 var d = new SetAvailable(this.SetStateButton);
-                this.SingIn.Invoke(d, state, button);
+                option.Invoke(d, state, option);
             } else {
-                button.Enabled = state; ;
+                option.Enabled = state;
             }
         }
     }
