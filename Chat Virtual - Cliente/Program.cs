@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Chat_Virtual___Cliente.Frontend;
 
 namespace Chat_Virtual___Cliente {
     static class Program {
@@ -13,8 +14,10 @@ namespace Chat_Virtual___Cliente {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            LoginWindow login = new LoginWindow();
-            login.Show();
+            HomeView h = new HomeView();
+            h.Show();
+            /*LoginWindow login = new LoginWindow();
+            login.Show();*/
             Application.Run();
         }
     }
