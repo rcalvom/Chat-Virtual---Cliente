@@ -14,10 +14,10 @@ namespace Chat_Virtual___Cliente {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            HomeView h = new HomeView();
-            h.Show();
-            /*LoginWindow login = new LoginWindow();
-            login.Show();*/
+            /*HomeView h = new HomeView();
+            h.Show();*/
+            LoginWindow login = new LoginWindow();
+            login.Show();
             Application.Run();
         }
     }

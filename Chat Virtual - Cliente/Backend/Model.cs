@@ -28,13 +28,6 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         public bool IsConnected() {
-            /*byte[] buffer = new byte[1];
-            try {
-                stream.Write(buffer, 1, 1);
-                return true;
-            } catch(Exception){
-                return false;
-            }*/
             return client.Connected;
         }
 

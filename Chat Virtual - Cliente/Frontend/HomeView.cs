@@ -10,8 +10,12 @@ using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class HomeView : Form {
+
+        private bool maximized;
+
         public HomeView() {
             InitializeComponent();
+            maximized = false;
         }
 
         private void MinButton_Click(object sender, EventArgs e) {
@@ -27,7 +31,14 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void ResizeButton_Click(object sender, EventArgs e) {
-
+            if (maximized) {
+                WindowState = FormWindowState.Normal;
+                resizeButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Maximize_Window_2_48px;
+            } else {
+                WindowState = FormWindowState.Maximized;
+                resizeButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Restore_Window_2_48px;
+            }
+            maximized = !maximized;
         }
 
         private void ResizeButton_MouseEnter(object sender, EventArgs e) {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
@@ -20,9 +21,14 @@ namespace Chat_Virtual___Cliente {
 
         public LoginWindow() {
             InitializeComponent();
-            username = "";
-            userPassword = "";
             this.model = new Model();
+            subProcess = true;
+            Refresh.RunWorkerAsync();
+        }
+
+        public LoginWindow(TcpClient client, NetworkStream stream) {
+            InitializeComponent();
+            this.model = new Model(client, stream);
             subProcess = true;
             Refresh.RunWorkerAsync();
         }
@@ -62,8 +68,10 @@ namespace Chat_Virtual___Cliente {
                     break;
                 case "SI":
                     subProcess = false;
-                    MainView mainView = new MainView(model.getClient(), model.getStream());
-                    mainView.Show();
+                    MainView m = new MainView(model.getClient(), model.getStream());
+                    m.Show();
+                    //HomeView homeView = new HomeView(/*model.getClient(), model.getStream()*/);
+                    //homeView.Show();
                     Close();
                     break;
                 case "NO":

@@ -53,7 +53,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void Back_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            LoginWindow loginWindow = new LoginWindow();
+            LoginWindow loginWindow = new LoginWindow(model.getClient(), model.getStream());
             loginWindow.Show();
             Close();
         }
@@ -101,6 +101,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             } else {
                 option.Enabled = state;
             }
+        }
+
+        private void MinButton_Click(object sender, EventArgs e) {
+
         }
     }
 }

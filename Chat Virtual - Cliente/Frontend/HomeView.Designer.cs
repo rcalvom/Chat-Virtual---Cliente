@@ -23,7 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeView));
             this.topPane = new System.Windows.Forms.Panel();
             this.resizeButtonPanel = new System.Windows.Forms.Panel();
             this.resizeButton = new System.Windows.Forms.PictureBox();
@@ -32,10 +31,14 @@
             this.minButtonPanel = new System.Windows.Forms.Panel();
             this.minButton = new System.Windows.Forms.PictureBox();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.ViewPanel = new System.Windows.Forms.Panel();
+            this.descriptionPanel = new System.Windows.Forms.Panel();
+            this.actionPanel = new System.Windows.Forms.Panel();
             this.optionsPanel = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.Home = new System.Windows.Forms.PictureBox();
+            this.Options = new System.Windows.Forms.PictureBox();
+            this.Chats = new System.Windows.Forms.PictureBox();
+            this.groups = new System.Windows.Forms.PictureBox();
             this.topPane.SuspendLayout();
             this.resizeButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resizeButton)).BeginInit();
@@ -44,6 +47,11 @@
             this.minButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.mainPanel.SuspendLayout();
+            this.optionsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Options)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groups)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -75,7 +83,7 @@
             // 
             this.resizeButton.BackColor = System.Drawing.Color.Transparent;
             this.resizeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.resizeButton.Image = ((System.Drawing.Image)(resources.GetObject("resizeButton.Image")));
+            this.resizeButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Maximize_Window_2_48px;
             this.resizeButton.Location = new System.Drawing.Point(3, 3);
             this.resizeButton.Name = "resizeButton";
             this.resizeButton.Size = new System.Drawing.Size(25, 25);
@@ -144,9 +152,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPanel.BackColor = System.Drawing.Color.Transparent;
-            this.mainPanel.Controls.Add(this.panel3);
-            this.mainPanel.Controls.Add(this.panel4);
-            this.mainPanel.Controls.Add(this.panel2);
+            this.mainPanel.Controls.Add(this.ViewPanel);
+            this.mainPanel.Controls.Add(this.descriptionPanel);
+            this.mainPanel.Controls.Add(this.actionPanel);
             this.mainPanel.Controls.Add(this.optionsPanel);
             this.mainPanel.Location = new System.Drawing.Point(0, 34);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -154,50 +162,96 @@
             this.mainPanel.Size = new System.Drawing.Size(1000, 566);
             this.mainPanel.TabIndex = 0;
             // 
+            // ViewPanel
+            // 
+            this.ViewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ViewPanel.Location = new System.Drawing.Point(280, 0);
+            this.ViewPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ViewPanel.MinimumSize = new System.Drawing.Size(0, 263);
+            this.ViewPanel.Name = "ViewPanel";
+            this.ViewPanel.Size = new System.Drawing.Size(570, 566);
+            this.ViewPanel.TabIndex = 2;
+            // 
+            // descriptionPanel
+            // 
+            this.descriptionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.descriptionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
+            this.descriptionPanel.Location = new System.Drawing.Point(850, 0);
+            this.descriptionPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.descriptionPanel.MinimumSize = new System.Drawing.Size(100, 263);
+            this.descriptionPanel.Name = "descriptionPanel";
+            this.descriptionPanel.Size = new System.Drawing.Size(150, 566);
+            this.descriptionPanel.TabIndex = 3;
+            // 
+            // actionPanel
+            // 
+            this.actionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.actionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
+            this.actionPanel.Location = new System.Drawing.Point(80, 0);
+            this.actionPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.actionPanel.MinimumSize = new System.Drawing.Size(120, 263);
+            this.actionPanel.Name = "actionPanel";
+            this.actionPanel.Size = new System.Drawing.Size(200, 566);
+            this.actionPanel.TabIndex = 1;
+            // 
             // optionsPanel
             // 
+            this.optionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.optionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
+            this.optionsPanel.Controls.Add(this.groups);
+            this.optionsPanel.Controls.Add(this.Chats);
+            this.optionsPanel.Controls.Add(this.Options);
+            this.optionsPanel.Controls.Add(this.Home);
             this.optionsPanel.Location = new System.Drawing.Point(0, 0);
             this.optionsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.optionsPanel.MinimumSize = new System.Drawing.Size(80, 263);
             this.optionsPanel.Name = "optionsPanel";
-            this.optionsPanel.Size = new System.Drawing.Size(80, 563);
+            this.optionsPanel.Size = new System.Drawing.Size(80, 566);
             this.optionsPanel.TabIndex = 0;
             // 
-            // panel2
+            // Home
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.panel2.Location = new System.Drawing.Point(80, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.MinimumSize = new System.Drawing.Size(120, 263);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 563);
-            this.panel2.TabIndex = 1;
+            this.Home.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Home.Location = new System.Drawing.Point(5, 5);
+            this.Home.Name = "Home";
+            this.Home.Size = new System.Drawing.Size(70, 70);
+            this.Home.TabIndex = 0;
+            this.Home.TabStop = false;
             // 
-            // panel3
+            // Options
             // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel3.Location = new System.Drawing.Point(280, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.MinimumSize = new System.Drawing.Size(0, 263);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(570, 563);
-            this.panel3.TabIndex = 2;
+            this.Options.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Options.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Options.Location = new System.Drawing.Point(5, 491);
+            this.Options.Margin = new System.Windows.Forms.Padding(5);
+            this.Options.Name = "Options";
+            this.Options.Size = new System.Drawing.Size(70, 70);
+            this.Options.TabIndex = 1;
+            this.Options.TabStop = false;
             // 
-            // panel4
+            // Chats
             // 
-            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
-            this.panel4.Location = new System.Drawing.Point(850, 0);
-            this.panel4.Margin = new System.Windows.Forms.Padding(0);
-            this.panel4.MinimumSize = new System.Drawing.Size(100, 263);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(150, 563);
-            this.panel4.TabIndex = 3;
+            this.Chats.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Chats.Location = new System.Drawing.Point(5, 85);
+            this.Chats.Name = "Chats";
+            this.Chats.Size = new System.Drawing.Size(70, 70);
+            this.Chats.TabIndex = 2;
+            this.Chats.TabStop = false;
+            // 
+            // groups
+            // 
+            this.groups.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.groups.Location = new System.Drawing.Point(5, 165);
+            this.groups.Name = "groups";
+            this.groups.Size = new System.Drawing.Size(70, 70);
+            this.groups.TabIndex = 3;
+            this.groups.TabStop = false;
             // 
             // HomeView
             // 
@@ -221,6 +275,11 @@
             this.minButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
+            this.optionsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Options)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groups)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -235,9 +294,13 @@
         private System.Windows.Forms.Panel resizeButtonPanel;
         private System.Windows.Forms.PictureBox resizeButton;
         private System.Windows.Forms.Panel mainPanel;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel ViewPanel;
+        private System.Windows.Forms.Panel descriptionPanel;
+        private System.Windows.Forms.Panel actionPanel;
         private System.Windows.Forms.Panel optionsPanel;
+        private System.Windows.Forms.PictureBox Chats;
+        private System.Windows.Forms.PictureBox Options;
+        private System.Windows.Forms.PictureBox Home;
+        private System.Windows.Forms.PictureBox groups;
     }
 }

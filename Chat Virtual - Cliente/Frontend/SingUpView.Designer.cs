@@ -109,6 +109,7 @@
             this.minButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.minButton.TabIndex = 7;
             this.minButton.TabStop = false;
+            this.minButton.Click += new System.EventHandler(this.MinButton_Click);
             // 
             // pictureBox1
             // 
@@ -151,10 +152,8 @@
             this.user.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.user.Location = new System.Drawing.Point(200, 193);
             this.user.Name = "user";
-            this.user.PasswordChar = '*';
             this.user.Size = new System.Drawing.Size(266, 24);
-            this.user.TabIndex = 15;
-            this.user.UseSystemPasswordChar = true;
+            this.user.TabIndex = 3;
             // 
             // userName
             // 
@@ -166,7 +165,7 @@
             this.userName.Location = new System.Drawing.Point(200, 133);
             this.userName.Name = "userName";
             this.userName.Size = new System.Drawing.Size(266, 24);
-            this.userName.TabIndex = 14;
+            this.userName.TabIndex = 1;
             // 
             // labelName
             // 
@@ -199,7 +198,8 @@
             this.password.Location = new System.Drawing.Point(200, 223);
             this.password.Name = "password";
             this.password.Size = new System.Drawing.Size(267, 24);
-            this.password.TabIndex = 20;
+            this.password.TabIndex = 4;
+            this.password.UseSystemPasswordChar = true;
             // 
             // passwordRepeat
             // 
@@ -210,7 +210,8 @@
             this.passwordRepeat.Location = new System.Drawing.Point(249, 253);
             this.passwordRepeat.Name = "passwordRepeat";
             this.passwordRepeat.Size = new System.Drawing.Size(218, 24);
-            this.passwordRepeat.TabIndex = 21;
+            this.passwordRepeat.TabIndex = 5;
+            this.passwordRepeat.UseSystemPasswordChar = true;
             // 
             // SingUp
             // 
@@ -222,7 +223,7 @@
             this.SingUp.Location = new System.Drawing.Point(374, 283);
             this.SingUp.Name = "SingUp";
             this.SingUp.Size = new System.Drawing.Size(93, 27);
-            this.SingUp.TabIndex = 22;
+            this.SingUp.TabIndex = 6;
             this.SingUp.Text = "Registrarse";
             this.SingUp.UseVisualStyleBackColor = false;
             this.SingUp.Click += new System.EventHandler(this.SingUp_Click);
@@ -236,7 +237,7 @@
             this.Back.Location = new System.Drawing.Point(12, 364);
             this.Back.Name = "Back";
             this.Back.Size = new System.Drawing.Size(49, 18);
-            this.Back.TabIndex = 23;
+            this.Back.TabIndex = 7;
             this.Back.TabStop = true;
             this.Back.Text = "Volver";
             this.Back.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Back_LinkClicked);
@@ -262,7 +263,7 @@
             this.userLastName.Location = new System.Drawing.Point(200, 163);
             this.userLastName.Name = "userLastName";
             this.userLastName.Size = new System.Drawing.Size(266, 24);
-            this.userLastName.TabIndex = 24;
+            this.userLastName.TabIndex = 2;
             // 
             // ServerDisconnected
             // 
