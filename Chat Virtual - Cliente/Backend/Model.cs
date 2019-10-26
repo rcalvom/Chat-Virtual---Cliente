@@ -14,6 +14,7 @@ namespace Chat_Virtual___Cliente.Backend {
         public LinkedQueue<string> toReadString;
 
         public Model() {
+            this.client = new TcpClient();
             toWriteString = toReadString = new LinkedQueue<string>();
         }
 

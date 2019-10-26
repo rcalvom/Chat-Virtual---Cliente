@@ -68,13 +68,13 @@ namespace Chat_Virtual___Cliente {
             while (true)
             {
                 if(this.model.getStream().DataAvailable && this.Visible) { 
-                    ChatAppend(this.model.ReadSingle()+"\n");
+                    //ChatAppend(this.model.ReadSingle()+"\n");
                 }
             }
         }
 
         private void Send_Click(object sender, EventArgs e){
-            this.model.Write(mensaje.Text);
+            //this.model.Write(mensaje.Text);
             mensaje.Clear();
         }
 
