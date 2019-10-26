@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading;
 using System.IO;
 using System.Net.Sockets;
 using DataStructures;
@@ -7,16 +7,20 @@ using DataStructures;
 namespace Chat_Virtual___Cliente.Backend {
 
     class Model {
-        private NetworkStream stream;
-        private TcpClient client;
+
+        protected NetworkStream stream;
+        protected TcpClient client;
+        public LinkedQueue<string> toWriteString;
+        public LinkedQueue<string> toReadString;
 
         public Model() {
-            this.client = new TcpClient();
+            toWriteString = toReadString = new LinkedQueue<string>();
         }
 
         public Model(TcpClient client, NetworkStream stream) {
             this.client = client;
             this.stream = stream;
+            toWriteString = toReadString = new LinkedQueue<string>();
         }
 
         public TcpClient getClient() {
@@ -31,13 +35,14 @@ namespace Chat_Virtual___Cliente.Backend {
             return client.Connected;
         }
 
-        public void Connect() {
+        public bool Connect() {
             try {
 		        this.client = new TcpClient();
                 this.client.Connect("25.7.220.122", 7777);
                 this.stream = this.client.GetStream();
+                return true;
             } catch (Exception) {
-                
+                return false;
             }
         }
 
@@ -45,50 +50,38 @@ namespace Chat_Virtual___Cliente.Backend {
             this.client = new TcpClient();
         }
 
-        public bool Write(LinkedQueue<string> messages) {
+        public bool WriteString() {
             try {
                 StreamWriter writer = new StreamWriter(client.GetStream());
-                while (!messages.IsEmpty()) {
-                    writer.WriteLine(messages.GetFrontElement());
+                while (!toWriteString.IsEmpty()) {
+                    writer.WriteLine(toWriteString.GetFrontElement());
                     writer.Flush();
+                    toWriteString.Dequeue();
                 }
                 return true;
             } catch (Exception) {
+                undoChangesInQueue(toWriteString);
                 return false;
             }
         }
 
-        public bool Write(string message) {
+        public bool ReadString() {
             try {
-                StreamWriter writer = new StreamWriter(client.GetStream());
-                writer.WriteLine(message);
-                writer.Flush();
+                StreamReader reader = new StreamReader(client.GetStream());
+                while (!toReadString.IsEmpty())
+                    toReadString.Enqueue(reader.ReadLine());
                 return true;
             } catch (Exception) {
+                undoChangesInQueue(toReadString);
                 return false;
             }
         }
 
-        public LinkedQueue<string> Read() {
-            LinkedQueue<string> read = new LinkedQueue<string>();
-            StreamReader reader = new StreamReader(client.GetStream());
-            try {
-                while(this.client.Available > 0){
-                    read.Put(reader.ReadLine());
-                }
-            } catch (Exception) {
-                return null;
-            }
-            return read;
-        }
-
-        public string ReadSingle() {
-            StreamReader reader = new StreamReader(client.GetStream());
-            try {
-                return reader.ReadLine();
-            } catch (Exception) {
-                return null;
-            }
+        protected void undoChangesInQueue(LinkedQueue<String> queue) {
+            string data;
+            do {
+                data = queue.Dequeue();
+            } while (data != null);
         }
     }
 }

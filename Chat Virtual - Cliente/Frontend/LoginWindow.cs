@@ -50,22 +50,24 @@ namespace Chat_Virtual___Cliente {
             user.Clear();
             password.Clear();
 
-            bool shipping = true;
-            shipping &= model.Write("InicioSesion");
-            shipping &= model.Write(username);
-            shipping &= model.Write(userPassword);
+            model.toWriteString.Enqueue("InicioSesion");
+            model.toWriteString.Enqueue(username);
+            model.toWriteString.Enqueue(userPassword);
+            //model.toWriteString.Enqueue(null);
 
-            if (!shipping) {
+            if (!model.WriteString()) {
                 ErrorMessage("Error al enviar los datos al servidor");
                 Cursor = Cursors.Default;
                 return;
             }
 
-            string answer = model.ReadSingle();
-            switch (answer) {
-                case null:
-                    ErrorMessage("No se ha obtenido respuesta del servidor");
-                    break;
+            if (!model.ReadString()) {
+                ErrorMessage("No se ha obtenido respuesta del servidor");
+                Cursor = Cursors.Default;
+                return;
+            }
+
+            switch (model.toReadString.Dequeue()) {
                 case "SI":
                     subProcess = false;
                     MainView m = new MainView(model.getClient(), model.getStream());
@@ -81,7 +83,6 @@ namespace Chat_Virtual___Cliente {
                     ErrorMessage("Error desconocido");
                     break;
             }
-
             Cursor = Cursors.Default;
         }
 

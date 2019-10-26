@@ -23,29 +23,26 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void SingUp_Click(object sender, EventArgs e) {
             errorLabel.Visible = false;
-            LinkedQueue<string> writingQueue = new LinkedQueue<string>();
-            writingQueue.Put(userName.Text);
-            writingQueue.Put(userLastName.Text);
-            writingQueue.Put(user.Text);
-            writingQueue.Put(password.Text);
-            writingQueue.Put(passwordRepeat.Text);
+            model.toWriteString.Enqueue(userName.Text);
+            model.toWriteString.Enqueue(userLastName.Text);
+            model.toWriteString.Enqueue(user.Text);
+            model.toWriteString.Enqueue(password.Text);
+            model.toWriteString.Enqueue(passwordRepeat.Text);
+            //model.toWriteString.Enqueue(null);
 
-            if (!model.Write(writingQueue)) {
-                ErrorMessage("Se ha producirdo un error enviando los datos al servidor");
+            if (!model.WriteString()) {
+                ErrorMessage("No se han podido enviar los datos al servidor");
                 return;
             }
 
-            LinkedQueue<string> serverAnswer = model.Read();
-            if (serverAnswer == null) {
+            if (!model.ReadString()) {
                 ErrorMessage("No se ha obtenido respuesta del servidor");
                 return;
             }
 
-            while (!serverAnswer.IsEmpty()) {
-                string answer = serverAnswer.GetFrontElement();
+            while (!model.toReadString.IsEmpty()) {
+                string answer = model.toReadString.Dequeue();
                 switch (answer) {
-                    case null:
-                        break;
                     default:
                         break;
                 }

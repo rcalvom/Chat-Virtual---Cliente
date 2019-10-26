@@ -59,7 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\MainModel.cs" />
+    <Compile Include="Backend\Message.cs" />
     <Compile Include="Backend\Model.cs" />
+    <Compile Include="Backend\Request.cs" />
+    <Compile Include="Backend\ShippingData.cs" />
     <Compile Include="Frontend\HomeView.cs">
       <SubType>Form</SubType>
     </Compile>
