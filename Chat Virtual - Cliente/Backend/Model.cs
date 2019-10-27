@@ -48,7 +48,7 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         public void Disconnect() {
-            this.client = new TcpClient();
+            this.client.Close();
         }
 
         public bool WriteString() {

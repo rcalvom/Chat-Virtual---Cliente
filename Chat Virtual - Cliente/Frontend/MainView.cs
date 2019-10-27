@@ -9,17 +9,13 @@ namespace Chat_Virtual___Cliente {
 
     public partial class MainView : Form {
 
-        private Model model;
+        private MainModel model;
 
         private delegate void DChatAppend(string text);
 
         public MainView(TcpClient client, NetworkStream stream) {
             this.InitializeComponent();
-            model = new Model(client, stream);
-            Thread t = new Thread(ChatLectura) {
-                IsBackground = true,
-            };
-            t.Start();
+            model = new MainModel(client, stream);
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -63,18 +59,8 @@ namespace Chat_Virtual___Cliente {
             
         }
 
-        private void ChatLectura()
-        {
-            while (true)
-            {
-                if(this.model.getStream().DataAvailable && this.Visible) { 
-                    //ChatAppend(this.model.ReadSingle()+"\n");
-                }
-            }
-        }
-
         private void Send_Click(object sender, EventArgs e){
-            //this.model.Write(mensaje.Text);
+            this.model.toWriteString.Enqueue(mensaje.Text);
             mensaje.Clear();
         }
 

@@ -10,37 +10,47 @@ namespace Chat_Virtual___Cliente.Backend {
         public LinkedQueue<ShippingData> toWriteData;
         public LinkedQueue<ShippingData> toReadData;
         protected bool runThread;
-        public bool threads;
-        public bool readString;
-        public bool writeString;
-        public bool readData;
-        public bool writeData;
+        protected bool threads;
+        public MainModel(TcpClient client, NetworkStream stream) {
+            this.client = client;
+            this.stream = stream;
+            toWriteString = toReadString = new LinkedQueue<string>();
+            toWriteData = toReadData = new LinkedQueue<ShippingData>();
+            threads = true;
+            runThread = false;
+            Thread thread = new Thread(DataControl);
+            thread.Start();
+        }
         public new bool Connect() {
             try {
                 this.client = new TcpClient();
                 this.client.Connect("25.7.220.122", 7777);
                 this.stream = this.client.GetStream();
-                threads = readString = readData = writeString = writeData = true;
+                threads = true;
                 runThread = false;
+                Thread thread = new Thread(DataControl);
+                thread.Start();
                 return true;
             } catch (Exception) {
+                threads = false;
                 return false;
             }
         }
 
         public new void Disconnect() {
-            threads = runThread = false;
-            this.client = new TcpClient();
+            threads = false;
+            this.client.Close();
         }
 
         private void DataControl() {
             runThread = true;
             while (threads) {
-                writeString = WriteString();
-                readString = ReadString();
-                //writeData = WriteData();
-                //readString = ReadData();
+                WriteString();
+                ReadString();
+                WriteData();
+                ReadData();
             }
+            runThread = false;
         }
 
         private new bool WriteString() {
