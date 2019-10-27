@@ -86,8 +86,8 @@ namespace Chat_Virtual___Cliente {
             Cursor = Cursors.Default;
         }
 
-        private void ExitButton_Click(object sender, EventArgs e)
-        {
+        private void ExitButton_Click(object sender, EventArgs e) {
+            subProcess = false;
             Application.Exit();
         }
 
@@ -111,6 +111,7 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            subProcess = false;
             SingUpView singUpView = new SingUpView(model.getClient(), model.getStream());
             singUpView.Show();
             Close();

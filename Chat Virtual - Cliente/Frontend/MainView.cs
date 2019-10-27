@@ -16,6 +16,10 @@ namespace Chat_Virtual___Cliente {
         public MainView(TcpClient client, NetworkStream stream) {
             this.InitializeComponent();
             model = new MainModel(client, stream);
+            Thread t = new Thread(ChatLectura) {
+                IsBackground = true,
+            };
+            t.Start();
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -57,6 +61,13 @@ namespace Chat_Virtual___Cliente {
             Restaurar.Visible = false;
             Maximize.Visible = true;
             
+        }
+        private void ChatLectura() {
+            while (true) {
+                if (!this.model.toReadString.IsEmpty()) {
+                    ChatAppend(this.model.toReadString.Dequeue());
+                }
+            }
         }
 
         private void Send_Click(object sender, EventArgs e){

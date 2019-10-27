@@ -35,10 +35,11 @@
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.optionsPanel = new System.Windows.Forms.Panel();
-            this.Home = new System.Windows.Forms.PictureBox();
-            this.Options = new System.Windows.Forms.PictureBox();
-            this.Chats = new System.Windows.Forms.PictureBox();
             this.groups = new System.Windows.Forms.PictureBox();
+            this.Chats = new System.Windows.Forms.PictureBox();
+            this.Options = new System.Windows.Forms.PictureBox();
+            this.Home = new System.Windows.Forms.PictureBox();
+            this.receptor = new System.ComponentModel.BackgroundWorker();
             this.topPane.SuspendLayout();
             this.resizeButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resizeButton)).BeginInit();
@@ -48,10 +49,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.mainPanel.SuspendLayout();
             this.optionsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Options)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groups)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Options)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -215,14 +216,23 @@
             this.optionsPanel.Size = new System.Drawing.Size(80, 566);
             this.optionsPanel.TabIndex = 0;
             // 
-            // Home
+            // groups
             // 
-            this.Home.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Home.Location = new System.Drawing.Point(5, 5);
-            this.Home.Name = "Home";
-            this.Home.Size = new System.Drawing.Size(70, 70);
-            this.Home.TabIndex = 0;
-            this.Home.TabStop = false;
+            this.groups.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.groups.Location = new System.Drawing.Point(5, 165);
+            this.groups.Name = "groups";
+            this.groups.Size = new System.Drawing.Size(70, 70);
+            this.groups.TabIndex = 3;
+            this.groups.TabStop = false;
+            // 
+            // Chats
+            // 
+            this.Chats.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Chats.Location = new System.Drawing.Point(5, 85);
+            this.Chats.Name = "Chats";
+            this.Chats.Size = new System.Drawing.Size(70, 70);
+            this.Chats.TabIndex = 2;
+            this.Chats.TabStop = false;
             // 
             // Options
             // 
@@ -235,23 +245,18 @@
             this.Options.TabIndex = 1;
             this.Options.TabStop = false;
             // 
-            // Chats
+            // Home
             // 
-            this.Chats.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Chats.Location = new System.Drawing.Point(5, 85);
-            this.Chats.Name = "Chats";
-            this.Chats.Size = new System.Drawing.Size(70, 70);
-            this.Chats.TabIndex = 2;
-            this.Chats.TabStop = false;
+            this.Home.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Home.Location = new System.Drawing.Point(5, 5);
+            this.Home.Name = "Home";
+            this.Home.Size = new System.Drawing.Size(70, 70);
+            this.Home.TabIndex = 0;
+            this.Home.TabStop = false;
             // 
-            // groups
+            // receptor
             // 
-            this.groups.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.groups.Location = new System.Drawing.Point(5, 165);
-            this.groups.Name = "groups";
-            this.groups.Size = new System.Drawing.Size(70, 70);
-            this.groups.TabIndex = 3;
-            this.groups.TabStop = false;
+            this.receptor.DoWork += new System.ComponentModel.DoWorkEventHandler(this.Receptor_DoWork);
             // 
             // HomeView
             // 
@@ -276,10 +281,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
             this.optionsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Options)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groups)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Options)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -302,5 +307,6 @@
         private System.Windows.Forms.PictureBox Options;
         private System.Windows.Forms.PictureBox Home;
         private System.Windows.Forms.PictureBox groups;
+        private System.ComponentModel.BackgroundWorker receptor;
     }
 }

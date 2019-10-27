@@ -47,9 +47,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                         break;
                 }
             }
+            subProcess = false;
         }
 
         private void Back_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            subProcess = false;
             LoginWindow loginWindow = new LoginWindow(model.getClient(), model.getStream());
             loginWindow.Show();
             Close();
@@ -101,7 +103,12 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void MinButton_Click(object sender, EventArgs e) {
+            WindowState = FormWindowState.Minimized;
+        }
 
+        private void ExitButton_Click(object sender, EventArgs e) {
+            subProcess = false;
+            Application.Exit();
         }
     }
 }

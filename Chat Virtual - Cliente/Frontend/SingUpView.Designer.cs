@@ -86,6 +86,7 @@
             this.exitButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.exitButton.TabIndex = 5;
             this.exitButton.TabStop = false;
+            this.exitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // minButtonPanel
             // 

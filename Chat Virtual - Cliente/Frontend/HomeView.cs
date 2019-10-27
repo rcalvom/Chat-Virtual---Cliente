@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Chat_Virtual___Cliente.Backend;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class HomeView : Form {
 
+        private MainModel model;
         private bool maximized;
+        private bool subprocess;
 
         public HomeView() {
             InitializeComponent();
             maximized = false;
+            subprocess = true;
+            receptor.RunWorkerAsync();
         }
 
         private void MinButton_Click(object sender, EventArgs e) {
@@ -50,6 +50,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void ExitButton_Click(object sender, EventArgs e) {
+            subprocess = false;
             Application.Exit();
         }
 
@@ -59,6 +60,17 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void ExitButton_MouseLeave(object sender, EventArgs e) {
             closeButtonPanel.BackColor = topPane.BackColor;
+        }
+
+        private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
+            while (subprocess) {
+                if (!model.toReadString.IsEmpty()) {
+
+                }
+                if (!model.toReadData.IsEmpty()) {
+
+                }
+            }
         }
     }
 }
