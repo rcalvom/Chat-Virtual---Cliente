@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
+using ShippingData;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class SingUpView : Form {
@@ -23,27 +23,19 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void SingUp_Click(object sender, EventArgs e) {
             errorLabel.Visible = false;
 
-            //model.toWrite.Enqueue(new SingUp(userName.Text, userLastName.Text, user.Text, password.Text, passwordRepeat.Text));
-            /*
+            model.toWrite.Enqueue(new SignUp(userName.Text, userLastName.Text, user.Text, password.Text, passwordRepeat.Text));
 
-            if (!model.WriteString()) {
+            if (!model.Write()) {
                 ErrorMessage("No se han podido enviar los datos al servidor");
                 return;
             }
 
-            if (!model.ReadString()) {
+            if (!model.Read()) {
                 ErrorMessage("No se ha obtenido respuesta del servidor");
                 return;
             }
 
-            while (!model.toRead.IsEmpty()) {
-                string answer = model.toRead.Dequeue();
-                switch (answer) {
-                    default:
-                        break;
-                }
-            }
-            subProcess = false;*/
+            subProcess = false;
         }
 
         private void Back_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {

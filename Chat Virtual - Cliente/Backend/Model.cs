@@ -10,18 +10,18 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected NetworkStream stream;
         protected TcpClient client;
-        public LinkedQueue<ShippingData.ShippingData> toWrite;
-        public LinkedQueue<ShippingData.ShippingData> toRead;
+        public LinkedQueue<Data> toWrite;
+        public LinkedQueue<Data> toRead;
 
         public Model() {
             this.client = new TcpClient();
-            toWrite = toRead = new LinkedQueue<ShippingData.ShippingData>();
+            toWrite = toRead = new LinkedQueue<Data>();
         }
 
         public Model(TcpClient client, NetworkStream stream) {
             this.client = client;
             this.stream = stream;
-            toWrite = toRead = new LinkedQueue<ShippingData.ShippingData>();
+            toWrite = toRead = new LinkedQueue<Data>();
         }
 
         public TcpClient getClient() {
@@ -54,7 +54,7 @@ namespace Chat_Virtual___Cliente.Backend {
         public bool Write() {
             try {
                 Console.WriteLine("Holi");
-                BinaryWriter writer = new BinaryWriter(client.GetStream());
+                BinaryWriter writer = new BinaryWriter(stream);
                 Console.WriteLine("Creado el writer");
                 while (!toWrite.IsEmpty()) {
                     Byte[] toSend = Serializer.Serialize(toWrite.Dequeue());
@@ -72,13 +72,13 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public bool Read() {
             try {
-                BinaryReader reader = new BinaryReader(client.GetStream());
-                while (!toRead.IsEmpty()) {
+                BinaryReader reader = new BinaryReader(stream);
+                while (stream.DataAvailable) {
                     int size = reader.ReadInt32();
                     byte []data = new byte[size];
                     data = reader.ReadBytes(size);
                     object a = Serializer.Deserialize(data);
-                    toRead.Enqueue((ShippingData.ShippingData)a);
+                    toRead.Enqueue((Data)a);
                 }
                 return true;
             } catch (Exception) {
@@ -88,8 +88,12 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public bool readBool(ref bool a) {
             try {
-                BinaryReader reader = new BinaryReader(client.GetStream());
-                a = reader.ReadBoolean();
+                if (stream.DataAvailable) {
+                    BinaryReader reader = new BinaryReader(client.GetStream());
+                    a = reader.ReadBoolean();
+                } else {
+                    return false;
+                }
             } catch (Exception) {
                 return false;
             }

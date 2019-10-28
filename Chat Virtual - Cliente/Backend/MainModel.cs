@@ -13,7 +13,7 @@ namespace Chat_Virtual___Cliente.Backend {
         public MainModel(TcpClient client, NetworkStream stream) {
             this.client = client;
             this.stream = stream;
-            toWrite = toRead = new LinkedQueue<ShippingData.ShippingData>();
+            toWrite = toRead = new LinkedQueue<Data>();
             threads = true;
             runThread = false;
             Thread thread = new Thread(DataControl);
@@ -70,7 +70,7 @@ namespace Chat_Virtual___Cliente.Backend {
                 byte[] data = new byte[size];
                 data = reader.ReadBytes(size);
                 object a = Serializer.Deserialize(data);
-                toRead.Enqueue((ShippingData.ShippingData)a);
+                toRead.Enqueue((Data)a);
                 return true;
             } catch (Exception) {
                 return false;

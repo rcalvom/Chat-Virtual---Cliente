@@ -51,7 +51,7 @@ namespace Chat_Virtual___Cliente {
             user.Clear();
             password.Clear();
 
-            model.toWrite.Enqueue(new SingIn(username, userPassword));
+            model.toWrite.Enqueue(new SignIn(username, userPassword));
 
             if (!model.Write()) {
                 ErrorMessage("Error al enviar los datos al servidor");
