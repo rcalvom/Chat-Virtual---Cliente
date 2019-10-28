@@ -3,7 +3,7 @@ using System.Threading;
 using System.IO;
 using System.Net.Sockets;
 using DataStructures;
-using Chat_Virtual___Cliente.Messages;
+using ShippingData;
 
 namespace Chat_Virtual___Cliente.Backend {
     class MainModel : Model {
@@ -13,7 +13,7 @@ namespace Chat_Virtual___Cliente.Backend {
         public MainModel(TcpClient client, NetworkStream stream) {
             this.client = client;
             this.stream = stream;
-            toWrite = toRead = new LinkedQueue<ShippingData>();
+            toWrite = toRead = new LinkedQueue<ShippingData.ShippingData>();
             threads = true;
             runThread = false;
             Thread thread = new Thread(DataControl);
@@ -70,7 +70,7 @@ namespace Chat_Virtual___Cliente.Backend {
                 byte[] data = new byte[size];
                 data = reader.ReadBytes(size);
                 object a = Serializer.Deserialize(data);
-                toRead.Enqueue((ShippingData)a);
+                toRead.Enqueue((ShippingData.ShippingData)a);
                 return true;
             } catch (Exception) {
                 return false;

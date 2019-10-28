@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
-using Chat_Virtual___Cliente.Messages;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class SingUpView : Form {
@@ -24,7 +23,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void SingUp_Click(object sender, EventArgs e) {
             errorLabel.Visible = false;
 
-            model.toWrite.Enqueue(new SingUp(userName.Text, userLastName.Text, user.Text, password.Text, passwordRepeat.Text));
+            //model.toWrite.Enqueue(new SingUp(userName.Text, userLastName.Text, user.Text, password.Text, passwordRepeat.Text));
             /*
 
             if (!model.WriteString()) {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using DataStructures;
-using Chat_Virtual___Cliente.Messages;
+using ShippingData;
 
 namespace Chat_Virtual___Cliente.Backend {
 
@@ -10,18 +10,18 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected NetworkStream stream;
         protected TcpClient client;
-        public LinkedQueue<ShippingData> toWrite;
-        public LinkedQueue<ShippingData> toRead;
+        public LinkedQueue<ShippingData.ShippingData> toWrite;
+        public LinkedQueue<ShippingData.ShippingData> toRead;
 
         public Model() {
             this.client = new TcpClient();
-            toWrite = toRead = new LinkedQueue<ShippingData>();
+            toWrite = toRead = new LinkedQueue<ShippingData.ShippingData>();
         }
 
         public Model(TcpClient client, NetworkStream stream) {
             this.client = client;
             this.stream = stream;
-            toWrite = toRead = new LinkedQueue<ShippingData>();
+            toWrite = toRead = new LinkedQueue<ShippingData.ShippingData>();
         }
 
         public TcpClient getClient() {
@@ -78,7 +78,7 @@ namespace Chat_Virtual___Cliente.Backend {
                     byte []data = new byte[size];
                     data = reader.ReadBytes(size);
                     object a = Serializer.Deserialize(data);
-                    toRead.Enqueue((ShippingData)a);
+                    toRead.Enqueue((ShippingData.ShippingData)a);
                 }
                 return true;
             } catch (Exception) {

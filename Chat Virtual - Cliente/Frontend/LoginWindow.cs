@@ -6,7 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
 using Chat_Virtual___Cliente.Frontend;
-using Chat_Virtual___Cliente.Messages;
+using ShippingData;
 
 namespace Chat_Virtual___Cliente {
 

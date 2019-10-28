@@ -41,10 +41,10 @@
     <Reference Include="DataStructures">
       <HintPath>lib\DataStructures.dll</HintPath>
     </Reference>
-    <Reference Include="Data_Structures">
-      <HintPath>lib\Data_Structures.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="ShippingData">
+      <HintPath>lib\ShippingData.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -60,10 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\MainModel.cs" />
-    <Compile Include="Backend\Serializer.cs" />
-    <Compile Include="Messages\Message.cs" />
     <Compile Include="Backend\Model.cs" />
-    <Compile Include="Messages\ShippingData.cs" />
     <Compile Include="Frontend\HomeView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,8 +85,6 @@
     <Compile Include="Frontend\SingUpView.Designer.cs">
       <DependentUpon>SingUpView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Messages\SingIn.cs" />
-    <Compile Include="Messages\SingUp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frontend\HomeView.resx">
