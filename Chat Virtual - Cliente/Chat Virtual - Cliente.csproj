@@ -60,10 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Backend\MainModel.cs" />
-    <Compile Include="Backend\Message.cs" />
+    <Compile Include="Backend\Serializer.cs" />
+    <Compile Include="Messages\Message.cs" />
     <Compile Include="Backend\Model.cs" />
-    <Compile Include="Backend\Request.cs" />
-    <Compile Include="Backend\ShippingData.cs" />
+    <Compile Include="Messages\ShippingData.cs" />
     <Compile Include="Frontend\HomeView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +88,8 @@
     <Compile Include="Frontend\SingUpView.Designer.cs">
       <DependentUpon>SingUpView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Messages\SingIn.cs" />
+    <Compile Include="Messages\SingUp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frontend\HomeView.resx">

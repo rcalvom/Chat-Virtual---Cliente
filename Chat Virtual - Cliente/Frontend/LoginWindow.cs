@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
 using Chat_Virtual___Cliente.Frontend;
+using Chat_Virtual___Cliente.Messages;
 
 namespace Chat_Virtual___Cliente {
 
@@ -50,38 +51,27 @@ namespace Chat_Virtual___Cliente {
             user.Clear();
             password.Clear();
 
-            model.toWriteString.Enqueue("InicioSesion");
-            model.toWriteString.Enqueue(username);
-            model.toWriteString.Enqueue(userPassword);
-            //model.toWriteString.Enqueue(null);
+            model.toWrite.Enqueue(new SingIn(username, userPassword));
 
-            if (!model.WriteString()) {
+            if (!model.Write()) {
                 ErrorMessage("Error al enviar los datos al servidor");
                 Cursor = Cursors.Default;
                 return;
             }
 
-            if (!model.ReadString()) {
-                ErrorMessage("No se ha obtenido respuesta del servidor");
-                Cursor = Cursors.Default;
-                return;
-            }
-
-            switch (model.toReadString.Dequeue()) {
-                case "SI":
+            bool respuesta = false;
+            if (model.readBool(respuesta)) {
+                if (respuesta) {
                     subProcess = false;
                     MainView m = new MainView(model.getClient(), model.getStream());
                     m.Show();
                     //HomeView homeView = new HomeView(/*model.getClient(), model.getStream()*/);
                     //homeView.Show();
                     Close();
-                    break;
-                case "NO":
+                } else
                     ErrorMessage("Usuario o contraseña incorrectos");
-                    break;
-                default:
-                    ErrorMessage("Error desconocido");
-                    break;
+            } else {
+                ErrorMessage("No se ha obtenido respuesta del servidor");
             }
             Cursor = Cursors.Default;
         }

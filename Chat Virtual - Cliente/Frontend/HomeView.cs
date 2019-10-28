@@ -63,13 +63,13 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
-            while (subprocess) {
-                if (!model.toReadString.IsEmpty()) {
+            while (subprocess) {/*
+                if (!model.toRead.IsEmpty()) {
 
                 }
                 if (!model.toReadData.IsEmpty()) {
 
-                }
+                }*/
             }
         }
     }

@@ -64,14 +64,14 @@ namespace Chat_Virtual___Cliente {
         }
         private void ChatLectura() {
             while (true) {
-                if (!this.model.toReadString.IsEmpty()) {
-                    ChatAppend(this.model.toReadString.Dequeue());
+                if (!this.model.toRead.IsEmpty()) {
+                    //ChatAppend(this.model.toRead.Dequeue());
                 }
             }
         }
 
         private void Send_Click(object sender, EventArgs e){
-            this.model.toWriteString.Enqueue(mensaje.Text);
+            //this.model.toWrite.Enqueue(mensaje.Text);
             mensaje.Clear();
         }
 

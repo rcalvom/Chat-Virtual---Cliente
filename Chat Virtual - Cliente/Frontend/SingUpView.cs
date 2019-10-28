@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
-using DataStructures;
+using Chat_Virtual___Cliente.Messages;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class SingUpView : Form {
@@ -23,12 +23,9 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void SingUp_Click(object sender, EventArgs e) {
             errorLabel.Visible = false;
-            model.toWriteString.Enqueue(userName.Text);
-            model.toWriteString.Enqueue(userLastName.Text);
-            model.toWriteString.Enqueue(user.Text);
-            model.toWriteString.Enqueue(password.Text);
-            model.toWriteString.Enqueue(passwordRepeat.Text);
-            //model.toWriteString.Enqueue(null);
+
+            model.toWrite.Enqueue(new SingUp(userName.Text, userLastName.Text, user.Text, password.Text, passwordRepeat.Text));
+            /*
 
             if (!model.WriteString()) {
                 ErrorMessage("No se han podido enviar los datos al servidor");
@@ -40,14 +37,14 @@ namespace Chat_Virtual___Cliente.Frontend {
                 return;
             }
 
-            while (!model.toReadString.IsEmpty()) {
-                string answer = model.toReadString.Dequeue();
+            while (!model.toRead.IsEmpty()) {
+                string answer = model.toRead.Dequeue();
                 switch (answer) {
                     default:
                         break;
                 }
             }
-            subProcess = false;
+            subProcess = false;*/
         }
 
         private void Back_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Threading;
 using System.IO;
 using System.Net.Sockets;
 using DataStructures;
+using Chat_Virtual___Cliente.Messages;
 
 namespace Chat_Virtual___Cliente.Backend {
 
@@ -10,18 +10,18 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected NetworkStream stream;
         protected TcpClient client;
-        public LinkedQueue<string> toWriteString;
-        public LinkedQueue<string> toReadString;
+        public LinkedQueue<ShippingData> toWrite;
+        public LinkedQueue<ShippingData> toRead;
 
         public Model() {
             this.client = new TcpClient();
-            toWriteString = toReadString = new LinkedQueue<string>();
+            toWrite = toRead = new LinkedQueue<ShippingData>();
         }
 
         public Model(TcpClient client, NetworkStream stream) {
             this.client = client;
             this.stream = stream;
-            toWriteString = toReadString = new LinkedQueue<string>();
+            toWrite = toRead = new LinkedQueue<ShippingData>();
         }
 
         public TcpClient getClient() {
@@ -51,38 +51,49 @@ namespace Chat_Virtual___Cliente.Backend {
             this.client.Close();
         }
 
-        public bool WriteString() {
+        public bool Write() {
             try {
-                StreamWriter writer = new StreamWriter(client.GetStream());
-                while (!toWriteString.IsEmpty()) {
-                    writer.WriteLine(toWriteString.GetFrontElement());
-                    writer.Flush();
-                    toWriteString.Dequeue();
+                Console.WriteLine("Holi");
+                BinaryWriter writer = new BinaryWriter(client.GetStream());
+                Console.WriteLine("Creado el writer");
+                while (!toWrite.IsEmpty()) {
+                    Byte[] toSend = Serializer.Serialize(toWrite.Dequeue());
+                    Console.WriteLine("Datos serializados");
+                    writer.Write(toSend.Length);
+                    Console.WriteLine("Escrito el tamaño");
+                    writer.Write(toSend);
+                    Console.WriteLine("Datos enviados");
                 }
                 return true;
             } catch (Exception) {
-                undoChangesInQueue(toWriteString);
                 return false;
             }
         }
 
-        public bool ReadString() {
+        public bool Read() {
             try {
-                StreamReader reader = new StreamReader(client.GetStream());
-                while (!toReadString.IsEmpty())
-                    toReadString.Enqueue(reader.ReadLine());
+                BinaryReader reader = new BinaryReader(client.GetStream());
+                while (!toRead.IsEmpty()) {
+                    int size = reader.ReadInt32();
+                    byte []data = new byte[size];
+                    data = reader.ReadBytes(size);
+                    object a = Serializer.Deserialize(data);
+                    toRead.Enqueue((ShippingData)a);
+                }
                 return true;
             } catch (Exception) {
-                undoChangesInQueue(toReadString);
                 return false;
             }
         }
 
-        protected void undoChangesInQueue(LinkedQueue<String> queue) {
-            string data;
-            do {
-                data = queue.Dequeue();
-            } while (data != null);
+        public bool readBool(bool a) {
+            try {
+                BinaryReader reader = new BinaryReader(client.GetStream());
+                a = reader.ReadBoolean();
+            } catch (Exception) {
+                return false;
+            }
+            return true; ;
         }
     }
 }
