@@ -18,18 +18,14 @@ namespace Chat_Virtual___Cliente.Backend {
             toWrite = toRead = new LinkedQueue<Data>();
         }
 
-        public Model(TcpClient client, NetworkStream stream) {
+        public Model(TcpClient client) {
             this.client = client;
-            this.stream = stream;
+            this.stream = client.GetStream();
             toWrite = toRead = new LinkedQueue<Data>();
         }
 
         public TcpClient getClient() {
             return client;
-        }
-
-        public NetworkStream getStream() {
-            return stream;
         }
 
         public bool IsConnected() {
@@ -91,13 +87,13 @@ namespace Chat_Virtual___Cliente.Backend {
                 if (stream.DataAvailable) {
                     BinaryReader reader = new BinaryReader(client.GetStream());
                     a = reader.ReadBoolean();
+                    return true;
                 } else {
                     return false;
                 }
             } catch (Exception) {
                 return false;
             }
-            return true; ;
         }
     }
 }

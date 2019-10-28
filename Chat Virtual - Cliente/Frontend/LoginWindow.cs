@@ -27,9 +27,9 @@ namespace Chat_Virtual___Cliente {
             Refresh.RunWorkerAsync();
         }
 
-        public LoginWindow(TcpClient client, NetworkStream stream) {
+        public LoginWindow(TcpClient client) {
             InitializeComponent();
-            this.model = new Model(client, stream);
+            this.model = new Model(client);
             subProcess = true;
             Refresh.RunWorkerAsync();
         }
@@ -59,11 +59,11 @@ namespace Chat_Virtual___Cliente {
                 return;
             }
 
-            bool respuesta = false;
-            if (model.readBool(ref respuesta)) {
-                if (respuesta) {
+            bool answer = false;
+            if (model.readBool(ref answer)) {
+                if (answer) {
                     subProcess = false;
-                    MainView m = new MainView(model.getClient(), model.getStream());
+                    MainView m = new MainView(model.getClient());
                     m.Show();
                     //HomeView homeView = new HomeView(/*model.getClient(), model.getStream()*/);
                     //homeView.Show();
@@ -102,7 +102,7 @@ namespace Chat_Virtual___Cliente {
 
         private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             subProcess = false;
-            SingUpView singUpView = new SingUpView(model.getClient(), model.getStream());
+            SingUpView singUpView = new SingUpView(model.getClient());
             singUpView.Show();
             Close();
         }

@@ -10,9 +10,9 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected bool runThread;
         protected bool threads;
-        public MainModel(TcpClient client, NetworkStream stream) {
+        public MainModel(TcpClient client) {
             this.client = client;
-            this.stream = stream;
+            this.stream = client.GetStream();
             toWrite = toRead = new LinkedQueue<Data>();
             threads = true;
             runThread = false;

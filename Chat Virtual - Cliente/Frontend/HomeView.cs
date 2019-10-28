@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Net.Sockets;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
 
@@ -11,8 +12,9 @@ namespace Chat_Virtual___Cliente.Frontend {
         private bool maximized;
         private bool subprocess;
 
-        public HomeView() {
+        public HomeView(TcpClient client) {
             InitializeComponent();
+            model = new MainModel(client);
             maximized = false;
             subprocess = true;
             receptor.RunWorkerAsync();
