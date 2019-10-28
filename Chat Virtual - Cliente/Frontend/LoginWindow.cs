@@ -60,7 +60,7 @@ namespace Chat_Virtual___Cliente {
             }
 
             bool respuesta = false;
-            if (model.readBool(respuesta)) {
+            if (model.readBool(ref respuesta)) {
                 if (respuesta) {
                     subProcess = false;
                     MainView m = new MainView(model.getClient(), model.getStream());
@@ -150,6 +150,11 @@ namespace Chat_Virtual___Cliente {
             } else {
                 option.Enabled = state;
             }
+        }
+
+        private void LoginWindow_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -86,7 +86,7 @@ namespace Chat_Virtual___Cliente.Backend {
             }
         }
 
-        public bool readBool(bool a) {
+        public bool readBool(ref bool a) {
             try {
                 BinaryReader reader = new BinaryReader(client.GetStream());
                 a = reader.ReadBoolean();
