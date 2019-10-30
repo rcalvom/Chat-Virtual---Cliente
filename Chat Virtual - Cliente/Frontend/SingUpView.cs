@@ -35,6 +35,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                 return;
             }
 
+            if (!password.Text.Equals(passwordRepeat.Text)) {
+                CreateErrorLabel("Los campos de contraseña no coinciden", password);
+                return;
+            }
+
             model.toWrite.Enqueue(new SignUp(userName.Text, userLastName.Text, user.Text, password.Text, passwordRepeat.Text));
 
             if (!model.Write()) {
@@ -59,13 +64,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                             switch(error.errorCode){
                                 case 0:
                                     CreateErrorLabel("El nombre de usuario ya se encuentra en uso", user);
-                                    break;
-                                case 1:
-                                    CreateErrorLabel("Los campos de contraseña no coinciden", password);
-                                    break;
-                                case 2:
-                                    break;
-                                default:
                                     break;
                             }
                         }

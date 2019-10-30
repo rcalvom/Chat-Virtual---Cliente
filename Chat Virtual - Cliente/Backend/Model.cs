@@ -8,35 +8,31 @@ namespace Chat_Virtual___Cliente.Backend {
 
     class Model {
 
-        protected NetworkStream stream;
-        protected TcpClient client;
-        public LinkedQueue<Data> toWrite;
-        public LinkedQueue<Data> toRead;
+        protected NetworkStream Stream { get; set; }
+        protected TcpClient Client { get; set; }
+        public LinkedQueue<Data> toWrite { get; set; }
+        public LinkedQueue<Data> toRead { get; set; }
 
         public Model() {
-            this.client = new TcpClient();
+            this.Client = new TcpClient();
             toWrite = toRead = new LinkedQueue<Data>();
         }
 
         public Model(TcpClient client) {
-            this.client = client;
-            this.stream = client.GetStream();
+            this.Client = client;
+            this.Stream = client.GetStream();
             toWrite = toRead = new LinkedQueue<Data>();
         }
 
-        public TcpClient getClient() {
-            return client;
-        }
-
         public bool IsConnected() {
-            return client.Connected;
+            return Client.Connected;
         }
 
         public bool Connect() {
             try {
-		        this.client = new TcpClient();
-                this.client.Connect("25.7.220.122", 7777);
-                this.stream = this.client.GetStream();
+		        this.Client = new TcpClient();
+                this.Client.Connect("25.7.220.122", 7777);
+                this.Stream = this.Client.GetStream();
                 return true;
             } catch (Exception) {
                 return false;
@@ -44,21 +40,17 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         public void Disconnect() {
-            this.client.Close();
+            this.Client.Close();
         }
 
         public bool Write() {
             try {
-                Console.WriteLine("Holi");
-                BinaryWriter writer = new BinaryWriter(stream);
+                BinaryWriter writer = new BinaryWriter(Stream);
                 Console.WriteLine("Creado el writer");
                 while (!toWrite.IsEmpty()) {
                     Byte[] toSend = Serializer.Serialize(toWrite.Dequeue());
-                    Console.WriteLine("Datos serializados");
                     writer.Write(toSend.Length);
-                    Console.WriteLine("Escrito el tamaño");
                     writer.Write(toSend);
-                    Console.WriteLine("Datos enviados");
                 }
                 return true;
             } catch (Exception) {
@@ -68,8 +60,8 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public bool Read() {
             try {
-                BinaryReader reader = new BinaryReader(stream);
-                while (stream.DataAvailable) {
+                BinaryReader reader = new BinaryReader(Stream);
+                while (Stream.DataAvailable) {
                     int size = reader.ReadInt32();
                     byte []data = new byte[size];
                     data = reader.ReadBytes(size);
@@ -84,8 +76,8 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public bool readBool(ref bool a) {
             try {
-                if (stream.DataAvailable) {
-                    BinaryReader reader = new BinaryReader(client.GetStream());
+                if (Stream.DataAvailable) {
+                    BinaryReader reader = new BinaryReader(Client.GetStream());
                     a = reader.ReadBoolean();
                     return true;
                 } else {

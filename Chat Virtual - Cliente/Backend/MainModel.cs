@@ -10,9 +10,10 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected bool runThread;
         protected bool threads;
+
         public MainModel(TcpClient client) {
-            this.client = client;
-            this.stream = client.GetStream();
+            this.Client = client;
+            this.Stream = client.GetStream();
             toWrite = toRead = new LinkedQueue<Data>();
             threads = true;
             runThread = false;
@@ -21,9 +22,9 @@ namespace Chat_Virtual___Cliente.Backend {
         }
         public new bool Connect() {
             try {
-                this.client = new TcpClient();
-                this.client.Connect("25.7.220.122", 7777);
-                this.stream = this.client.GetStream();
+                this.Client = new TcpClient();
+                this.Client.Connect("25.7.220.122", 7777);
+                this.Stream = this.Client.GetStream();
                 threads = true;
                 runThread = false;
                 Thread thread = new Thread(DataControl);
@@ -37,7 +38,7 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public new void Disconnect() {
             threads = false;
-            this.client.Close();
+            this.Client.Close();
         }
 
         private void DataControl() {
@@ -51,7 +52,7 @@ namespace Chat_Virtual___Cliente.Backend {
 
         private new bool Write() {
             try {
-                BinaryWriter writer = new BinaryWriter(client.GetStream());
+                BinaryWriter writer = new BinaryWriter(Client.GetStream());
                 Byte[] toSend = Serializer.Serialize(toWrite.GetFrontElement());
                 writer.Write(toSend.Length);
                 writer.Write(toSend);
@@ -65,7 +66,7 @@ namespace Chat_Virtual___Cliente.Backend {
 
         private new bool Read() {
             try {
-                BinaryReader reader = new BinaryReader(client.GetStream());
+                BinaryReader reader = new BinaryReader(Client.GetStream());
                 int size = reader.ReadInt32();
                 byte[] data = new byte[size];
                 data = reader.ReadBytes(size);

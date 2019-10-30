@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Net.Sockets;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
+using ShippingData;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class HomeView : Form {
@@ -52,6 +53,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void ExitButton_Click(object sender, EventArgs e) {
+            model.Disconnect();
             subprocess = false;
             Application.Exit();
         }
@@ -65,13 +67,13 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
-            while (subprocess) {/*
+            while (subprocess) {
                 if (!model.toRead.IsEmpty()) {
-
+                    Data data = model.toRead.Dequeue();
+                    if (data is ShippingData.Message ms) {
+                        
+                    }
                 }
-                if (!model.toReadData.IsEmpty()) {
-
-                }*/
             }
         }
     }
