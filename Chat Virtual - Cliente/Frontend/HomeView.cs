@@ -13,9 +13,9 @@ namespace Chat_Virtual___Cliente.Frontend {
         private bool maximized;
         private bool subprocess;
 
-        public HomeView(TcpClient client) {
+        public HomeView() {
             InitializeComponent();
-            model = new MainModel(client);
+            model = new MainModel();
             maximized = false;
             subprocess = true;
             receptor.RunWorkerAsync();

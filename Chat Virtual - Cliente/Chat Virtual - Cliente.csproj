@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Backend\MainModel.cs" />
     <Compile Include="Backend\Model.cs" />
+    <Compile Include="Backend\Singleton.cs" />
     <Compile Include="Frontend\HomeView.cs">
       <SubType>Form</SubType>
     </Compile>

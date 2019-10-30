@@ -13,9 +13,9 @@ namespace Chat_Virtual___Cliente {
 
         private delegate void DChatAppend(string text);
 
-        public MainView(TcpClient client) {
+        public MainView() {
             this.InitializeComponent();
-            model = new MainModel(client);
+            model = new MainModel();
             Thread t = new Thread(ChatLectura) {
                 IsBackground = true,
             };

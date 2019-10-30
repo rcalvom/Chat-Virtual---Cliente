@@ -11,20 +11,19 @@ namespace Chat_Virtual___Cliente.Backend {
         protected bool runThread;
         protected bool threads;
 
-        public MainModel(TcpClient client) {
-            this.Client = client;
-            this.Stream = client.GetStream();
+        public MainModel() {
+            singleton = Singleton.GetSingleton();
             toWrite = toRead = new LinkedQueue<Data>();
             threads = true;
             runThread = false;
             Thread thread = new Thread(DataControl);
             thread.Start();
         }
+
         public new bool Connect() {
             try {
-                this.Client = new TcpClient();
-                this.Client.Connect("25.7.220.122", 7777);
-                this.Stream = this.Client.GetStream();
+                singleton.Client.Connect("25.7.220.122", 7777);
+                singleton.SetStreams();
                 threads = true;
                 runThread = false;
                 Thread thread = new Thread(DataControl);
@@ -38,7 +37,7 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public new void Disconnect() {
             threads = false;
-            this.Client.Close();
+            this.singleton.Client.Close();
         }
 
         private void DataControl() {
@@ -52,11 +51,12 @@ namespace Chat_Virtual___Cliente.Backend {
 
         private new bool Write() {
             try {
-                BinaryWriter writer = new BinaryWriter(Client.GetStream());
-                Byte[] toSend = Serializer.Serialize(toWrite.GetFrontElement());
-                writer.Write(toSend.Length);
-                writer.Write(toSend);
-                toWrite.Dequeue();
+                if (!toWrite.IsEmpty()) {
+                    Byte[] toSend = Serializer.Serialize(toWrite.GetFrontElement());
+                    singleton.Writer.Write(toSend.Length);
+                    singleton.Writer.Write(toSend);
+                    toWrite.Dequeue();
+                }
                 return true;
             } catch (Exception) {
                 toWrite.Enqueue(toWrite.Dequeue());
@@ -66,12 +66,13 @@ namespace Chat_Virtual___Cliente.Backend {
 
         private new bool Read() {
             try {
-                BinaryReader reader = new BinaryReader(Client.GetStream());
-                int size = reader.ReadInt32();
-                byte[] data = new byte[size];
-                data = reader.ReadBytes(size);
-                object a = Serializer.Deserialize(data);
-                toRead.Enqueue((Data)a);
+                if (singleton.stream.DataAvailable) {
+                    int size = singleton.Reader.ReadInt32();
+                    byte[] data = new byte[size];
+                    data = singleton.Reader.ReadBytes(size);
+                    object a = Serializer.Deserialize(data);
+                    toRead.Enqueue((Data)a);
+                }
                 return true;
             } catch (Exception) {
                 return false;

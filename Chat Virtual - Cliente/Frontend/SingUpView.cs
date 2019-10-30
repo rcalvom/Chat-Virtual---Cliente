@@ -16,10 +16,10 @@ namespace Chat_Virtual___Cliente.Frontend {
         private delegate void SetVisible(bool state);
         private delegate void SetAvailable(bool state, Control button);
 
-        public SingUpView(TcpClient client) {
+        public SingUpView() {
             InitializeComponent();
             errorLabels = new LinkedList<Label>();
-            model = new Model(client);
+            model = new Model();
             subProcess = true;
         }
 
@@ -40,7 +40,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 return;
             }
 
-            model.toWrite.Enqueue(new SignUp(userName.Text, userLastName.Text, user.Text, password.Text, passwordRepeat.Text));
+            model.toWrite.Enqueue(new SignUp(userName.Text, userLastName.Text, user.Text, password.Text));
 
             if (!model.Write()) {
                 ErrorMessage("No se han podido enviar los datos al servidor");
@@ -55,7 +55,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 model.toRead.Dequeue();
                 if (answer.answer) {
                     subProcess = false;
-                    HomeView nextView = new HomeView(model.getClient());
+                    HomeView nextView = new HomeView();
                     nextView.Show();
                     Close();
                 } else {
@@ -89,7 +89,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void Back_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             subProcess = false;
-            LoginWindow loginWindow = new LoginWindow(model.getClient());
+            LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
             Close();
         }

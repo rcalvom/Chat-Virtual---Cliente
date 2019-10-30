@@ -27,13 +27,6 @@ namespace Chat_Virtual___Cliente {
             Refresh.RunWorkerAsync();
         }
 
-        public LoginWindow(TcpClient client) {
-            InitializeComponent();
-            this.model = new Model(client);
-            subProcess = true;
-            Refresh.RunWorkerAsync();
-        }
-
         private void SingIn_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -59,19 +52,23 @@ namespace Chat_Virtual___Cliente {
                 return;
             }
 
-            bool answer = false;
-            if (model.readBool(ref answer)) {
-                if (answer) {
+            if (!model.Read()) {
+                ErrorMessage("No se ha obtenido respuesta del servidor");
+                Cursor = Cursors.Default;
+                return;
+            }
+
+            Data answer = model.toRead.Dequeue();
+            if (answer is RequestAnswer rs) {
+                if (rs.answer) {
                     subProcess = false;
-                    MainView m = new MainView(model.getClient());
+                    MainView m = new MainView();
                     m.Show();
-                    //HomeView homeView = new HomeView(/*model.getClient(), model.getStream()*/);
+                    //HomeView homeView = new HomeView();
                     //homeView.Show();
                     Close();
                 } else
                     ErrorMessage("Usuario o contraseña incorrectos");
-            } else {
-                ErrorMessage("No se ha obtenido respuesta del servidor");
             }
             Cursor = Cursors.Default;
         }
@@ -102,7 +99,7 @@ namespace Chat_Virtual___Cliente {
 
         private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             subProcess = false;
-            SingUpView singUpView = new SingUpView(model.getClient());
+            SingUpView singUpView = new SingUpView();
             singUpView.Show();
             Close();
         }
