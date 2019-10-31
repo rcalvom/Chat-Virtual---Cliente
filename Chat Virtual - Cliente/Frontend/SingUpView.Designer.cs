@@ -61,7 +61,7 @@
             this.topPane.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPane.Location = new System.Drawing.Point(0, 0);
             this.topPane.Name = "topPane";
-            this.topPane.Size = new System.Drawing.Size(605, 34);
+            this.topPane.Size = new System.Drawing.Size(573, 34);
             this.topPane.TabIndex = 5;
             // 
             // closeButtonPanel
@@ -69,7 +69,7 @@
             this.closeButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.closeButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.closeButtonPanel.Controls.Add(this.exitButton);
-            this.closeButtonPanel.Location = new System.Drawing.Point(571, 0);
+            this.closeButtonPanel.Location = new System.Drawing.Point(539, 0);
             this.closeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.closeButtonPanel.Name = "closeButtonPanel";
             this.closeButtonPanel.Size = new System.Drawing.Size(32, 34);
@@ -93,7 +93,7 @@
             this.minButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.minButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.minButtonPanel.Controls.Add(this.minButton);
-            this.minButtonPanel.Location = new System.Drawing.Point(539, 0);
+            this.minButtonPanel.Location = new System.Drawing.Point(507, 0);
             this.minButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.minButtonPanel.Name = "minButtonPanel";
             this.minButtonPanel.Size = new System.Drawing.Size(32, 34);
@@ -116,7 +116,7 @@
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(215, 54);
+            this.pictureBox1.Location = new System.Drawing.Point(208, 52);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(181, 60);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -128,7 +128,7 @@
             this.labelPassword.AutoSize = true;
             this.labelPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelPassword.Location = new System.Drawing.Point(106, 225);
+            this.labelPassword.Location = new System.Drawing.Point(88, 224);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(89, 18);
             this.labelPassword.TabIndex = 17;
@@ -139,7 +139,7 @@
             this.labelUser.AutoSize = true;
             this.labelUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelUser.Location = new System.Drawing.Point(106, 195);
+            this.labelUser.Location = new System.Drawing.Point(88, 194);
             this.labelUser.Name = "labelUser";
             this.labelUser.Size = new System.Drawing.Size(64, 18);
             this.labelUser.TabIndex = 16;
@@ -151,7 +151,7 @@
             this.user.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.user.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.user.Location = new System.Drawing.Point(200, 193);
+            this.user.Location = new System.Drawing.Point(182, 192);
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(266, 24);
             this.user.TabIndex = 3;
@@ -163,7 +163,7 @@
             this.userName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.userName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.userName.Location = new System.Drawing.Point(200, 133);
+            this.userName.Location = new System.Drawing.Point(182, 132);
             this.userName.Name = "userName";
             this.userName.Size = new System.Drawing.Size(266, 24);
             this.userName.TabIndex = 1;
@@ -173,7 +173,7 @@
             this.labelName.AutoSize = true;
             this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelName.Location = new System.Drawing.Point(106, 135);
+            this.labelName.Location = new System.Drawing.Point(88, 134);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(74, 18);
             this.labelName.TabIndex = 18;
@@ -184,7 +184,7 @@
             this.labelRepeatPassword.AutoSize = true;
             this.labelRepeatPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelRepeatPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelRepeatPassword.Location = new System.Drawing.Point(106, 255);
+            this.labelRepeatPassword.Location = new System.Drawing.Point(88, 254);
             this.labelRepeatPassword.Name = "labelRepeatPassword";
             this.labelRepeatPassword.Size = new System.Drawing.Size(137, 18);
             this.labelRepeatPassword.TabIndex = 19;
@@ -196,7 +196,7 @@
             this.password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.password.Location = new System.Drawing.Point(200, 223);
+            this.password.Location = new System.Drawing.Point(182, 222);
             this.password.Name = "password";
             this.password.Size = new System.Drawing.Size(267, 24);
             this.password.TabIndex = 4;
@@ -208,7 +208,7 @@
             this.passwordRepeat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.passwordRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordRepeat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.passwordRepeat.Location = new System.Drawing.Point(249, 253);
+            this.passwordRepeat.Location = new System.Drawing.Point(231, 252);
             this.passwordRepeat.Name = "passwordRepeat";
             this.passwordRepeat.Size = new System.Drawing.Size(218, 24);
             this.passwordRepeat.TabIndex = 5;
@@ -221,7 +221,7 @@
             this.SingUp.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SingUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SingUp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SingUp.Location = new System.Drawing.Point(374, 283);
+            this.SingUp.Location = new System.Drawing.Point(356, 282);
             this.SingUp.Name = "SingUp";
             this.SingUp.Size = new System.Drawing.Size(93, 27);
             this.SingUp.TabIndex = 6;
@@ -248,7 +248,7 @@
             this.labelLastName.AutoSize = true;
             this.labelLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLastName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelLastName.Location = new System.Drawing.Point(106, 165);
+            this.labelLastName.Location = new System.Drawing.Point(88, 164);
             this.labelLastName.Name = "labelLastName";
             this.labelLastName.Size = new System.Drawing.Size(67, 18);
             this.labelLastName.TabIndex = 25;
@@ -261,17 +261,18 @@
             this.userLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userLastName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.userLastName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.userLastName.Location = new System.Drawing.Point(200, 163);
+            this.userLastName.Location = new System.Drawing.Point(182, 162);
             this.userLastName.Name = "userLastName";
             this.userLastName.Size = new System.Drawing.Size(266, 24);
             this.userLastName.TabIndex = 2;
             // 
             // ServerDisconnected
             // 
+            this.ServerDisconnected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ServerDisconnected.AutoSize = true;
             this.ServerDisconnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerDisconnected.ForeColor = System.Drawing.Color.DarkRed;
-            this.ServerDisconnected.Location = new System.Drawing.Point(359, 364);
+            this.ServerDisconnected.Location = new System.Drawing.Point(334, 364);
             this.ServerDisconnected.Name = "ServerDisconnected";
             this.ServerDisconnected.Size = new System.Drawing.Size(234, 18);
             this.ServerDisconnected.TabIndex = 27;
@@ -283,7 +284,7 @@
             this.errorLabel.AutoSize = true;
             this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorLabel.Location = new System.Drawing.Point(106, 319);
+            this.errorLabel.Location = new System.Drawing.Point(88, 325);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(117, 18);
             this.errorLabel.TabIndex = 26;
@@ -299,7 +300,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
-            this.ClientSize = new System.Drawing.Size(605, 391);
+            this.ClientSize = new System.Drawing.Size(573, 391);
             this.Controls.Add(this.ServerDisconnected);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.labelLastName);

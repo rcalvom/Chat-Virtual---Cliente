@@ -36,7 +36,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
 
             if (!password.Text.Equals(passwordRepeat.Text)) {
-                CreateErrorLabel("Los campos de contraseña no coinciden", password);
+                ErrorMessage("Los campos de contraseña no coinciden");
                 return;
             }
 
@@ -63,28 +63,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                         if (model.toRead.GetFrontElement() is RequestError error) {
                             switch(error.errorCode){
                                 case 0:
-                                    CreateErrorLabel("El nombre de usuario ya se encuentra en uso", user);
+                                    ErrorMessage("El nombre de usuario ya se encuentra en uso");
                                     break;
                             }
                         }
                     }
                 }
             }
-        }
-
-        private void CreateErrorLabel(string error, Control referencePosition) {
-            Label errorLabel = new Label();
-            this.errorLabel.AutoSize = false;
-            this.errorLabel.AutoEllipsis = true;
-            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorLabel.Location = new System.Drawing.Point(referencePosition.Location.X+referencePosition.Width +10, referencePosition.Location.Y);
-            this.errorLabel.Size = new System.Drawing.Size(117, 18);
-            this.errorLabel.Text = error;
-            this.errorLabel.Visible = true;
-
-            this.Controls.Add(errorLabel);
-            errorLabels.Add(errorLabel);
         }
 
         private void Back_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {

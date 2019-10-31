@@ -70,8 +70,19 @@ namespace Chat_Virtual___Cliente.Frontend {
             while (subprocess) {
                 if (!model.toRead.IsEmpty()) {
                     Data data = model.toRead.Dequeue();
-                    if (data is ShippingData.Message ms) {
+
+                    if (data is ChatMessage chatMessages) {
                         
+                    } else if (data is GroupMessage groupMessage) {
+
+                    } else if (data is ChatGroup chatGroup) {
+
+                    } else if (data is Chat chat) {
+
+                    } else if(data is RequestAnswer requestAnswer) {
+
+                    } else if (data is RequestError requestError) {
+
                     }
                 }
             }

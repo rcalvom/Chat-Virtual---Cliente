@@ -11,6 +11,7 @@ namespace Chat_Virtual___Cliente.Backend {
         protected bool runThread;
         protected bool threads;
 
+
         public MainModel() {
             singleton = Singleton.GetSingleton();
             toWrite = toRead = new LinkedQueue<Data>();
