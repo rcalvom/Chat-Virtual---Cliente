@@ -9,6 +9,8 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected bool runThread;
         protected bool threads;
+        public int CurrentGroup { get; set; }
+        public string CurrentChat { get; set; }
         public HashTable<string, UserChat> chats { get; set; }
         public HashTable<int, Group> groups { get; set; }
 

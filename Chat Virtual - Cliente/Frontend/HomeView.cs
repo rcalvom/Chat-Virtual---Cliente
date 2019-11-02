@@ -7,13 +7,19 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+enum CurrentView {
+    InChat, InGroup, InHome, InProfile, None
+};
+
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class HomeView : Form {
 
-        //private MainModel model;
+        private MainModel model;
         private bool maximized;
         private bool subprocess;
         private LinkedList<Control> aditionalComponents;
+        private LinkedStack<Panel> messages;
+        private CurrentView currentView;
 
         public HomeView() {
             InitializeComponent();
@@ -21,6 +27,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             maximized = false;
             subprocess = true;
             aditionalComponents = new LinkedList<Control>();
+            messages = new LinkedStack<Panel>();
+            this.currentView = CurrentView.InHome;
             receptor.RunWorkerAsync();
         }
 
@@ -68,10 +76,6 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void ExitButton_MouseLeave(object sender, EventArgs e) {
             closeButtonPanel.BackColor = topPane.BackColor;
         }
-
-        private void AddMessage() {
-
-        }
         
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
             /*while (subprocess) {
@@ -83,19 +87,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                         Console.WriteLine("Receiver: " + chatMessage.Receiver);
                         Console.WriteLine("Content: " + chatMessage.Content);
                         UserChat receiver = model.chats.Search(chatMessage.Receiver);
-                        if (receiver.IsActive)
-                            AddMessage();
-                        else
-                            model.chats.Search(chatMessage.Receiver).messages.Push(chatMessage);
+                        receiver.messages.Push(chatMessage);
                     } else if (data is GroupMessage groupMessage) {
                         Console.WriteLine("Sender: " + groupMessage.Sender);
                         Console.WriteLine("Id group receiver: " + groupMessage.IdGroupReceiver);
                         Console.WriteLine("Content: " + groupMessage.Content);
                         Group receiver = model.groups.Search(groupMessage.IdGroupReceiver);
-                        if (receiver.IsActive)
-                            AddMessage();
-                        else 
-                            receiver.messages.Push(groupMessage);
+                        receiver.messages.Push(groupMessage);
                     } else if (data is ChatGroup chatGroup) {
                         Group newGroup = new Group(chatGroup.idGroup, chatGroup.name);
                         model.groups.AddElement(newGroup.code, newGroup);
@@ -112,12 +110,276 @@ namespace Chat_Virtual___Cliente.Frontend {
 
                     }
                 }
+
+                if (currentView == CurrentView.InChat) {
+                    AddChatMessage(model.chats.Search(model.CurrentChat));
+                } else if (currentView == CurrentView.InGroup) {
+                    AddGroupMessage(model.groups.Search(model.CurrentGroup));
+                }
             }*/
+        }
+
+        private void AddChatMessage(UserChat chat) {
+            Panel message = new Panel();
+            Label user = new Label();
+            Label content = new Label();
+            Label time = new Label();
+            ChatMessage ms;
+            if (!chat.messages.IsEmpty()) {
+                ms = chat.messages.Pop();
+
+                this.ViewPanel.Controls.Add(message);
+                message.Controls.Add(user);
+                message.Controls.Add(content);
+                message.Controls.Add(time);
+                //user label
+                user.AutoSize = true;
+                user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
+                user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                user.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                user.Location = new Point(2, 2);
+                user.Name = "UserName";
+                user.Size = new Size(ViewPanel.Width-4, 18);
+                user.TabStop = false;
+                user.Text = ms.Sender;
+                //content label
+                content.AutoSize = true;
+                content.Anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
+                content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                content.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                content.Location = new Point(2, 30);
+                content.Name = "Content";
+                content.Size = new Size(ViewPanel.Width - 4, 20);
+                content.TabStop = false;
+                content.Text = ms.Content;
+                //time label
+                time.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+                time.AutoSize = true;
+                time.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                time.Name = "Time";
+                time.Size = new Size(42, 13);
+                time.TabStop = false;
+                time.Text = "11:31 am";
+                time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+                //message panel
+                message.BorderStyle = BorderStyle.FixedSingle;
+                message.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                message.Location = new Point(0, 0);
+                message.Name = "Message";
+                message.Size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
+                message.TabStop = false;
+
+                messages.Push(message);
+            }
+            while (!chat.messages.IsEmpty()) {
+                ms = chat.messages.Pop();
+
+                message = new Panel();
+                user = new Label();
+                content = new Label();
+                time = new Label();
+
+                this.ViewPanel.Controls.Add(message);
+                message.Controls.Add(user);
+                message.Controls.Add(content);
+                message.Controls.Add(time);
+                //user label
+                user.AutoSize = true;
+                user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
+                user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                user.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                user.Location = new Point(2, 2);
+                user.Name = "UserName";
+                user.Size = new Size(ViewPanel.Width - 4, 18);
+                user.TabStop = false;
+                user.Text = ms.Sender;
+                //content label
+                content.AutoSize = true;
+                content.Anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
+                content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                content.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                content.Location = new Point(2, 30);
+                content.Name = "Content";
+                content.Size = new Size(ViewPanel.Width - 4, 20);
+                content.TabStop = false;
+                content.Text = ms.Content;
+                //time label
+                time.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+                time.AutoSize = true;
+                time.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                time.Name = "Time";
+                time.Size = new Size(42, 13);
+                time.TabStop = false;
+                time.Text = "11:31 am";
+                time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+                //message panel
+                message.BorderStyle = BorderStyle.FixedSingle;
+                message.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                message.Name = "Message";
+                message.Size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
+                message.Location = new Point(0, messages.Peek().Location.Y + message.Height);
+                message.TabStop = false;
+
+                messages.Push(message);
+            }
+        }
+
+        private void AddGroupMessage(Group chat) {
+            Panel message = new Panel();
+            Label user = new Label();
+            Label content = new Label();
+            Label time = new Label();
+            GroupMessage ms;
+            if (!chat.messages.IsEmpty()) {
+                ms = chat.messages.Pop();
+
+                this.ViewPanel.Controls.Add(message);
+                message.Controls.Add(user);
+                message.Controls.Add(content);
+                message.Controls.Add(time);
+                //user label
+                user.AutoSize = true;
+                user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
+                user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                user.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                user.Location = new Point(2, 2);
+                user.Name = "UserName";
+                user.Size = new Size(ViewPanel.Width - 4, 18);
+                user.TabStop = false;
+                user.Text = ms.Sender;
+                //content label
+                content.AutoSize = true;
+                content.Anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
+                content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                content.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                content.Location = new Point(2, 30);
+                content.Name = "Content";
+                content.Size = new Size(ViewPanel.Width - 4, 20);
+                content.TabStop = false;
+                content.Text = ms.Content;
+                //time label
+                time.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+                time.AutoSize = true;
+                time.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                time.Name = "Time";
+                time.Size = new Size(42, 13);
+                time.TabStop = false;
+                time.Text = "11:31 am";
+                time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+                //message panel
+                message.BorderStyle = BorderStyle.FixedSingle;
+                message.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                message.Location = new Point(0, 0);
+                message.Name = "Message";
+                message.Size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
+                message.TabStop = false;
+
+                messages.Push(message);
+            }
+            while (!chat.messages.IsEmpty()) {
+                ms = chat.messages.Pop();
+
+                message = new Panel();
+                user = new Label();
+                content = new Label();
+                time = new Label();
+
+                this.ViewPanel.Controls.Add(message);
+                message.Controls.Add(user);
+                message.Controls.Add(content);
+                message.Controls.Add(time);
+                //user label
+                user.AutoSize = true;
+                user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
+                user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                user.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                user.Location = new Point(2, 2);
+                user.Name = "UserName";
+                user.Size = new Size(ViewPanel.Width - 4, 18);
+                user.TabStop = false;
+                user.Text = ms.Sender;
+                //content label
+                content.AutoSize = true;
+                content.Anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
+                content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                content.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                content.Location = new Point(2, 30);
+                content.Name = "Content";
+                content.Size = new Size(ViewPanel.Width - 4, 20);
+                content.TabStop = false;
+                content.Text = ms.Content;
+                //time label
+                time.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+                time.AutoSize = true;
+                time.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                time.Name = "Time";
+                time.Size = new Size(42, 13);
+                time.TabStop = false;
+                time.Text = "11:31 am";
+                time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+                //message panel
+                message.BorderStyle = BorderStyle.FixedSingle;
+                message.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                message.Name = "Message";
+                message.Size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
+                message.Location = new Point(0, messages.Peek().Location.Y + message.Height);
+                message.TabStop = false;
+
+                messages.Push(message);
+            }
         }
 
         private void RemoveComponents() {
             while (!aditionalComponents.IsEmpty()) {
-                this.Controls.Remove(aditionalComponents.Remove(0));
+                Control c = aditionalComponents.Remove(0);
+                this.Controls.Remove(c);
+                this.ViewPanel.Controls.Remove(c);
+                this.descriptionPanel.Controls.Remove(c);
+                this.actionPanel.Controls.Remove(c);
+            }
+            if (currentView == CurrentView.InChat) {
+                ChatMessage ms;
+                UserChat uc = model.chats.Search(model.CurrentChat);
+                while (!messages.IsEmpty()) {
+                    ms = new ChatMessage();
+                    Panel p = messages.Pop();
+                    foreach (Control c in p.Controls) {
+                        if (c is Label l) {
+                            if (l.Name.Equals("UserName")) {
+                                ms.Sender = l.Text;
+                            } else if (l.Name.Equals("Content")) {
+                                ms.Content = l.Text;
+                            } else if (l.Name.Equals("Time")) {
+
+                            }
+                        }
+                    }
+                    if (ms.Sender.Equals(model.singleton.userName)) {
+                        ms.Receiver = uc.member;
+                    } else {
+                        ms.Receiver = model.singleton.userName;
+                    }
+                    uc.messages.Push(ms);
+                }
+            } else if (currentView == CurrentView.InGroup) {
+                GroupMessage ms;
+                Group group = model.groups.Search(model.CurrentGroup);
+                while (!messages.IsEmpty()) {
+                    ms = new GroupMessage(group.code);
+                    Panel p = messages.Pop();
+                    foreach (Control c in p.Controls) {
+                        if (c is Label l) {
+                            if (l.Name.Equals("UserName")) {
+                                ms.Sender = l.Text;
+                            } else if (l.Name.Equals("Content")) {
+                                ms.Content = l.Text;
+                            } else if (l.Name.Equals("Time")) {
+
+                            }
+                        }
+                    }
+                    group.messages.Push(ms);
+                }
             }
         }
 
@@ -133,50 +395,93 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
             if (!exist) {
                 TextBox chat = new TextBox();
+                PictureBox sendButton = new PictureBox();
                 this.ViewPanel.Controls.Add(chat);
-                chat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            |   System.Windows.Forms.AnchorStyles.Right)));
-                chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-                chat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                chat.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                chat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-                chat.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+                this.ViewPanel.Controls.Add(sendButton);
+                chat.Anchor = ((AnchorStyles)(((AnchorStyles.Bottom | AnchorStyles.Left) | AnchorStyles.Right)));
+                chat.BackColor = Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+                chat.BorderStyle = BorderStyle.FixedSingle;
+                chat.Font = new Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                chat.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                chat.ImeMode = ImeMode.NoControl;
                 chat.Name = "chatBox";
-                chat.MinimumSize = new System.Drawing.Size(0, 24);
-                chat.MaximumSize = new System.Drawing.Size(1000000, 150);
-                chat.Size = new System.Drawing.Size(ViewPanel.Width - 50, 35);
-                chat.Location = new System.Drawing.Point(6, ViewPanel.Height - 30);
-                chat.TabIndex = 0;
+                chat.MinimumSize = new Size(0, 24);
+                chat.MaximumSize = new Size(1000000, 150);
+                chat.Size = new Size(ViewPanel.Width - 50, 35);
+                chat.Location = new Point(6, ViewPanel.Height - 30);
+                chat.TabIndex = 1;
+                chat.Multiline = true;
+                chat.TabStop = true;
                 chat.Visible = true;
                 chat.Enabled = true;
+
+                sendButton.BackColor = Color.Transparent;
+                //sendButton.Image = ;
+                sendButton.Cursor = Cursors.Hand;
+                sendButton.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right);
+                sendButton.Location = new Point(this.ViewPanel.Width-41, this.ViewPanel.Height-30);
+                sendButton.Name = "SendButton";
+                sendButton.TabStop = false;
+                sendButton.Size = new Size(35, 35);
+                sendButton.SizeMode = PictureBoxSizeMode.StretchImage;
+                sendButton.Click += new EventHandler(this.Send_Click);
+
                 aditionalComponents.Add(chat);
-                Console.WriteLine("Se creó");
+                aditionalComponents.Add(sendButton);
             }
         }
 
         private void Home_Click(object sender, EventArgs e) {
             RemoveComponents();
+            currentView = CurrentView.InHome;
         }
 
         private void Chats_Click(object sender, EventArgs e) {
             RemoveComponents();
-            AddTextBox();
+            currentView = CurrentView.None;
         }
 
         private void Groups_Click(object sender, EventArgs e) {
             RemoveComponents();
+            currentView = CurrentView.None;
         }
 
         private void Options_Click(object sender, EventArgs e) {
             RemoveComponents();
+            currentView = CurrentView.InProfile;
         }
 
         private void Chat_Click(object sender, EventArgs e) {
             AddTextBox();
+            currentView = CurrentView.InChat;
         }
 
         private void Group_Click(object sender, EventArgs e) {
             AddTextBox();
+            currentView = CurrentView.InGroup;
+        }
+
+        private void Send_Click(object sender, EventArgs e) {
+            string content = "";
+            ChainNode<Control> c = aditionalComponents.GetNode(0);
+            while (c!=null) {
+                if (c.element.Name.Equals("chatBox")) {
+                    if(c.element is TextBox tx) {
+                        content = tx.Text;
+                        tx.Clear();
+                    }
+                }
+            }
+            if (currentView == CurrentView.InChat) {
+                ChatMessage ms = new ChatMessage();
+                ms.Sender = model.singleton.userName;
+                ms.Receiver = model.CurrentChat;
+                ms.Content = content;
+                model.toWrite.Enqueue(ms);
+            } else if (currentView == CurrentView.InGroup) {
+                GroupMessage ms = new GroupMessage(model.CurrentGroup, model.singleton.userName, content);
+                model.toWrite.Enqueue(ms);
+            }
         }
     }
 }
