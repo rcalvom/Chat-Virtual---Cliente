@@ -33,10 +33,6 @@
             this.minButton = new System.Windows.Forms.PictureBox();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.ViewPanel = new System.Windows.Forms.Panel();
-            this.Message = new System.Windows.Forms.Panel();
-            this.Time = new System.Windows.Forms.Label();
-            this.Content = new System.Windows.Forms.Label();
-            this.UserName = new System.Windows.Forms.Label();
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.optionsPanel = new System.Windows.Forms.Panel();
@@ -53,8 +49,6 @@
             this.minButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.mainPanel.SuspendLayout();
-            this.ViewPanel.SuspendLayout();
-            this.Message.SuspendLayout();
             this.optionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
@@ -176,57 +170,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ViewPanel.AutoScroll = true;
-            this.ViewPanel.Controls.Add(this.Message);
-            this.ViewPanel.Location = new System.Drawing.Point(280, 0);
+            this.ViewPanel.Location = new System.Drawing.Point(323, 85);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ViewPanel.MinimumSize = new System.Drawing.Size(0, 263);
             this.ViewPanel.Name = "ViewPanel";
-            this.ViewPanel.Size = new System.Drawing.Size(570, 566);
+            this.ViewPanel.Size = new System.Drawing.Size(527, 481);
             this.ViewPanel.TabIndex = 2;
-            // 
-            // Message
-            // 
-            this.Message.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Message.Controls.Add(this.Time);
-            this.Message.Controls.Add(this.Content);
-            this.Message.Controls.Add(this.UserName);
-            this.Message.Location = new System.Drawing.Point(0, 3);
-            this.Message.Name = "Message";
-            this.Message.Size = new System.Drawing.Size(570, 89);
-            this.Message.TabIndex = 0;
-            // 
-            // Time
-            // 
-            this.Time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Time.AutoSize = true;
-            this.Time.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.Time.Location = new System.Drawing.Point(523, 68);
-            this.Time.Name = "Time";
-            this.Time.Size = new System.Drawing.Size(42, 13);
-            this.Time.TabIndex = 2;
-            this.Time.Text = "8:50pm";
-            // 
-            // Content
-            // 
-            this.Content.AutoSize = true;
-            this.Content.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Content.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.Content.Location = new System.Drawing.Point(3, 34);
-            this.Content.Name = "Content";
-            this.Content.Size = new System.Drawing.Size(451, 20);
-            this.Content.TabIndex = 1;
-            this.Content.Text = "This is a regular content of a message, this only is a pruba puto";
-            // 
-            // UserName
-            // 
-            this.UserName.AutoSize = true;
-            this.UserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.UserName.Location = new System.Drawing.Point(2, 1);
-            this.UserName.Name = "UserName";
-            this.UserName.Size = new System.Drawing.Size(133, 18);
-            this.UserName.TabIndex = 0;
-            this.UserName.Text = "Regular user name";
             // 
             // descriptionPanel
             // 
@@ -234,25 +183,24 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionPanel.AutoScroll = true;
             this.descriptionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.descriptionPanel.Location = new System.Drawing.Point(850, 0);
+            this.descriptionPanel.Location = new System.Drawing.Point(850, 85);
             this.descriptionPanel.Margin = new System.Windows.Forms.Padding(0);
             this.descriptionPanel.MinimumSize = new System.Drawing.Size(100, 263);
             this.descriptionPanel.Name = "descriptionPanel";
-            this.descriptionPanel.Size = new System.Drawing.Size(150, 566);
+            this.descriptionPanel.Size = new System.Drawing.Size(150, 481);
             this.descriptionPanel.TabIndex = 3;
             // 
             // actionPanel
             // 
-            this.actionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.actionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.actionPanel.AutoScroll = true;
             this.actionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.actionPanel.Location = new System.Drawing.Point(80, 0);
+            this.actionPanel.Location = new System.Drawing.Point(80, 85);
             this.actionPanel.Margin = new System.Windows.Forms.Padding(0);
             this.actionPanel.MinimumSize = new System.Drawing.Size(120, 263);
             this.actionPanel.Name = "actionPanel";
-            this.actionPanel.Size = new System.Drawing.Size(200, 566);
+            this.actionPanel.Size = new System.Drawing.Size(243, 481);
             this.actionPanel.TabIndex = 1;
             // 
             // optionsPanel
@@ -346,9 +294,6 @@
             this.minButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
-            this.ViewPanel.ResumeLayout(false);
-            this.Message.ResumeLayout(false);
-            this.Message.PerformLayout();
             this.optionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
@@ -377,9 +322,5 @@
         private System.Windows.Forms.PictureBox Home;
         private System.Windows.Forms.PictureBox Groups;
         private System.ComponentModel.BackgroundWorker receptor;
-        private System.Windows.Forms.Panel Message;
-        private System.Windows.Forms.Label Time;
-        private System.Windows.Forms.Label Content;
-        private System.Windows.Forms.Label UserName;
     }
 }

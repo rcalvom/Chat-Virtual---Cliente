@@ -23,7 +23,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         public HomeView() {
             InitializeComponent();
-            //model = new MainModel();
+            model = new MainModel();
             maximized = false;
             subprocess = true;
             aditionalComponents = new LinkedList<Control>();
@@ -64,7 +64,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void ExitButton_Click(object sender, EventArgs e) {
-            //model.Disconnect();
+            model.Disconnect();
             subprocess = false;
             Application.Exit();
         }
@@ -78,7 +78,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
         
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
-            /*while (subprocess) {
+            while (subprocess) {
                 if (!model.toRead.IsEmpty()) {
                     Data data = model.toRead.Dequeue();
 
@@ -87,7 +87,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                         Console.WriteLine("Receiver: " + chatMessage.Receiver);
                         Console.WriteLine("Content: " + chatMessage.Content);
                         UserChat receiver = model.chats.Search(chatMessage.Receiver);
-                        receiver.messages.Push(chatMessage);
+                        if(receiver == default) {
+                            
+                        }
+                        else
+                            receiver.messages.Push(chatMessage);
                     } else if (data is GroupMessage groupMessage) {
                         Console.WriteLine("Sender: " + groupMessage.Sender);
                         Console.WriteLine("Id group receiver: " + groupMessage.IdGroupReceiver);
@@ -116,7 +120,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if (currentView == CurrentView.InGroup) {
                     AddGroupMessage(model.groups.Search(model.CurrentGroup));
                 }
-            }*/
+            }
         }
 
         private void AddChatMessage(UserChat chat) {
@@ -439,11 +443,129 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void Chats_Click(object sender, EventArgs e) {
             RemoveComponents();
             currentView = CurrentView.None;
+            if (model.chats.IsEmpty()) {
+                Label l = new Label();
+                this.actionPanel.Controls.Add(l);
+                aditionalComponents.Add(l);
+
+                l.Text = "Aún no tienes ningún chat";
+                l.Size = new Size(actionPanel.Width-6, 20);
+                l.TextAlign = ContentAlignment.MiddleCenter;
+                l.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
+                l.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                l.ForeColor = Color.FromArgb(200, 200, 200);
+                l.AutoSize = false;
+                l.Location = new Point(3, 3);
+            } else {
+                LinkedList<UserChat> chats = model.chats.GetAll();
+                Panel lastPanel = null;
+                while (!chats.IsEmpty()) {
+                    UserChat c = chats.Remove(0);
+                    Panel newPanel = new Panel();
+                    PictureBox photo = new PictureBox();
+                    Label user = new Label();
+                    this.actionPanel.Controls.Add(newPanel);
+                    newPanel.Controls.Add(photo);
+                    newPanel.Controls.Add(user);
+
+                    //panel
+                    if (lastPanel == null)
+                        newPanel.Location = new Point(0, 0);
+                    else
+                        newPanel.Location = new Point(0, lastPanel.Height+lastPanel.Location.Y);
+                    newPanel.Size = new Size(actionPanel.Width, 50);
+                    newPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                    newPanel.BackColor = Color.Transparent;
+                    newPanel.Name = c.member;
+                    newPanel.TabStop = false;
+                    newPanel.MouseEnter += new EventHandler(Chat_MouseEnter(newPanel));
+                    newPanel.MouseLeave += new EventHandler(Chat_MouseLeave(newPanel));
+                    newPanel.Click += new EventHandler(Chat_MouseEnter(newPanel));
+
+                    //pictureBox
+                    photo.Size = new Size(40, 40);
+                    photo.SizeMode = PictureBoxSizeMode.StretchImage;
+                    //photo.Image = c.photo;
+                    photo.Location = new Point(10, 10);
+                    photo.TabStop = false;
+
+                    //label
+                    user.Text = c.member;
+                    user.Location = new Point(50, 10);
+                    user.Size = new Size(newPanel.Width-60, 20);
+                    user.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                    user.BackColor = Color.Transparent;
+                    user.ForeColor = Color.FromArgb(200, 200, 200);
+                    user.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+                    aditionalComponents.Add(newPanel);
+                    lastPanel = newPanel;
+                }
+            }
         }
 
         private void Groups_Click(object sender, EventArgs e) {
             RemoveComponents();
             currentView = CurrentView.None;
+            if (model.groups.IsEmpty()) {
+                Label l = new Label();
+                this.actionPanel.Controls.Add(l);
+                aditionalComponents.Add(l);
+
+                l.Size = new Size(actionPanel.Width - 6, 20);
+                l.TextAlign = ContentAlignment.MiddleCenter;
+                l.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
+                l.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                l.ForeColor = Color.FromArgb(200, 200 ,200);
+                l.AutoSize = true;
+                l.Location = new Point(3, 3);
+                l.Text = "Aún no tienes ningún grupo";
+            } else {
+                LinkedList<Group> groups = model.groups.GetAll();
+                Panel lastPanel = null;
+                while (!groups.IsEmpty()) {
+                    Group c = groups.Remove(0);
+                    Panel newPanel = new Panel();
+                    PictureBox photo = new PictureBox();
+                    Label user = new Label();
+                    this.actionPanel.Controls.Add(newPanel);
+                    newPanel.Controls.Add(photo);
+                    newPanel.Controls.Add(user);
+
+                    //panel
+                    if (lastPanel == null)
+                        newPanel.Location = new Point(0, 0);
+                    else
+                        newPanel.Location = new Point(0, lastPanel.Height + lastPanel.Location.Y);
+                    newPanel.Size = new Size(actionPanel.Width, 50);
+                    newPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                    newPanel.BackColor = Color.Transparent;
+                    newPanel.Name = c.code.ToString();
+                    newPanel.TabStop = false;
+                    newPanel.MouseEnter += new EventHandler(Chat_MouseEnter(newPanel));
+                    newPanel.MouseLeave += new EventHandler(Chat_MouseLeave(newPanel));
+                    newPanel.Click += new EventHandler(Chat_MouseEnter(newPanel));
+
+                    //pictureBox
+                    photo.Size = new Size(40, 40);
+                    photo.SizeMode = PictureBoxSizeMode.StretchImage;
+                    //photo.Image = c.photo;
+                    photo.Location = new Point(10, 10);
+                    photo.TabStop = false;
+
+                    //label
+                    user.Text = c.name;
+                    user.Location = new Point(50, 10);
+                    user.Size = new Size(newPanel.Width - 60, 20);
+                    user.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+                    user.BackColor = Color.Transparent;
+                    user.ForeColor = Color.FromArgb(200, 200, 200);
+                    user.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+
+                    aditionalComponents.Add(newPanel);
+                    lastPanel = newPanel;
+                }
+            }
         }
 
         private void Options_Click(object sender, EventArgs e) {
@@ -451,14 +573,18 @@ namespace Chat_Virtual___Cliente.Frontend {
             currentView = CurrentView.InProfile;
         }
 
-        private void Chat_Click(object sender, EventArgs e) {
+        private EventHandler Chat_Click(Panel sender) {
             AddTextBox();
             currentView = CurrentView.InChat;
+            model.CurrentChat = sender.Name;
+            return default;
         }
 
-        private void Group_Click(object sender, EventArgs e) {
+        private EventHandler Group_Click(Panel sender) {
             AddTextBox();
             currentView = CurrentView.InGroup;
+            model.CurrentGroup = int.Parse(sender.Name);
+            return default;
         }
 
         private void Send_Click(object sender, EventArgs e) {
@@ -482,6 +608,17 @@ namespace Chat_Virtual___Cliente.Frontend {
                 GroupMessage ms = new GroupMessage(model.CurrentGroup, model.singleton.userName, content);
                 model.toWrite.Enqueue(ms);
             }
+        }
+
+
+        private EventHandler Chat_MouseEnter(Panel newPanel) {
+            newPanel.BackColor = Color.FromArgb(100, 100, 100);
+            return default;
+        }
+
+        private EventHandler Chat_MouseLeave(Panel newPanel) {
+            newPanel.BackColor = Color.Transparent;
+            return default;
         }
     }
 }
