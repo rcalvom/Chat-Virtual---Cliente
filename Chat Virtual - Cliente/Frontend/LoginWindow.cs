@@ -62,10 +62,11 @@ namespace Chat_Virtual___Cliente {
             if (answer is RequestAnswer rs) {
                 if (rs.answer) {
                     subProcess = false;
-                    MainView m = new MainView();
-                    m.Show();
-                    //HomeView homeView = new HomeView();
-                    //homeView.Show();
+                    model.singleton.userName = username;
+                    //MainView m = new MainView();
+                    //m.Show();
+                    HomeView homeView = new HomeView();
+                    homeView.Show();
                     Close();
                 } else
                     ErrorMessage("Usuario o contraseña incorrectos");

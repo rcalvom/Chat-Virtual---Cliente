@@ -8,6 +8,8 @@ namespace Chat_Virtual___Cliente.Backend {
         public NetworkStream stream { get; set; }
         public BinaryWriter Writer { get; set; }
         public BinaryReader Reader { get; set; }
+        public string userName { get; set; }
+
         private static Singleton singleton;
 
         private Singleton() {

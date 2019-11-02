@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
+using Chat_Virtual___Cliente.Frontend;
 
 namespace Chat_Virtual___Cliente {
     static class Program {
@@ -12,7 +13,8 @@ namespace Chat_Virtual___Cliente {
             Singleton singleton = Singleton.GetSingleton();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            LoginWindow login = new LoginWindow();
+            HomeView login = new HomeView();
+            //LoginWindow login = new LoginWindow();
             login.Show();
             Application.Run();
         }

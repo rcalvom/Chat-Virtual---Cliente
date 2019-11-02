@@ -35,7 +35,7 @@
             this.minButton = new System.Windows.Forms.PictureBox();
             this.labelUser = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Logo = new System.Windows.Forms.PictureBox();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
             this.errorLabel = new System.Windows.Forms.Label();
             this.Refresh = new System.ComponentModel.BackgroundWorker();
@@ -48,7 +48,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
             this.minButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.SuspendLayout();
             // 
             // user
@@ -185,15 +185,15 @@
             this.labelPassword.TabIndex = 6;
             this.labelPassword.Text = "Contraseña:";
             // 
-            // pictureBox1
+            // Logo
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(178, 55);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(181, 60);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 12;
-            this.pictureBox1.TabStop = false;
+            this.Logo.Image = ((System.Drawing.Image)(resources.GetObject("Logo.Image")));
+            this.Logo.Location = new System.Drawing.Point(178, 55);
+            this.Logo.Name = "Logo";
+            this.Logo.Size = new System.Drawing.Size(181, 60);
+            this.Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.Logo.TabIndex = 12;
+            this.Logo.TabStop = false;
             // 
             // DragControl
             // 
@@ -283,7 +283,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ServerDisconnected);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.Logo);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUser);
             this.Controls.Add(this.topPane);
@@ -301,7 +301,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
             this.minButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,7 +317,7 @@
         private System.Windows.Forms.PictureBox exitButton;
         private System.Windows.Forms.Label labelUser;
         private System.Windows.Forms.Label labelPassword;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox Logo;
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
         private System.Windows.Forms.Panel minButtonPanel;
         private System.Windows.Forms.Panel closeButtonPanel;

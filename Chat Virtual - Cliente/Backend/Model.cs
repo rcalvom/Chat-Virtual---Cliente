@@ -8,7 +8,7 @@ namespace Chat_Virtual___Cliente.Backend {
 
     class Model {
 
-        protected Singleton singleton;
+        public Singleton singleton { get; set; }
         public LinkedQueue<Data> toWrite { get; set; }
         public LinkedQueue<Data> toRead { get; set; }
 

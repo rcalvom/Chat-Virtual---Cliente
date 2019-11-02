@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeView));
             this.topPane = new System.Windows.Forms.Panel();
             this.resizeButtonPanel = new System.Windows.Forms.Panel();
             this.resizeButton = new System.Windows.Forms.PictureBox();
@@ -35,7 +36,7 @@
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.optionsPanel = new System.Windows.Forms.Panel();
-            this.groups = new System.Windows.Forms.PictureBox();
+            this.Groups = new System.Windows.Forms.PictureBox();
             this.Chats = new System.Windows.Forms.PictureBox();
             this.Options = new System.Windows.Forms.PictureBox();
             this.Home = new System.Windows.Forms.PictureBox();
@@ -49,7 +50,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.mainPanel.SuspendLayout();
             this.optionsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.groups)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Groups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Options)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
@@ -205,7 +206,7 @@
             this.optionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.optionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
-            this.optionsPanel.Controls.Add(this.groups);
+            this.optionsPanel.Controls.Add(this.Groups);
             this.optionsPanel.Controls.Add(this.Chats);
             this.optionsPanel.Controls.Add(this.Options);
             this.optionsPanel.Controls.Add(this.Home);
@@ -216,34 +217,45 @@
             this.optionsPanel.Size = new System.Drawing.Size(80, 566);
             this.optionsPanel.TabIndex = 0;
             // 
-            // groups
+            // Groups
             // 
-            this.groups.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.groups.Location = new System.Drawing.Point(5, 165);
-            this.groups.Name = "groups";
-            this.groups.Size = new System.Drawing.Size(70, 70);
-            this.groups.TabIndex = 3;
-            this.groups.TabStop = false;
+            this.Groups.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Groups.ErrorImage = null;
+            this.Groups.Image = ((System.Drawing.Image)(resources.GetObject("Groups.Image")));
+            this.Groups.InitialImage = null;
+            this.Groups.Location = new System.Drawing.Point(5, 165);
+            this.Groups.Name = "Groups";
+            this.Groups.Size = new System.Drawing.Size(70, 70);
+            this.Groups.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Groups.TabIndex = 3;
+            this.Groups.TabStop = false;
+            this.Groups.Click += new System.EventHandler(this.Groups_Click);
             // 
             // Chats
             // 
             this.Chats.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Chats.Image = ((System.Drawing.Image)(resources.GetObject("Chats.Image")));
             this.Chats.Location = new System.Drawing.Point(5, 85);
             this.Chats.Name = "Chats";
             this.Chats.Size = new System.Drawing.Size(70, 70);
+            this.Chats.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Chats.TabIndex = 2;
             this.Chats.TabStop = false;
+            this.Chats.Click += new System.EventHandler(this.Chats_Click);
             // 
             // Options
             // 
             this.Options.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Options.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Options.Image = ((System.Drawing.Image)(resources.GetObject("Options.Image")));
             this.Options.Location = new System.Drawing.Point(5, 491);
             this.Options.Margin = new System.Windows.Forms.Padding(5);
             this.Options.Name = "Options";
             this.Options.Size = new System.Drawing.Size(70, 70);
+            this.Options.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Options.TabIndex = 1;
             this.Options.TabStop = false;
+            this.Options.Click += new System.EventHandler(this.Options_Click);
             // 
             // Home
             // 
@@ -253,6 +265,7 @@
             this.Home.Size = new System.Drawing.Size(70, 70);
             this.Home.TabIndex = 0;
             this.Home.TabStop = false;
+            this.Home.Click += new System.EventHandler(this.Home_Click);
             // 
             // receptor
             // 
@@ -281,7 +294,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
             this.optionsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.groups)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Groups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Options)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
@@ -306,7 +319,7 @@
         private System.Windows.Forms.PictureBox Chats;
         private System.Windows.Forms.PictureBox Options;
         private System.Windows.Forms.PictureBox Home;
-        private System.Windows.Forms.PictureBox groups;
+        private System.Windows.Forms.PictureBox Groups;
         private System.ComponentModel.BackgroundWorker receptor;
     }
 }

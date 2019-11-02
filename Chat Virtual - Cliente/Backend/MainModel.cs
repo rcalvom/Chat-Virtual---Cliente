@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Threading;
-using System.IO;
-using System.Net.Sockets;
 using DataStructures;
 using ShippingData;
+using Chat_Virtual___Cliente.Communication;
 
 namespace Chat_Virtual___Cliente.Backend {
     class MainModel : Model {
 
         protected bool runThread;
         protected bool threads;
-
+        public HashTable<string, UserChat> chats { get; set; }
+        public HashTable<int, Group> groups { get; set; }
 
         public MainModel() {
             singleton = Singleton.GetSingleton();
             toWrite = toRead = new LinkedQueue<Data>();
+            chats = new HashTable<string, UserChat>(50);
+            groups = new HashTable<int, Group>(20);
             threads = true;
             runThread = false;
             Thread thread = new Thread(DataControl);

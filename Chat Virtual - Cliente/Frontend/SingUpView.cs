@@ -40,7 +40,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 return;
             }
 
-            model.toWrite.Enqueue(new SignUp(userName.Text, userLastName.Text, user.Text, password.Text));
+            model.toWrite.Enqueue(new SignUp(userName.Text + " " + userLastName.Text, user.Text, password.Text));
 
             if (!model.Write()) {
                 ErrorMessage("No se han podido enviar los datos al servidor");
@@ -55,6 +55,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 model.toRead.Dequeue();
                 if (answer.answer) {
                     subProcess = false;
+                    model.singleton.userName = user.Text;
                     HomeView nextView = new HomeView();
                     nextView.Show();
                     Close();
