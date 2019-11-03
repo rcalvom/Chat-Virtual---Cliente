@@ -9,6 +9,8 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected bool runThread;
         protected bool threads;
+        public Semaphore CanRead { get; set; }
+        public Semaphore CanWrite { get; set; }
         public int CurrentGroup { get; set; }
         public string CurrentChat { get; set; }
         public HashTable<string, UserChat> chats { get; set; }
@@ -21,6 +23,10 @@ namespace Chat_Virtual___Cliente.Backend {
             groups = new HashTable<int, Group>(20);
             threads = true;
             runThread = false;
+            CanRead = new Semaphore(0, 1);
+            CanWrite = new Semaphore(0, 1);
+            CanRead.Release();
+            CanWrite.Release();
             Thread thread = new Thread(DataControl);
             thread.Start();
         }
@@ -56,21 +62,25 @@ namespace Chat_Virtual___Cliente.Backend {
 
         private new bool Write() {
             try {
+                CanWrite.WaitOne();
                 if (!toWrite.IsEmpty()) {
                     Byte[] toSend = Serializer.Serialize(toWrite.GetFrontElement());
                     singleton.Writer.Write(toSend.Length);
                     singleton.Writer.Write(toSend);
                     toWrite.Dequeue();
                 }
+                CanWrite.Release();
                 return true;
             } catch (Exception) {
                 toWrite.Enqueue(toWrite.Dequeue());
+                CanWrite.Release();
                 return false;
             }
         }
 
         private new bool Read() {
             try {
+                CanRead.WaitOne();
                 if (singleton.stream.DataAvailable) {
                     int size = singleton.Reader.ReadInt32();
                     byte[] data = new byte[size];
@@ -78,8 +88,10 @@ namespace Chat_Virtual___Cliente.Backend {
                     object a = Serializer.Deserialize(data);
                     toRead.Enqueue((Data)a);
                 }
+                CanRead.Release();
                 return true;
             } catch (Exception) {
+                CanRead.Release();
                 return false;
             }
         }

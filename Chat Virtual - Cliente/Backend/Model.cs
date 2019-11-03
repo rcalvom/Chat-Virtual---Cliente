@@ -50,14 +50,18 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public bool Read() {
             try {
+                while (!this.singleton.stream.DataAvailable) {
+                    continue;
+                }
                 while (this.singleton.stream.DataAvailable) {
                     int size = singleton.Reader.ReadInt32();
                     byte []data = new byte[size];
                     data = singleton.Reader.ReadBytes(size);
                     object a = Serializer.Deserialize(data);
                     toRead.Enqueue((Data)a);
+                    return true;
                 }
-                return true;
+                return false;
             } catch (Exception) {
                 return false;
             }
