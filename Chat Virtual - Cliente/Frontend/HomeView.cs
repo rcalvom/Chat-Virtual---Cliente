@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 enum CurrentView {
-    InChat, InGroup, InHome, InProfile, None
+    InChat, InGroup, InHome, InProfile, ViewChats, ViewGroups
 };
 
 namespace Chat_Virtual___Cliente.Frontend {
@@ -210,16 +210,15 @@ namespace Chat_Virtual___Cliente.Frontend {
             LastChat = LastGroup = null;
             while (!AditionalComponents.IsEmpty()) {
                 Control c = AditionalComponents.Remove(0);
-                this.Controls.Remove(c);
                 this.ViewPanel.Controls.Remove(c);
                 this.descriptionPanel.Controls.Remove(c);
-                this.actionPanel.Controls.Remove(c);
+                this.InfoPanel.Controls.Remove(c);
             }
             RemoveMessages();
         }
 
         //Estado: Listo
-        private void AddTextBox() {
+        private void AddChatBox() {
             bool exist = false;
             ChainNode<Control> c = AditionalComponents.GetNode(0);
             while (c != null) {
@@ -234,6 +233,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 PictureBox sendButton = new PictureBox();
                 this.ViewPanel.Controls.Add(chat);
                 this.ViewPanel.Controls.Add(sendButton);
+
                 chat.Anchor = ((AnchorStyles)(((AnchorStyles.Bottom | AnchorStyles.Left) | AnchorStyles.Right)));
                 chat.BackColor = Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
                 chat.BorderStyle = BorderStyle.FixedSingle;
@@ -267,6 +267,42 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
+        //Estado: Listo
+        private void AddChatSearchElements() {
+            Panel NewChatPanel = new Panel();
+            Label NewChatLabel = new Label();
+            TextBox NewChatTextBox = new TextBox();
+            this.InfoPanel.Controls.Add(NewChatPanel);
+
+            NewChatPanel.Location = new Point(0, 0);
+            NewChatPanel.Size = new Size(actionPanel.Width, InfoPanel.Height);
+            NewChatPanel.BackColor = Color.Transparent;
+            NewChatPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Top);
+            NewChatPanel.BorderStyle = BorderStyle.FixedSingle;
+            NewChatPanel.Controls.Add(NewChatLabel);
+            NewChatPanel.Controls.Add(NewChatTextBox);
+
+            NewChatLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            NewChatLabel.ForeColor = Color.FromArgb(220, 220, 220);
+            NewChatLabel.Location = new Point(5, 5);
+            NewChatLabel.Size = new Size(actionPanel.Width-10, 18);
+            NewChatLabel.Text = "Busca o inicia un nuevo chat";
+
+            NewChatTextBox.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
+            NewChatTextBox.BackColor = Color.FromArgb(64, 64, 64);
+            NewChatTextBox.BorderStyle = BorderStyle.FixedSingle;
+            NewChatTextBox.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            NewChatTextBox.ForeColor = Color.FromArgb(224, 224, 224);
+            NewChatTextBox.ImeMode = ImeMode.NoControl;
+            NewChatTextBox.Name = "NewChat";
+            NewChatTextBox.Size = new Size(NewChatPanel.Width - 10, 20);
+            NewChatTextBox.Location = new Point(5, 28);
+            NewChatTextBox.TabIndex = 2;
+            NewChatTextBox.Multiline = false;
+            NewChatTextBox.TabStop = true;
+            AditionalComponents.Add(NewChatPanel);
+        }
+
         //Estado: Pendiente
         private void Home_Click(object sender, EventArgs e) {
             RemoveComponents();
@@ -276,7 +312,8 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Listo
         private void Chats_Click(object sender, EventArgs e) {
             RemoveComponents();
-            currentView = CurrentView.None;
+            AddChatSearchElements();
+            currentView = CurrentView.ViewChats;
             if (model.chats.IsEmpty()) {
                 Label l = new Label();
                 this.actionPanel.Controls.Add(l);
@@ -302,7 +339,8 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Listo
         private void Groups_Click(object sender, EventArgs e) {
             RemoveComponents();
-            currentView = CurrentView.None;
+            AddChatSearchElements();
+            currentView = CurrentView.ViewGroups;
             if (model.groups.IsEmpty()) {
                 Label l = new Label();
                 this.actionPanel.Controls.Add(l);
@@ -332,22 +370,6 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         //Estado: Listo
-        private EventHandler Chat_Click(Panel sender) {
-            AddTextBox();
-            currentView = CurrentView.InChat;
-            model.CurrentChat = sender.Name;
-            return default;
-        }
-
-        //Estado: Listo
-        private EventHandler Group_Click(Panel sender) {
-            AddTextBox();
-            currentView = CurrentView.InGroup;
-            model.CurrentGroup = int.Parse(sender.Name);
-            return default;
-        }
-
-        //Estado: Listo
         private void Send_Click(object sender, EventArgs e) {
             string content = "";
             ChainNode<Control> c = AditionalComponents.GetNode(0);
@@ -373,6 +395,22 @@ namespace Chat_Virtual___Cliente.Frontend {
                 model.toWrite.Enqueue(ms);
                 model.CanWrite.Release();
             }
+        }
+
+        //Estado: Listo
+        private EventHandler Chat_Click(Panel sender) {
+            AddChatBox();
+            currentView = CurrentView.InChat;
+            model.CurrentChat = sender.Name;
+            return default;
+        }
+
+        //Estado: Listo
+        private EventHandler Group_Click(Panel sender) {
+            AddChatBox();
+            currentView = CurrentView.InGroup;
+            model.CurrentGroup = int.Parse(sender.Name);
+            return default;
         }
 
         //Estado: Creo que falta un delegado
@@ -580,7 +618,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             newPanel.TabStop = false;
             newPanel.MouseEnter += new EventHandler(Chat_MouseEnter(newPanel));
             newPanel.MouseLeave += new EventHandler(Chat_MouseLeave(newPanel));
-            newPanel.Click += new EventHandler(Chat_MouseEnter(newPanel));
+            newPanel.Click += new EventHandler(Chat_Click(newPanel));
 
             //pictureBox
             photo.Size = new Size(40, 40);
@@ -627,7 +665,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             newPanel.TabStop = false;
             newPanel.MouseEnter += new EventHandler(Chat_MouseEnter(newPanel));
             newPanel.MouseLeave += new EventHandler(Chat_MouseLeave(newPanel));
-            newPanel.Click += new EventHandler(Chat_MouseEnter(newPanel));
+            newPanel.Click += new EventHandler(Group_Click(newPanel));
 
             //pictureBox
             photo.Size = new Size(40, 40);

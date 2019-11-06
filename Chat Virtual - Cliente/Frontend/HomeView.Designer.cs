@@ -32,6 +32,7 @@
             this.minButtonPanel = new System.Windows.Forms.Panel();
             this.minButton = new System.Windows.Forms.PictureBox();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.InfoPanel = new System.Windows.Forms.Panel();
             this.ViewPanel = new System.Windows.Forms.Panel();
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.actionPanel = new System.Windows.Forms.Panel();
@@ -154,6 +155,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPanel.BackColor = System.Drawing.Color.Transparent;
+            this.mainPanel.Controls.Add(this.InfoPanel);
             this.mainPanel.Controls.Add(this.ViewPanel);
             this.mainPanel.Controls.Add(this.descriptionPanel);
             this.mainPanel.Controls.Add(this.actionPanel);
@@ -164,17 +166,28 @@
             this.mainPanel.Size = new System.Drawing.Size(1000, 566);
             this.mainPanel.TabIndex = 0;
             // 
+            // InfoPanel
+            // 
+            this.InfoPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.InfoPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
+            this.InfoPanel.Location = new System.Drawing.Point(80, 0);
+            this.InfoPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.InfoPanel.Name = "InfoPanel";
+            this.InfoPanel.Size = new System.Drawing.Size(920, 60);
+            this.InfoPanel.TabIndex = 4;
+            // 
             // ViewPanel
             // 
             this.ViewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ViewPanel.AutoScroll = true;
-            this.ViewPanel.Location = new System.Drawing.Point(323, 85);
+            this.ViewPanel.Location = new System.Drawing.Point(323, 60);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ViewPanel.MinimumSize = new System.Drawing.Size(0, 263);
             this.ViewPanel.Name = "ViewPanel";
-            this.ViewPanel.Size = new System.Drawing.Size(527, 481);
+            this.ViewPanel.Size = new System.Drawing.Size(677, 506);
             this.ViewPanel.TabIndex = 2;
             // 
             // descriptionPanel
@@ -183,12 +196,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionPanel.AutoScroll = true;
             this.descriptionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.descriptionPanel.Location = new System.Drawing.Point(850, 85);
+            this.descriptionPanel.Location = new System.Drawing.Point(850, 60);
             this.descriptionPanel.Margin = new System.Windows.Forms.Padding(0);
             this.descriptionPanel.MinimumSize = new System.Drawing.Size(100, 263);
             this.descriptionPanel.Name = "descriptionPanel";
-            this.descriptionPanel.Size = new System.Drawing.Size(150, 481);
+            this.descriptionPanel.Size = new System.Drawing.Size(150, 506);
             this.descriptionPanel.TabIndex = 3;
+            this.descriptionPanel.Visible = false;
             // 
             // actionPanel
             // 
@@ -196,11 +210,11 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.actionPanel.AutoScroll = true;
             this.actionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.actionPanel.Location = new System.Drawing.Point(80, 85);
+            this.actionPanel.Location = new System.Drawing.Point(80, 60);
             this.actionPanel.Margin = new System.Windows.Forms.Padding(0);
             this.actionPanel.MinimumSize = new System.Drawing.Size(120, 263);
             this.actionPanel.Name = "actionPanel";
-            this.actionPanel.Size = new System.Drawing.Size(243, 481);
+            this.actionPanel.Size = new System.Drawing.Size(243, 506);
             this.actionPanel.TabIndex = 1;
             // 
             // optionsPanel
@@ -322,5 +336,6 @@
         private System.Windows.Forms.PictureBox Home;
         private System.Windows.Forms.PictureBox Groups;
         private System.ComponentModel.BackgroundWorker receptor;
+        private System.Windows.Forms.Panel InfoPanel;
     }
 }
