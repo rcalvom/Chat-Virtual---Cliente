@@ -686,5 +686,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             AditionalComponents.Add(newPanel);
             LastGroup = newPanel;
         }
+
+        private void TopPane_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

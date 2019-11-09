@@ -73,6 +73,16 @@ namespace Chat_Virtual___Cliente.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Home {
+            get {
+                object obj = ResourceManager.GetObject("Home", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Maximize_Window_2_48px {
             get {
                 object obj = ResourceManager.GetObject("Maximize Window_2 48px", resourceCulture);
@@ -106,6 +116,26 @@ namespace Chat_Virtual___Cliente.Properties {
         internal static System.Drawing.Bitmap Restore_Window_2_48px {
             get {
                 object obj = ResourceManager.GetObject("Restore Window 2_48px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SadiriLogo2 {
+            get {
+                object obj = ResourceManager.GetObject("SadiriLogo2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Settingss {
+            get {
+                object obj = ResourceManager.GetObject("Settingss", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
