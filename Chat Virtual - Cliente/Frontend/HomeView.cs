@@ -367,6 +367,8 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void Options_Click(object sender, EventArgs e) {
             RemoveComponents();
             currentView = CurrentView.InProfile;
+            Profile profile = new Profile();
+            profile.Show();
         }
 
         //Estado: Listo
