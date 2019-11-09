@@ -213,94 +213,9 @@ namespace Chat_Virtual___Cliente.Frontend {
                 this.ViewPanel.Controls.Remove(c);
                 this.descriptionPanel.Controls.Remove(c);
                 this.InfoPanel.Controls.Remove(c);
+                this.actionPanel.Controls.Remove(c);
             }
             RemoveMessages();
-        }
-
-        //Estado: Listo
-        private void AddChatBox() {
-            bool exist = false;
-            ChainNode<Control> c = AditionalComponents.GetNode(0);
-            while (c != null) {
-                if (c.element.Name.Equals("chatBox")) {
-                    exist = true;
-                    break;
-                }
-                c = c.next;
-            }
-            if (!exist) {
-                TextBox chat = new TextBox();
-                PictureBox sendButton = new PictureBox();
-                this.ViewPanel.Controls.Add(chat);
-                this.ViewPanel.Controls.Add(sendButton);
-
-                chat.Anchor = ((AnchorStyles)(((AnchorStyles.Bottom | AnchorStyles.Left) | AnchorStyles.Right)));
-                chat.BackColor = Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-                chat.BorderStyle = BorderStyle.FixedSingle;
-                chat.Font = new Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                chat.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-                chat.ImeMode = ImeMode.NoControl;
-                chat.Name = "chatBox";
-                chat.MinimumSize = new Size(0, 24);
-                chat.MaximumSize = new Size(1000000, 150);
-                chat.Size = new Size(ViewPanel.Width - 50, 35);
-                chat.Location = new Point(6, ViewPanel.Height - 30);
-                chat.TabIndex = 1;
-                chat.Multiline = true;
-                chat.TabStop = true;
-                chat.Visible = true;
-                chat.Enabled = true;
-
-                sendButton.BackColor = Color.Transparent;
-                //sendButton.Image = ;
-                sendButton.Cursor = Cursors.Hand;
-                sendButton.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right);
-                sendButton.Location = new Point(this.ViewPanel.Width-41, this.ViewPanel.Height-30);
-                sendButton.Name = "SendButton";
-                sendButton.TabStop = false;
-                sendButton.Size = new Size(35, 35);
-                sendButton.SizeMode = PictureBoxSizeMode.StretchImage;
-                sendButton.Click += new EventHandler(this.Send_Click);
-
-                AditionalComponents.Add(chat);
-                AditionalComponents.Add(sendButton);
-            }
-        }
-
-        //Estado: Listo
-        private void AddChatSearchElements() {
-            Panel NewChatPanel = new Panel();
-            Label NewChatLabel = new Label();
-            TextBox NewChatTextBox = new TextBox();
-            this.InfoPanel.Controls.Add(NewChatPanel);
-
-            NewChatPanel.Location = new Point(0, 0);
-            NewChatPanel.Size = new Size(actionPanel.Width, InfoPanel.Height);
-            NewChatPanel.BackColor = Color.Transparent;
-            NewChatPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Top);
-            NewChatPanel.BorderStyle = BorderStyle.FixedSingle;
-            NewChatPanel.Controls.Add(NewChatLabel);
-            NewChatPanel.Controls.Add(NewChatTextBox);
-
-            NewChatLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            NewChatLabel.ForeColor = Color.FromArgb(220, 220, 220);
-            NewChatLabel.Location = new Point(5, 5);
-            NewChatLabel.Size = new Size(actionPanel.Width-10, 18);
-            NewChatLabel.Text = "Busca o inicia un nuevo chat";
-
-            NewChatTextBox.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
-            NewChatTextBox.BackColor = Color.FromArgb(64, 64, 64);
-            NewChatTextBox.BorderStyle = BorderStyle.FixedSingle;
-            NewChatTextBox.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            NewChatTextBox.ForeColor = Color.FromArgb(224, 224, 224);
-            NewChatTextBox.ImeMode = ImeMode.NoControl;
-            NewChatTextBox.Name = "NewChat";
-            NewChatTextBox.Size = new Size(NewChatPanel.Width - 10, 20);
-            NewChatTextBox.Location = new Point(5, 28);
-            NewChatTextBox.TabIndex = 2;
-            NewChatTextBox.Multiline = false;
-            NewChatTextBox.TabStop = true;
-            AditionalComponents.Add(NewChatPanel);
         }
 
         //Estado: Pendiente
@@ -369,6 +284,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             currentView = CurrentView.InProfile;
             Profile profile = new Profile();
             profile.Show();
+        }
+
+        private void Settings_Click(object sender, EventArgs e) {
+
         }
 
         //Estado: Listo
@@ -509,6 +428,92 @@ namespace Chat_Virtual___Cliente.Frontend {
                     RecentMessages.Push(message);
                 }
             }
+        }
+
+        //Estado: Listo
+        private void AddChatBox() {
+            bool exist = false;
+            ChainNode<Control> c = AditionalComponents.GetNode(0);
+            while (c != null) {
+                if (c.element.Name.Equals("chatBox")) {
+                    exist = true;
+                    break;
+                }
+                c = c.next;
+            }
+            if (!exist) {
+                TextBox chat = new TextBox();
+                PictureBox sendButton = new PictureBox();
+                this.ViewPanel.Controls.Add(chat);
+                this.ViewPanel.Controls.Add(sendButton);
+
+                chat.Anchor = ((AnchorStyles)(((AnchorStyles.Bottom | AnchorStyles.Left) | AnchorStyles.Right)));
+                chat.BackColor = Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+                chat.BorderStyle = BorderStyle.FixedSingle;
+                chat.Font = new Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                chat.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                chat.ImeMode = ImeMode.NoControl;
+                chat.Name = "chatBox";
+                chat.MinimumSize = new Size(0, 24);
+                chat.MaximumSize = new Size(1000000, 150);
+                chat.Size = new Size(ViewPanel.Width - 50, 35);
+                chat.Location = new Point(6, ViewPanel.Height - 30);
+                chat.TabIndex = 1;
+                chat.Multiline = true;
+                chat.TabStop = true;
+                chat.Visible = true;
+                chat.Enabled = true;
+
+                sendButton.BackColor = Color.Transparent;
+                //sendButton.Image = ;
+                sendButton.Cursor = Cursors.Hand;
+                sendButton.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right);
+                sendButton.Location = new Point(this.ViewPanel.Width - 41, this.ViewPanel.Height - 30);
+                sendButton.Name = "SendButton";
+                sendButton.TabStop = false;
+                sendButton.Size = new Size(35, 35);
+                sendButton.SizeMode = PictureBoxSizeMode.StretchImage;
+                sendButton.Click += new EventHandler(this.Send_Click);
+
+                AditionalComponents.Add(chat);
+                AditionalComponents.Add(sendButton);
+            }
+        }
+
+        //Estado: Listo
+        private void AddChatSearchElements() {
+            Panel NewChatPanel = new Panel();
+            Label NewChatLabel = new Label();
+            TextBox NewChatTextBox = new TextBox();
+            this.InfoPanel.Controls.Add(NewChatPanel);
+
+            NewChatPanel.Location = new Point(0, 0);
+            NewChatPanel.Size = new Size(actionPanel.Width, InfoPanel.Height);
+            NewChatPanel.BackColor = Color.Transparent;
+            NewChatPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Top);
+            NewChatPanel.BorderStyle = BorderStyle.FixedSingle;
+            NewChatPanel.Controls.Add(NewChatLabel);
+            NewChatPanel.Controls.Add(NewChatTextBox);
+
+            NewChatLabel.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            NewChatLabel.ForeColor = Color.FromArgb(220, 220, 220);
+            NewChatLabel.Location = new Point(5, 5);
+            NewChatLabel.Size = new Size(actionPanel.Width - 10, 18);
+            NewChatLabel.Text = "Busca o inicia un nuevo chat";
+
+            NewChatTextBox.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
+            NewChatTextBox.BackColor = Color.FromArgb(64, 64, 64);
+            NewChatTextBox.BorderStyle = BorderStyle.FixedSingle;
+            NewChatTextBox.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            NewChatTextBox.ForeColor = Color.FromArgb(224, 224, 224);
+            NewChatTextBox.ImeMode = ImeMode.NoControl;
+            NewChatTextBox.Name = "NewChat";
+            NewChatTextBox.Size = new Size(NewChatPanel.Width - 10, 20);
+            NewChatTextBox.Location = new Point(5, 28);
+            NewChatTextBox.TabIndex = 2;
+            NewChatTextBox.Multiline = false;
+            NewChatTextBox.TabStop = true;
+            AditionalComponents.Add(NewChatPanel);
         }
 
         private void AddGroupMessage(Group chat) {
@@ -687,16 +692,6 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             AditionalComponents.Add(newPanel);
             LastGroup = newPanel;
-        }
-
-        private void TopPane_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void ActionPanel_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }
