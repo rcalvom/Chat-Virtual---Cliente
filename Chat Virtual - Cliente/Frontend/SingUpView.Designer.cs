@@ -27,10 +27,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SingUpView));
             this.topPane = new System.Windows.Forms.Panel();
             this.closeButtonPanel = new System.Windows.Forms.Panel();
-            this.exitButton = new System.Windows.Forms.PictureBox();
             this.minButtonPanel = new System.Windows.Forms.Panel();
-            this.minButton = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelPassword = new System.Windows.Forms.Label();
             this.labelUser = new System.Windows.Forms.Label();
             this.user = new System.Windows.Forms.TextBox();
@@ -47,12 +44,17 @@
             this.errorLabel = new System.Windows.Forms.Label();
             this.Refresh = new System.ComponentModel.BackgroundWorker();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.exitButton = new System.Windows.Forms.PictureBox();
+            this.minButton = new System.Windows.Forms.PictureBox();
             this.topPane.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
             this.minButtonPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -78,20 +80,6 @@
             this.closeButtonPanel.Size = new System.Drawing.Size(48, 52);
             this.closeButtonPanel.TabIndex = 14;
             // 
-            // exitButton
-            // 
-            this.exitButton.BackColor = System.Drawing.Color.Transparent;
-            this.exitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.exitButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Close_Window__2_48px;
-            this.exitButton.Location = new System.Drawing.Point(6, 5);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(38, 38);
-            this.exitButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.exitButton.TabIndex = 5;
-            this.exitButton.TabStop = false;
-            this.exitButton.Click += new System.EventHandler(this.ExitButton_Click);
-            // 
             // minButtonPanel
             // 
             this.minButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -102,32 +90,6 @@
             this.minButtonPanel.Name = "minButtonPanel";
             this.minButtonPanel.Size = new System.Drawing.Size(48, 52);
             this.minButtonPanel.TabIndex = 13;
-            // 
-            // minButton
-            // 
-            this.minButton.BackColor = System.Drawing.Color.Transparent;
-            this.minButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.minButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Minimize_Window_2_48px;
-            this.minButton.Location = new System.Drawing.Point(4, 5);
-            this.minButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.minButton.Name = "minButton";
-            this.minButton.Size = new System.Drawing.Size(38, 38);
-            this.minButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.minButton.TabIndex = 7;
-            this.minButton.TabStop = false;
-            this.minButton.Click += new System.EventHandler(this.MinButton_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(312, 80);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(181, 60);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
             // 
             // labelPassword
             // 
@@ -322,12 +284,64 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::Chat_Virtual___Cliente.Properties.Resources.SadiriLogo2;
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(52, 49);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 28;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.PictureBox2_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(311, 89);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(181, 60);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            // 
+            // exitButton
+            // 
+            this.exitButton.BackColor = System.Drawing.Color.Transparent;
+            this.exitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.exitButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Close_Window__2_48px;
+            this.exitButton.Location = new System.Drawing.Point(6, 5);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(38, 38);
+            this.exitButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.exitButton.TabIndex = 5;
+            this.exitButton.TabStop = false;
+            this.exitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // 
+            // minButton
+            // 
+            this.minButton.BackColor = System.Drawing.Color.Transparent;
+            this.minButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.minButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Minimize_Window_2_48px;
+            this.minButton.Location = new System.Drawing.Point(4, 5);
+            this.minButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.minButton.Name = "minButton";
+            this.minButton.Size = new System.Drawing.Size(38, 38);
+            this.minButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.minButton.TabIndex = 7;
+            this.minButton.TabStop = false;
+            this.minButton.Click += new System.EventHandler(this.MinButton_Click);
+            // 
             // SingUpView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(860, 602);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.ServerDisconnected);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.labelLastName);
@@ -351,10 +365,11 @@
             this.Text = "SingUpView";
             this.topPane.ResumeLayout(false);
             this.closeButtonPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
             this.minButtonPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -384,5 +399,6 @@
         private System.Windows.Forms.Label errorLabel;
         private System.ComponentModel.BackgroundWorker Refresh;
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

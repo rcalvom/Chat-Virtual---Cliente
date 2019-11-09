@@ -691,5 +691,10 @@ namespace Chat_Virtual___Cliente.Frontend {
         {
 
         }
+
+        private void ActionPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -133,5 +133,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             subProcess = false;
             Application.Exit();
         }
+
+        private void PictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

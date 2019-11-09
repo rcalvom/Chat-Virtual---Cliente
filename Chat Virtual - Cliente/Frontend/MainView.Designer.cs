@@ -62,9 +62,8 @@
             this.Animation.SetDecoration(this.TopPanel, BunifuAnimatorNS.DecorationType.None);
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TopPanel.Location = new System.Drawing.Point(0, 0);
-            this.TopPanel.Margin = new System.Windows.Forms.Padding(2);
             this.TopPanel.Name = "TopPanel";
-            this.TopPanel.Size = new System.Drawing.Size(667, 47);
+            this.TopPanel.Size = new System.Drawing.Size(1000, 72);
             this.TopPanel.TabIndex = 0;
             // 
             // Restaurar
@@ -74,10 +73,9 @@
             this.Animation.SetDecoration(this.Restaurar, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this.Restaurar, BunifuAnimatorNS.DecorationType.None);
             this.Restaurar.Image = global::Chat_Virtual___Cliente.Properties.Resources.Restore_Window_2_48px;
-            this.Restaurar.Location = new System.Drawing.Point(601, 10);
-            this.Restaurar.Margin = new System.Windows.Forms.Padding(2);
+            this.Restaurar.Location = new System.Drawing.Point(902, 15);
             this.Restaurar.Name = "Restaurar";
-            this.Restaurar.Size = new System.Drawing.Size(27, 26);
+            this.Restaurar.Size = new System.Drawing.Size(40, 40);
             this.Restaurar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Restaurar.TabIndex = 3;
             this.Restaurar.TabStop = false;
@@ -91,10 +89,9 @@
             this.Animation.SetDecoration(this.Close, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this.Close, BunifuAnimatorNS.DecorationType.None);
             this.Close.Image = global::Chat_Virtual___Cliente.Properties.Resources.Close_Window__2_48px;
-            this.Close.Location = new System.Drawing.Point(632, 10);
-            this.Close.Margin = new System.Windows.Forms.Padding(2);
+            this.Close.Location = new System.Drawing.Point(948, 15);
             this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(27, 26);
+            this.Close.Size = new System.Drawing.Size(40, 40);
             this.Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Close.TabIndex = 1;
             this.Close.TabStop = false;
@@ -107,10 +104,9 @@
             this.Animation.SetDecoration(this.Minimize, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this.Minimize, BunifuAnimatorNS.DecorationType.None);
             this.Minimize.Image = global::Chat_Virtual___Cliente.Properties.Resources.Minimize_Window_2_48px;
-            this.Minimize.Location = new System.Drawing.Point(571, 10);
-            this.Minimize.Margin = new System.Windows.Forms.Padding(2);
+            this.Minimize.Location = new System.Drawing.Point(856, 15);
             this.Minimize.Name = "Minimize";
-            this.Minimize.Size = new System.Drawing.Size(27, 26);
+            this.Minimize.Size = new System.Drawing.Size(40, 40);
             this.Minimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Minimize.TabIndex = 2;
             this.Minimize.TabStop = false;
@@ -123,10 +119,9 @@
             this.Animation.SetDecoration(this.Maximize, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this.Maximize, BunifuAnimatorNS.DecorationType.None);
             this.Maximize.Image = global::Chat_Virtual___Cliente.Properties.Resources.Maximize_Window_2_48px;
-            this.Maximize.Location = new System.Drawing.Point(601, 10);
-            this.Maximize.Margin = new System.Windows.Forms.Padding(2);
+            this.Maximize.Location = new System.Drawing.Point(902, 15);
             this.Maximize.Name = "Maximize";
-            this.Maximize.Size = new System.Drawing.Size(27, 26);
+            this.Maximize.Size = new System.Drawing.Size(40, 40);
             this.Maximize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Maximize.TabIndex = 0;
             this.Maximize.TabStop = false;
@@ -137,10 +132,9 @@
             this.Animation.SetDecoration(this.Menu, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this.Menu, BunifuAnimatorNS.DecorationType.None);
             this.Menu.Image = global::Chat_Virtual___Cliente.Properties.Resources.Menu_48px;
-            this.Menu.Location = new System.Drawing.Point(17, 10);
-            this.Menu.Margin = new System.Windows.Forms.Padding(2);
+            this.Menu.Location = new System.Drawing.Point(26, 15);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(23, 23);
+            this.Menu.Size = new System.Drawing.Size(34, 35);
             this.Menu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Menu.TabIndex = 0;
             this.Menu.TabStop = false;
@@ -155,10 +149,9 @@
             this.Animation2.SetDecoration(this.MainPanel, BunifuAnimatorNS.DecorationType.None);
             this.Animation.SetDecoration(this.MainPanel, BunifuAnimatorNS.DecorationType.None);
             this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(167, 47);
-            this.MainPanel.Margin = new System.Windows.Forms.Padding(2);
+            this.MainPanel.Location = new System.Drawing.Point(250, 72);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(500, 343);
+            this.MainPanel.Size = new System.Drawing.Size(750, 528);
             this.MainPanel.TabIndex = 2;
             // 
             // send
@@ -166,9 +159,10 @@
             this.send.BackColor = System.Drawing.Color.White;
             this.Animation.SetDecoration(this.send, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this.send, BunifuAnimatorNS.DecorationType.None);
-            this.send.Location = new System.Drawing.Point(446, 307);
+            this.send.Location = new System.Drawing.Point(669, 472);
+            this.send.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.send.Name = "send";
-            this.send.Size = new System.Drawing.Size(41, 24);
+            this.send.Size = new System.Drawing.Size(62, 37);
             this.send.TabIndex = 2;
             this.send.Text = "Send";
             this.send.UseVisualStyleBackColor = false;
@@ -179,10 +173,12 @@
             this.Animation.SetDecoration(this.mensaje, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this.mensaje, BunifuAnimatorNS.DecorationType.None);
             this.mensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mensaje.Location = new System.Drawing.Point(8, 307);
+            this.mensaje.Location = new System.Drawing.Point(12, 472);
+            this.mensaje.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.mensaje.Name = "mensaje";
-            this.mensaje.Size = new System.Drawing.Size(432, 21);
+            this.mensaje.Size = new System.Drawing.Size(646, 28);
             this.mensaje.TabIndex = 1;
+            this.mensaje.TextChanged += new System.EventHandler(this.Mensaje_TextChanged);
             this.mensaje.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Mensaje_KeyPress);
             // 
             // chat
@@ -190,10 +186,11 @@
             this.Animation2.SetDecoration(this.chat, BunifuAnimatorNS.DecorationType.None);
             this.Animation.SetDecoration(this.chat, BunifuAnimatorNS.DecorationType.None);
             this.chat.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chat.Location = new System.Drawing.Point(8, 5);
+            this.chat.Location = new System.Drawing.Point(12, 8);
+            this.chat.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chat.Name = "chat";
             this.chat.ReadOnly = true;
-            this.chat.Size = new System.Drawing.Size(480, 296);
+            this.chat.Size = new System.Drawing.Size(718, 453);
             this.chat.TabIndex = 0;
             this.chat.Text = "";
             // 
@@ -231,10 +228,9 @@
             this.Animation2.SetDecoration(this.SlidePanel, BunifuAnimatorNS.DecorationType.None);
             this.Animation.SetDecoration(this.SlidePanel, BunifuAnimatorNS.DecorationType.None);
             this.SlidePanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.SlidePanel.Location = new System.Drawing.Point(0, 47);
-            this.SlidePanel.Margin = new System.Windows.Forms.Padding(2);
+            this.SlidePanel.Location = new System.Drawing.Point(0, 72);
             this.SlidePanel.Name = "SlidePanel";
-            this.SlidePanel.Size = new System.Drawing.Size(167, 343);
+            this.SlidePanel.Size = new System.Drawing.Size(250, 528);
             this.SlidePanel.TabIndex = 1;
             // 
             // Animation2
@@ -260,16 +256,15 @@
             // 
             // MainView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 390);
+            this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.SlidePanel);
             this.Controls.Add(this.TopPanel);
             this.Animation.SetDecoration(this, BunifuAnimatorNS.DecorationType.None);
             this.Animation2.SetDecoration(this, BunifuAnimatorNS.DecorationType.None);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";

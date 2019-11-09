@@ -89,5 +89,10 @@ namespace Chat_Virtual___Cliente {
                 Send_Click(sender, e);
             }
         }
+
+        private void Mensaje_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -178,6 +178,7 @@
             this.actionPanel.Name = "actionPanel";
             this.actionPanel.Size = new System.Drawing.Size(364, 778);
             this.actionPanel.TabIndex = 1;
+            this.actionPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.ActionPanel_Paint);
             // 
             // optionsPanel
             // 
