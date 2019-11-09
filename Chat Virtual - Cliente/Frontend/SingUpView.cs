@@ -49,6 +49,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             if (!model.Read()) {
                 ErrorMessage("No se ha obtenido respuesta del servidor");
+                model.Disconnect();
             }
 
             if (model.toRead.GetFrontElement() is RequestAnswer answer) {

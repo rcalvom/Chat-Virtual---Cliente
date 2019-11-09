@@ -54,6 +54,7 @@ namespace Chat_Virtual___Cliente {
 
             if (!model.Read()) {
                 ErrorMessage("No se ha obtenido respuesta del servidor");
+                model.Disconnect();
                 Cursor = Cursors.Default;
                 return;
             }

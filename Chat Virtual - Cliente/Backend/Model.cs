@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 using DataStructures;
 using ShippingData;
 
@@ -50,8 +51,10 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public bool Read() {
             try {
-                while (!this.singleton.stream.DataAvailable) {
-                    continue;
+                int time = 0;
+                while (!this.singleton.stream.DataAvailable && time < 10) {
+                    Thread.Sleep(1000);
+                    time++;
                 }
                 while (this.singleton.stream.DataAvailable) {
                     int size = singleton.Reader.ReadInt32();
