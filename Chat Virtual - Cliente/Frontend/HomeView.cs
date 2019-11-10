@@ -126,6 +126,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                         model.groups.AddElement(newGroup.code, newGroup);
                     } else if (data is Chat chat) {
                         UserChat newChat;
+                        Console.WriteLine("Me ha llegado un chat");
                         if (chat.memberOne.Equals(model.singleton.userName))
                             newChat = new UserChat(chat.memberTwo);
                         else
@@ -319,31 +320,31 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         //Estado: Listo
-        private EventHandler Chat_Click(Panel sender) {
+        private void Chat_Click(object sender, EventArgs e) {
             AddChatBox();
             currentView = CurrentView.InChat;
-            model.CurrentChat = sender.Name;
-            return default;
+            if(sender is Panel s)
+                model.CurrentChat = s.Name;
         }
 
         //Estado: Listo
-        private EventHandler Group_Click(Panel sender) {
+        private void Group_Click(object sender, EventArgs e) {
             AddChatBox();
             currentView = CurrentView.InGroup;
-            model.CurrentGroup = int.Parse(sender.Name);
-            return default;
+            if(sender is Panel sn)
+                model.CurrentGroup = int.Parse(sn.Name);
         }
 
         //Estado: Creo que falta un delegado
-        private EventHandler Chat_MouseEnter(Panel newPanel) {
-            newPanel.BackColor = Color.FromArgb(100, 100, 100);
-            return default;
+        private void Chat_MouseEnter(object sender, EventArgs e) {
+            if(sender is Panel newPanel)
+                newPanel.BackColor = Color.FromArgb(100, 100, 100);
         }
 
         //Estado: Creo que falta un delegado
-        private EventHandler Chat_MouseLeave(Panel newPanel) {
-            newPanel.BackColor = Color.Transparent;
-            return default;
+        private void Chat_MouseLeave(object sender, EventArgs e) {
+            if (sender is Panel newPanel)
+                newPanel.BackColor = Color.Transparent;
         }
 
         private void AddChatMessage(UserChat chat) {
@@ -622,11 +623,12 @@ namespace Chat_Virtual___Cliente.Frontend {
             newPanel.Size = new Size(actionPanel.Width, 50);
             newPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
             newPanel.BackColor = Color.Transparent;
+            newPanel.BorderStyle = BorderStyle.FixedSingle;
             newPanel.Name = c.member;
             newPanel.TabStop = false;
-            newPanel.MouseEnter += new EventHandler(Chat_MouseEnter(newPanel));
-            newPanel.MouseLeave += new EventHandler(Chat_MouseLeave(newPanel));
-            newPanel.Click += new EventHandler(Chat_Click(newPanel));
+            newPanel.MouseEnter += new EventHandler(Chat_MouseEnter);
+            newPanel.MouseLeave += new EventHandler(Chat_MouseLeave);
+            newPanel.Click += new EventHandler(Chat_Click);
 
             //pictureBox
             photo.Size = new Size(40, 40);
@@ -671,9 +673,9 @@ namespace Chat_Virtual___Cliente.Frontend {
             newPanel.BackColor = Color.Transparent;
             newPanel.Name = c.code.ToString();
             newPanel.TabStop = false;
-            newPanel.MouseEnter += new EventHandler(Chat_MouseEnter(newPanel));
-            newPanel.MouseLeave += new EventHandler(Chat_MouseLeave(newPanel));
-            newPanel.Click += new EventHandler(Group_Click(newPanel));
+            newPanel.MouseEnter += new EventHandler(Chat_MouseEnter);
+            newPanel.MouseLeave += new EventHandler(Chat_MouseLeave);
+            newPanel.Click += new EventHandler(Group_Click);
 
             //pictureBox
             photo.Size = new Size(40, 40);
@@ -697,12 +699,12 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void Search_Chat(object sender, KeyPressEventArgs e) {
             string a = "";
-            Console.WriteLine("Pues has hecho enter");
-            if (sender is TextBox t) {
-                a = t.Text;
-                t.Clear();
-            }
             if (e.KeyChar == (int)Keys.Enter) {
+                Console.WriteLine("Pues has hecho enter");
+                if (sender is TextBox t) {
+                    a = t.Text;
+                    t.Clear();
+                }
                 model.CanWrite.WaitOne();
                 model.toWrite.Enqueue(new Chat(model.singleton.userName, a));
                 model.CanWrite.Release();
