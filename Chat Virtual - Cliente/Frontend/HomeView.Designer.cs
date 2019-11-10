@@ -73,18 +73,18 @@
             this.topPane.Controls.Add(this.closeButtonPanel);
             this.topPane.Controls.Add(this.minButtonPanel);
             this.topPane.Location = new System.Drawing.Point(0, 0);
-            this.topPane.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.topPane.MinimumSize = new System.Drawing.Size(750, 52);
+            this.topPane.MinimumSize = new System.Drawing.Size(500, 34);
             this.topPane.Name = "topPane";
-            this.topPane.Size = new System.Drawing.Size(1500, 52);
+            this.topPane.Size = new System.Drawing.Size(1000, 34);
             this.topPane.TabIndex = 5;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Chat_Virtual___Cliente.Properties.Resources.SadiriLogo2;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(2, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(57, 52);
+            this.pictureBox1.Size = new System.Drawing.Size(38, 34);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -94,10 +94,10 @@
             this.resizeButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.resizeButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.resizeButtonPanel.Controls.Add(this.resizeButton);
-            this.resizeButtonPanel.Location = new System.Drawing.Point(1402, 0);
+            this.resizeButtonPanel.Location = new System.Drawing.Point(935, 0);
             this.resizeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.resizeButtonPanel.Name = "resizeButtonPanel";
-            this.resizeButtonPanel.Size = new System.Drawing.Size(48, 52);
+            this.resizeButtonPanel.Size = new System.Drawing.Size(32, 34);
             this.resizeButtonPanel.TabIndex = 14;
             // 
             // resizeButton
@@ -105,10 +105,9 @@
             this.resizeButton.BackColor = System.Drawing.Color.Transparent;
             this.resizeButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.resizeButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Maximize_Window_2_48px;
-            this.resizeButton.Location = new System.Drawing.Point(4, 5);
-            this.resizeButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.resizeButton.Location = new System.Drawing.Point(3, 3);
             this.resizeButton.Name = "resizeButton";
-            this.resizeButton.Size = new System.Drawing.Size(38, 38);
+            this.resizeButton.Size = new System.Drawing.Size(25, 25);
             this.resizeButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.resizeButton.TabIndex = 7;
             this.resizeButton.TabStop = false;
@@ -121,10 +120,10 @@
             this.closeButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.closeButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.closeButtonPanel.Controls.Add(this.exitButton);
-            this.closeButtonPanel.Location = new System.Drawing.Point(1449, 0);
+            this.closeButtonPanel.Location = new System.Drawing.Point(966, 0);
             this.closeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.closeButtonPanel.Name = "closeButtonPanel";
-            this.closeButtonPanel.Size = new System.Drawing.Size(48, 52);
+            this.closeButtonPanel.Size = new System.Drawing.Size(32, 34);
             this.closeButtonPanel.TabIndex = 14;
             // 
             // exitButton
@@ -132,10 +131,9 @@
             this.exitButton.BackColor = System.Drawing.Color.Transparent;
             this.exitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exitButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Close_Window__2_48px;
-            this.exitButton.Location = new System.Drawing.Point(6, 5);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.exitButton.Location = new System.Drawing.Point(4, 3);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(38, 38);
+            this.exitButton.Size = new System.Drawing.Size(25, 25);
             this.exitButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.exitButton.TabIndex = 5;
             this.exitButton.TabStop = false;
@@ -148,10 +146,10 @@
             this.minButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.minButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.minButtonPanel.Controls.Add(this.minButton);
-            this.minButtonPanel.Location = new System.Drawing.Point(1354, 0);
+            this.minButtonPanel.Location = new System.Drawing.Point(903, 0);
             this.minButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.minButtonPanel.Name = "minButtonPanel";
-            this.minButtonPanel.Size = new System.Drawing.Size(48, 52);
+            this.minButtonPanel.Size = new System.Drawing.Size(32, 34);
             this.minButtonPanel.TabIndex = 13;
             // 
             // minButton
@@ -159,10 +157,9 @@
             this.minButton.BackColor = System.Drawing.Color.Transparent;
             this.minButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.minButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Minimize_Window_2_48px;
-            this.minButton.Location = new System.Drawing.Point(4, 5);
-            this.minButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.minButton.Location = new System.Drawing.Point(3, 3);
             this.minButton.Name = "minButton";
-            this.minButton.Size = new System.Drawing.Size(38, 38);
+            this.minButton.Size = new System.Drawing.Size(25, 25);
             this.minButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.minButton.TabIndex = 7;
             this.minButton.TabStop = false;
@@ -181,10 +178,10 @@
             this.mainPanel.Controls.Add(this.descriptionPanel);
             this.mainPanel.Controls.Add(this.actionPanel);
             this.mainPanel.Controls.Add(this.optionsPanel);
-            this.mainPanel.Location = new System.Drawing.Point(0, 52);
+            this.mainPanel.Location = new System.Drawing.Point(0, 34);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1614, 1006);
+            this.mainPanel.Size = new System.Drawing.Size(1152, 742);
             this.mainPanel.TabIndex = 0;
             // 
             // InfoPanel
@@ -192,10 +189,10 @@
             this.InfoPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.InfoPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.InfoPanel.Location = new System.Drawing.Point(120, 0);
+            this.InfoPanel.Location = new System.Drawing.Point(80, 0);
             this.InfoPanel.Margin = new System.Windows.Forms.Padding(0);
             this.InfoPanel.Name = "InfoPanel";
-            this.InfoPanel.Size = new System.Drawing.Size(1380, 92);
+            this.InfoPanel.Size = new System.Drawing.Size(920, 60);
             this.InfoPanel.TabIndex = 4;
             // 
             // ViewPanel
@@ -204,11 +201,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ViewPanel.AutoScroll = true;
-            this.ViewPanel.Location = new System.Drawing.Point(484, 92);
+            this.ViewPanel.Location = new System.Drawing.Point(323, 60);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.ViewPanel.MinimumSize = new System.Drawing.Size(0, 405);
+            this.ViewPanel.MinimumSize = new System.Drawing.Size(0, 263);
             this.ViewPanel.Name = "ViewPanel";
-            this.ViewPanel.Size = new System.Drawing.Size(1016, 778);
+            this.ViewPanel.Size = new System.Drawing.Size(677, 506);
             this.ViewPanel.TabIndex = 2;
             // 
             // descriptionPanel
@@ -217,11 +214,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionPanel.AutoScroll = true;
             this.descriptionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.descriptionPanel.Location = new System.Drawing.Point(1389, 92);
+            this.descriptionPanel.Location = new System.Drawing.Point(1002, 60);
             this.descriptionPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.descriptionPanel.MinimumSize = new System.Drawing.Size(150, 405);
+            this.descriptionPanel.MinimumSize = new System.Drawing.Size(100, 263);
             this.descriptionPanel.Name = "descriptionPanel";
-            this.descriptionPanel.Size = new System.Drawing.Size(225, 914);
+            this.descriptionPanel.Size = new System.Drawing.Size(150, 682);
             this.descriptionPanel.TabIndex = 3;
             this.descriptionPanel.Visible = false;
             // 
@@ -231,11 +228,11 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.actionPanel.AutoScroll = true;
             this.actionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.actionPanel.Location = new System.Drawing.Point(120, 92);
+            this.actionPanel.Location = new System.Drawing.Point(80, 60);
             this.actionPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.actionPanel.MinimumSize = new System.Drawing.Size(180, 405);
+            this.actionPanel.MinimumSize = new System.Drawing.Size(120, 263);
             this.actionPanel.Name = "actionPanel";
-            this.actionPanel.Size = new System.Drawing.Size(364, 778);
+            this.actionPanel.Size = new System.Drawing.Size(243, 506);
             this.actionPanel.TabIndex = 1;
             // 
             // optionsPanel
@@ -250,9 +247,9 @@
             this.optionsPanel.Controls.Add(this.Home);
             this.optionsPanel.Location = new System.Drawing.Point(0, 0);
             this.optionsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.optionsPanel.MinimumSize = new System.Drawing.Size(120, 405);
+            this.optionsPanel.MinimumSize = new System.Drawing.Size(80, 263);
             this.optionsPanel.Name = "optionsPanel";
-            this.optionsPanel.Size = new System.Drawing.Size(120, 871);
+            this.optionsPanel.Size = new System.Drawing.Size(80, 566);
             this.optionsPanel.TabIndex = 0;
             // 
             // Profile
@@ -260,11 +257,11 @@
             this.Profile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.Profile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Profile.Image = ((System.Drawing.Image)(resources.GetObject("Profile.Image")));
-            this.Profile.Location = new System.Drawing.Point(8, 635);
-            this.Profile.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.Profile.Location = new System.Drawing.Point(5, 413);
+            this.Profile.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Profile.Name = "Profile";
-            this.Profile.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.Profile.Size = new System.Drawing.Size(105, 108);
+            this.Profile.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Profile.Size = new System.Drawing.Size(70, 70);
             this.Profile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Profile.TabIndex = 1;
             this.Profile.TabStop = false;
@@ -273,10 +270,11 @@
             // Settings
             // 
             this.Settings.Image = global::Chat_Virtual___Cliente.Properties.Resources.Settingss;
-            this.Settings.Location = new System.Drawing.Point(8, 754);
+            this.Settings.Location = new System.Drawing.Point(5, 490);
+            this.Settings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Settings.Name = "Settings";
-            this.Settings.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.Settings.Size = new System.Drawing.Size(105, 108);
+            this.Settings.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Settings.Size = new System.Drawing.Size(70, 70);
             this.Settings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Settings.TabIndex = 4;
             this.Settings.TabStop = false;
@@ -286,11 +284,10 @@
             // 
             this.Chats.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Chats.Image = global::Chat_Virtual___Cliente.Properties.Resources.Menu_48px;
-            this.Chats.Location = new System.Drawing.Point(8, 131);
-            this.Chats.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Chats.Location = new System.Drawing.Point(5, 85);
             this.Chats.Name = "Chats";
-            this.Chats.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.Chats.Size = new System.Drawing.Size(105, 108);
+            this.Chats.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Chats.Size = new System.Drawing.Size(70, 70);
             this.Chats.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Chats.TabIndex = 2;
             this.Chats.TabStop = false;
@@ -302,11 +299,10 @@
             this.Groups.ErrorImage = null;
             this.Groups.Image = ((System.Drawing.Image)(resources.GetObject("Groups.Image")));
             this.Groups.InitialImage = null;
-            this.Groups.Location = new System.Drawing.Point(8, 254);
-            this.Groups.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Groups.Location = new System.Drawing.Point(5, 165);
             this.Groups.Name = "Groups";
-            this.Groups.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.Groups.Size = new System.Drawing.Size(105, 108);
+            this.Groups.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Groups.Size = new System.Drawing.Size(70, 70);
             this.Groups.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Groups.TabIndex = 3;
             this.Groups.TabStop = false;
@@ -316,11 +312,10 @@
             // 
             this.Home.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Home.Image = global::Chat_Virtual___Cliente.Properties.Resources.Home;
-            this.Home.Location = new System.Drawing.Point(8, 8);
-            this.Home.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Home.Location = new System.Drawing.Point(5, 5);
             this.Home.Name = "Home";
-            this.Home.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.Home.Size = new System.Drawing.Size(105, 108);
+            this.Home.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Home.Size = new System.Drawing.Size(70, 70);
             this.Home.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Home.TabIndex = 0;
             this.Home.TabStop = false;
@@ -339,16 +334,15 @@
             // 
             // HomeView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1500, 923);
+            this.ClientSize = new System.Drawing.Size(1000, 600);
             this.Controls.Add(this.mainPanel);
             this.Controls.Add(this.topPane);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MinimumSize = new System.Drawing.Size(750, 462);
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "HomeView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HomeView";
