@@ -37,6 +37,9 @@
             this.exitButton = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.labelUser = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.TopPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -48,6 +51,7 @@
             // TopPanel
             // 
             this.TopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
+            this.TopPanel.Controls.Add(this.label2);
             this.TopPanel.Controls.Add(this.exitButton);
             this.TopPanel.Controls.Add(this.pictureBox2);
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -59,6 +63,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
+            this.panel1.Controls.Add(this.labelUser);
+            this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.pictureBox3);
             this.panel1.Controls.Add(this.SingIn);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -135,13 +141,51 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::Chat_Virtual___Cliente.Properties.Resources.ImageAdd;
-            this.pictureBox3.Location = new System.Drawing.Point(216, 212);
+            this.pictureBox3.Location = new System.Drawing.Point(195, 186);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(56, 55);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Click += new System.EventHandler(this.PictureBox3_Click_1);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(61, 399);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(155, 20);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Cambiar Contrasena";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
+            // 
+            // labelUser
+            // 
+            this.labelUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.labelUser.AutoSize = true;
+            this.labelUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labelUser.Location = new System.Drawing.Point(306, 67);
+            this.labelUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelUser.Name = "labelUser";
+            this.labelUser.Size = new System.Drawing.Size(102, 29);
+            this.labelUser.TabIndex = 7;
+            this.labelUser.Text = "Usuario:";
+            this.labelUser.Click += new System.EventHandler(this.LabelUser_Click);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.label2.Location = new System.Drawing.Point(73, 11);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(69, 29);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Perfil";
             // 
             // Profile
             // 
@@ -154,7 +198,9 @@
             this.Name = "Profile";
             this.Text = "Profile";
             this.TopPanel.ResumeLayout(false);
+            this.TopPanel.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -173,5 +219,8 @@
         private System.Windows.Forms.Button SingIn;
         private Bunifu.Framework.UI.BunifuDragControl ProfileDrag;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label labelUser;
     }
 }

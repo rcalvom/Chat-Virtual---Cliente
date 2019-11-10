@@ -15,6 +15,7 @@ namespace Chat_Virtual___Cliente.Frontend
         public Profile()
         {
             InitializeComponent();
+            labelUser.Text = Backend.Singleton.GetSingleton().userName;
         }
 
         private void Panel1_Paint(object sender, PaintEventArgs e)
@@ -82,6 +83,21 @@ namespace Chat_Virtual___Cliente.Frontend
             {
                 MessageBox.Show("SASA", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void Label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        }
+
+        private void LabelUser_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

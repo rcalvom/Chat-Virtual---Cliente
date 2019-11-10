@@ -40,15 +40,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.SingUp = new System.Windows.Forms.LinkLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Logo = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.exitButton = new System.Windows.Forms.PictureBox();
             this.minButton = new System.Windows.Forms.PictureBox();
             this.topPane.SuspendLayout();
             this.closeButtonPanel.SuspendLayout();
             this.minButtonPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.SuspendLayout();
@@ -66,6 +66,7 @@
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(400, 33);
             this.user.TabIndex = 0;
+            this.user.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.User_KeyPress);
             // 
             // password
             // 
@@ -81,6 +82,8 @@
             this.password.Size = new System.Drawing.Size(400, 33);
             this.password.TabIndex = 1;
             this.password.UseSystemPasswordChar = true;
+            this.password.TextChanged += new System.EventHandler(this.Password_TextChanged);
+            this.password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Password_KeyPress);
             // 
             // SingIn
             // 
@@ -244,16 +247,6 @@
             this.SingUp.Text = "registrarte";
             this.SingUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SingUp_LinkClicked);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Chat_Virtual___Cliente.Properties.Resources.SadiriLogo2;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(52, 48);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 19;
-            this.pictureBox1.TabStop = false;
-            // 
             // Logo
             // 
             this.Logo.Image = ((System.Drawing.Image)(resources.GetObject("Logo.Image")));
@@ -264,6 +257,16 @@
             this.Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.Logo.TabIndex = 12;
             this.Logo.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Chat_Virtual___Cliente.Properties.Resources.SadiriLogo2;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(52, 48);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 19;
+            this.pictureBox1.TabStop = false;
             // 
             // exitButton
             // 
@@ -324,8 +327,8 @@
             this.topPane.ResumeLayout(false);
             this.closeButtonPanel.ResumeLayout(false);
             this.minButtonPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.ResumeLayout(false);
