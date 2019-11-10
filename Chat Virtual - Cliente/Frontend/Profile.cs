@@ -34,7 +34,23 @@ namespace Chat_Virtual___Cliente.Frontend
 
         private void PictureBox1_Click(object sender, EventArgs e)
         {
-            
+            String imageLocation = "";
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "jpg files(.*jpg)|*.jpg| PNG files(.*png)|*.png| All Files(*.*)|*.*";
+
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    imageLocation = dialog.FileName;
+                    pictureBox1.ImageLocation = imageLocation;
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("SASA", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void Label1_Click(object sender, EventArgs e)
@@ -43,6 +59,11 @@ namespace Chat_Virtual___Cliente.Frontend
         }
 
         private void PictureBox3_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void PictureBox3_Click_1(object sender, EventArgs e)
         {
             String imageLocation = "";
             try

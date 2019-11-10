@@ -83,6 +83,16 @@ namespace Chat_Virtual___Cliente.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ImageAdd {
+            get {
+                object obj = ResourceManager.GetObject("ImageAdd", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Maximize_Window_2_48px {
             get {
                 object obj = ResourceManager.GetObject("Maximize Window_2 48px", resourceCulture);
