@@ -283,7 +283,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             RemoveComponents();
             currentView = CurrentView.InProfile;
             Profile profile = new Profile();
-            profile.Show();
+            profile.ShowDialog();
         }
 
         private void Settings_Click(object sender, EventArgs e) {
