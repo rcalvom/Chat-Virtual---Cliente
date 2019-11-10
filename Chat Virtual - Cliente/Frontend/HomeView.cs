@@ -109,11 +109,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                             Console.WriteLine("Sender: " + chatMessage.Sender);
                             Console.WriteLine("Receiver: " + chatMessage.Receiver);
                             Console.WriteLine("Content: " + chatMessage.Content);
-                            UserChat receiver = model.chats.Search(chatMessage.Receiver);
-                            if (receiver == default) {
-                                //Hay que crear el nuevo chat
-                            } else
-                                receiver.NewMessages.Enqueue(chatMessage);
+                            UserChat Sender = model.chats.Search(chatMessage.Sender);
+                            if (Sender == default)
+                                Sender = new UserChat(chatMessage.Sender);
+                            Sender.NewMessages.Enqueue(chatMessage);
                         } else if (data is GroupMessage groupMessage) {
                             Console.WriteLine("Sender: " + groupMessage.Sender);
                             Console.WriteLine("Id group receiver: " + groupMessage.IdGroupReceiver);
@@ -131,6 +130,9 @@ namespace Chat_Virtual___Cliente.Frontend {
                             newChat = new UserChat(chat.memberTwo);
                         else
                             newChat = new UserChat(chat.memberOne);
+                        if (model.chats.Search(newChat.member) != default) {
+                            continue;
+                        }
                         model.chats.AddElement(newChat.member, newChat);
                     } else if(data is RequestAnswer requestAnswer) {
 
@@ -262,6 +264,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 this.actionPanel.Controls.Add(l);
                 AditionalComponents.Add(l);
 
+                l.Text = "Aún no tienes ningún grupo";
                 l.Size = new Size(actionPanel.Width - 6, 20);
                 l.TextAlign = ContentAlignment.MiddleCenter;
                 l.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
@@ -269,7 +272,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                 l.ForeColor = Color.FromArgb(200, 200 ,200);
                 l.AutoSize = true;
                 l.Location = new Point(3, 3);
-                l.Text = "Aún no tienes ningún grupo";
             } else {
                 LinkedList<Group> groups = model.groups.GetAll();
                 while (!groups.IsEmpty()) {
@@ -319,12 +321,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
-        //Estado: Listo
+        //Estado: Falta probar
         private void Chat_Click(object sender, EventArgs e) {
             AddChatBox();
             currentView = CurrentView.InChat;
             if(sender is Panel s)
                 model.CurrentChat = s.Name;
+            Console.WriteLine("Chat: " + model.CurrentChat);
         }
 
         //Estado: Listo
@@ -335,18 +338,17 @@ namespace Chat_Virtual___Cliente.Frontend {
                 model.CurrentGroup = int.Parse(sn.Name);
         }
 
-        //Estado: Creo que falta un delegado
         private void Chat_MouseEnter(object sender, EventArgs e) {
             if(sender is Panel newPanel)
                 newPanel.BackColor = Color.FromArgb(100, 100, 100);
         }
 
-        //Estado: Creo que falta un delegado
         private void Chat_MouseLeave(object sender, EventArgs e) {
             if (sender is Panel newPanel)
                 newPanel.BackColor = Color.Transparent;
         }
 
+        //Falta por probar
         private void AddChatMessage(UserChat chat) {
             Panel message = new Panel();
             Label user = new Label();
@@ -434,13 +436,12 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Listo
         private void AddChatBox() {
             bool exist = false;
-            ChainNode<Control> c = AditionalComponents.GetNode(0);
-            while (c != null) {
-                if (c.element.Name.Equals("chatBox")) {
+            Iterator<Control> c = AditionalComponents.Iterator();
+            while (c.HasNext()) {
+                if (c.Next().Name.Equals("chatBox")) {
                     exist = true;
                     break;
                 }
-                c = c.next;
             }
             if (!exist) {
                 TextBox chat = new TextBox();
@@ -449,16 +450,16 @@ namespace Chat_Virtual___Cliente.Frontend {
                 this.ViewPanel.Controls.Add(sendButton);
 
                 chat.Anchor = ((AnchorStyles)(((AnchorStyles.Bottom | AnchorStyles.Left) | AnchorStyles.Right)));
-                chat.BackColor = Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+                chat.BackColor = Color.FromArgb(64, 64, 64);
                 chat.BorderStyle = BorderStyle.FixedSingle;
-                chat.Font = new Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                chat.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                chat.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                chat.ForeColor = Color.FromArgb(224, 224, 224);
                 chat.ImeMode = ImeMode.NoControl;
                 chat.Name = "chatBox";
                 chat.MinimumSize = new Size(0, 24);
                 chat.MaximumSize = new Size(1000000, 150);
                 chat.Size = new Size(ViewPanel.Width - 50, 35);
-                chat.Location = new Point(6, ViewPanel.Height - 30);
+                chat.Location = new Point(6, ViewPanel.Height - 40);
                 chat.TabIndex = 1;
                 chat.Multiline = true;
                 chat.TabStop = true;
@@ -469,7 +470,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 sendButton.Image = Chat_Virtual___Cliente.Properties.Resources.SendIcon;
                 sendButton.Cursor = Cursors.Hand;
                 sendButton.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right);
-                sendButton.Location = new Point(this.ViewPanel.Width - 41, this.ViewPanel.Height - 30);
+                sendButton.Location = new Point(this.ViewPanel.Width - 41, this.ViewPanel.Height - 40);
                 sendButton.Name = "SendButton";
                 sendButton.TabStop = false;
                 sendButton.Size = new Size(35, 35);
