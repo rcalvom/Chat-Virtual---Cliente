@@ -28,5 +28,12 @@ namespace Chat_Virtual___Cliente.Backend {
             }
             return singleton;
         }
+
+        public void Disconect() {
+            this.Client.Close();
+            this.stream = null;
+            this.Writer = null;
+            this.Reader = null;
+        }
     }
 }

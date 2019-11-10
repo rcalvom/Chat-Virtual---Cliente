@@ -33,7 +33,7 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         public void Disconnect() {
-            this.singleton.Client.Close();
+            this.singleton.Disconect();
         }
 
         public bool Write() {

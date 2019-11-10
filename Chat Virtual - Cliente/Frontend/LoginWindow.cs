@@ -49,37 +49,18 @@ namespace Chat_Virtual___Cliente {
 
             model.Connect();
 
-            for (int i = 0; i < 10; i++)
-            {
-                if (model.Write())
-                {
-                    break;
-                }
-                Thread.Sleep(125);
-            }
-            // Evaluar que no pueda enviar
-
-            /*if (!model.Write()) {
+            if (!model.Write()) {
                 ErrorMessage("Error al enviar los datos al servidor");
                 Cursor = Cursors.Default;
                 return;
-            }*/
-
-            for (int i = 0; i < 10; i++)
-            {
-                if (model.Read())
-                {
-                    break;
-                }
-                Thread.Sleep(125);
             }
-            // Evaluar que no pueda leer
 
-            /*if (!model.Read()) {
+            if (!model.Read()) {
                 ErrorMessage("No se ha obtenido respuesta del servidor");
+                model.Disconnect();
                 Cursor = Cursors.Default;
                 return;
-            }*/
+            }
 
             Data answer = model.toRead.Dequeue();
             if (answer is RequestAnswer rs)
