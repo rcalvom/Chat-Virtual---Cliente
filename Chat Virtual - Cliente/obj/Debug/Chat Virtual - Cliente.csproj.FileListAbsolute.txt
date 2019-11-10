@@ -59,3 +59,4 @@ C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\ob
 C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.SingUpView.resources
 C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.Profile.resources
 C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.Profile.resources
+C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\DataStructures.xml

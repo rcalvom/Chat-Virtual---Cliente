@@ -35,7 +35,8 @@ namespace Chat_Virtual___Cliente {
             username = user.Text;
             userPassword = password.Text;
 
-            if (username.Length == 0 || userPassword.Length == 0) {
+            if (username.Length == 0 || userPassword.Length == 0)
+            {
                 ErrorMessage("Los campos de nombre de usuario y contraseña\nno pueden estar vacios");
                 Cursor = Cursors.Default;
                 return;
@@ -46,22 +47,45 @@ namespace Chat_Virtual___Cliente {
 
             model.toWrite.Enqueue(new SignIn(username, userPassword));
 
-            if (!model.Write()) {
+            model.Connect();
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (model.Write())
+                {
+                    break;
+                }
+                Thread.Sleep(125);
+            }
+            // Evaluar que no pueda enviar
+
+            /*if (!model.Write()) {
                 ErrorMessage("Error al enviar los datos al servidor");
                 Cursor = Cursors.Default;
                 return;
-            }
+            }*/
 
-            if (!model.Read()) {
+            for (int i = 0; i < 10; i++)
+            {
+                if (model.Read())
+                {
+                    break;
+                }
+                Thread.Sleep(125);
+            }
+            // Evaluar que no pueda leer
+
+            /*if (!model.Read()) {
                 ErrorMessage("No se ha obtenido respuesta del servidor");
-                model.Disconnect();
                 Cursor = Cursors.Default;
                 return;
-            }
+            }*/
 
             Data answer = model.toRead.Dequeue();
-            if (answer is RequestAnswer rs) {
-                if (rs.answer) {
+            if (answer is RequestAnswer rs)
+            {
+                if (rs.answer)
+                {
                     subProcess = false;
                     model.singleton.userName = username;
                     //MainView m = new MainView();
@@ -69,7 +93,8 @@ namespace Chat_Virtual___Cliente {
                     HomeView homeView = new HomeView();
                     homeView.Show();
                     Close();
-                } else
+                }
+                else
                     ErrorMessage("Usuario o contraseña incorrectos");
             }
             Cursor = Cursors.Default;
@@ -112,7 +137,7 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void Refresh_DoWork(object sender, DoWorkEventArgs e) {
-            bool lastEstate = true;
+            /*bool lastEstate = true;
             bool connected = false;
             while (subProcess) {
                 connected = model.IsConnected();
@@ -130,7 +155,7 @@ namespace Chat_Virtual___Cliente {
                 }
                 lastEstate = connected;
                 Thread.Sleep(1000);
-            }
+            }*/
         }
 
         private void SetVisibleControl(bool state) {
