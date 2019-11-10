@@ -44,6 +44,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.SingUp = new System.Windows.Forms.LinkLabel();
             this.Logo = new System.Windows.Forms.PictureBox();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.closeButtonPanel.SuspendLayout();
@@ -289,6 +290,12 @@
             this.Logo.TabIndex = 12;
             this.Logo.TabStop = false;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Conectandose";
+            this.notifyIcon1.Visible = true;
+            // 
             // LoginWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -345,5 +352,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel SingUp;
         private System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }

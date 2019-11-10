@@ -9,6 +9,8 @@ namespace Chat_Virtual___Cliente.Backend {
         public BinaryWriter Writer { get; set; }
         public BinaryReader Reader { get; set; }
         public string userName { get; set; }
+        public byte[] ProfilePicture { get; set; }
+        public string Status { get; set; }
 
         private static Singleton singleton;
 

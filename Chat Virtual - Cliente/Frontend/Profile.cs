@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShippingData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,7 +16,9 @@ namespace Chat_Virtual___Cliente.Frontend
         public Profile()
         {
             InitializeComponent();
-            labelUser.Text = Backend.Singleton.GetSingleton().userName;
+            labelUser.Text += ""+Backend.Singleton.GetSingleton().userName;
+            pictureBox1.Image = Serializer.DeserializeImage(Backend.Singleton.GetSingleton().ProfilePicture);
+            LStatus.Text = Backend.Singleton.GetSingleton().Status;
         }
 
         private void Panel1_Paint(object sender, PaintEventArgs e)
@@ -66,16 +69,17 @@ namespace Chat_Virtual___Cliente.Frontend
 
         private void PictureBox3_Click_1(object sender, EventArgs e)
         {
-            String imageLocation = "";
-            try
-            {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "jpg files(.*jpg)|*.jpg| PNG files(.*png)|*.png| All Files(*.*)|*.*";
+            try {
+                OpenFileDialog dialog = new OpenFileDialog {
+                    Filter = "jpg files(.*jpg)|*.jpg| PNG files(.*png)|*.png| All Files(*.*)|*.*"
+                };
 
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    imageLocation = dialog.FileName;
-                    pictureBox1.ImageLocation = imageLocation;
+                    string imageLocation = dialog.FileName;
+                    if (imageLocation != null) {
+                        pictureBox1.ImageLocation = imageLocation;
+                    }
                 }
 
             }
@@ -97,6 +101,10 @@ namespace Chat_Virtual___Cliente.Frontend
 
         private void LabelUser_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void SingIn_Click(object sender, EventArgs e) {
 
         }
     }

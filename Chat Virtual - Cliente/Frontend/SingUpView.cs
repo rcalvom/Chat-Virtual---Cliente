@@ -42,6 +42,8 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             model.toWrite.Enqueue(new SignUp(userName.Text + " " + userLastName.Text, user.Text, password.Text));
 
+            model.Connect();
+
             if (!model.Write()) {
                 ErrorMessage("No se han podido enviar los datos al servidor");
                 return;
@@ -87,7 +89,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void Refresh_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) {
-            bool lastEstate = true;
+            /*bool lastEstate = true;
             bool connected = false;
             while (subProcess) {
                 connected = model.IsConnected();
@@ -105,7 +107,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 }
                 lastEstate = connected;
                 Thread.Sleep(1000);
-            }
+            }*/
         }
 
         private void SetVisibleControl(bool state) {

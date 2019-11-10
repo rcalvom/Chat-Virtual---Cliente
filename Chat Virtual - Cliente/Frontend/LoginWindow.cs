@@ -28,7 +28,7 @@ namespace Chat_Virtual___Cliente {
         }
 
         private void SingIn_Click(object sender, EventArgs e)
-        {
+        {      
             Cursor = Cursors.WaitCursor;
             errorLabel.Visible = false;
 

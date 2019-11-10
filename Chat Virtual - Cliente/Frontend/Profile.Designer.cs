@@ -35,6 +35,8 @@
             this.exitButton = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.LStatus = new System.Windows.Forms.Label();
+            this.LTStatus = new System.Windows.Forms.Label();
             this.labelUser = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -57,7 +59,7 @@
             this.TopPanel.Controls.Add(this.pictureBox2);
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TopPanel.Location = new System.Drawing.Point(0, 0);
-            this.TopPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TopPanel.Margin = new System.Windows.Forms.Padding(2);
             this.TopPanel.Name = "TopPanel";
             this.TopPanel.Size = new System.Drawing.Size(573, 37);
             this.TopPanel.TabIndex = 0;
@@ -91,7 +93,7 @@
             // 
             this.pictureBox2.Image = global::Chat_Virtual___Cliente.Properties.Resources.SadiriLogo2;
             this.pictureBox2.Location = new System.Drawing.Point(2, 3);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(35, 32);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -102,6 +104,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
+            this.panel1.Controls.Add(this.LStatus);
+            this.panel1.Controls.Add(this.LTStatus);
             this.panel1.Controls.Add(this.labelUser);
             this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.pictureBox3);
@@ -109,11 +113,35 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 37);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(573, 354);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
+            // 
+            // LStatus
+            // 
+            this.LStatus.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.LStatus.AutoSize = true;
+            this.LStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.LStatus.Location = new System.Drawing.Point(204, 139);
+            this.LStatus.Name = "LStatus";
+            this.LStatus.Size = new System.Drawing.Size(178, 18);
+            this.LStatus.TabIndex = 9;
+            this.LStatus.Text = "No hay estado disponible.";
+            // 
+            // LTStatus
+            // 
+            this.LTStatus.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.LTStatus.AutoSize = true;
+            this.LTStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LTStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.LTStatus.Location = new System.Drawing.Point(204, 102);
+            this.LTStatus.Name = "LTStatus";
+            this.LTStatus.Size = new System.Drawing.Size(59, 18);
+            this.LTStatus.TabIndex = 8;
+            this.LTStatus.Text = "Estado:";
             // 
             // labelUser
             // 
@@ -123,9 +151,9 @@
             this.labelUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.labelUser.Location = new System.Drawing.Point(204, 44);
             this.labelUser.Name = "labelUser";
-            this.labelUser.Size = new System.Drawing.Size(64, 18);
+            this.labelUser.Size = new System.Drawing.Size(72, 18);
             this.labelUser.TabIndex = 7;
-            this.labelUser.Text = "Usuario:";
+            this.labelUser.Text = "Usuario:  ";
             this.labelUser.Click += new System.EventHandler(this.LabelUser_Click);
             // 
             // linkLabel1
@@ -144,7 +172,7 @@
             // 
             this.pictureBox3.Image = global::Chat_Virtual___Cliente.Properties.Resources.ImageAdd;
             this.pictureBox3.Location = new System.Drawing.Point(130, 121);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(37, 36);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -170,12 +198,13 @@
             this.SingIn.TabIndex = 4;
             this.SingIn.Text = "Guardar";
             this.SingIn.UseVisualStyleBackColor = false;
+            this.SingIn.Click += new System.EventHandler(this.SingIn_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pictureBox1.Location = new System.Drawing.Point(34, 27);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(133, 130);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -199,7 +228,7 @@
             this.Controls.Add(this.TopPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Profile";
             this.Text = "Profile";
             this.TopPanel.ResumeLayout(false);
@@ -227,5 +256,7 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label labelUser;
+        public System.Windows.Forms.Label LStatus;
+        public System.Windows.Forms.Label LTStatus;
     }
 }

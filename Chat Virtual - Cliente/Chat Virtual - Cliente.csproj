@@ -159,6 +159,7 @@
     <None Include="Resources\ImageAdd.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\SadiriLogo2.ico" />
     <Content Include="Resources\SendIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
