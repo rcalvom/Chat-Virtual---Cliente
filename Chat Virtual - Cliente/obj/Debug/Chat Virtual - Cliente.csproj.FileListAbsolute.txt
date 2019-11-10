@@ -66,3 +66,20 @@ C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - 
 C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.Profile.resources
 C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.SingUpView.resources
 C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\DataStructures.xml
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.exe.config
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.exe
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\Chat Virtual - Cliente.pdb
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\DataStructures.dll
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\ShippingData.dll
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\DataStructures.xml
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csprojAssemblyReference.cache
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.HomeView.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.MainView.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.LoginWindow.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.Profile.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.SingUpView.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Properties.Resources.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.GenerateResource.cache
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CopyComplete
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.exe
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.pdb
