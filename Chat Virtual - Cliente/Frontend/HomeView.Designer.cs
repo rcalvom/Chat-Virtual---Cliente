@@ -82,7 +82,7 @@
             // 
             this.pictureBox1.Image = global::Chat_Virtual___Cliente.Properties.Resources.SadiriLogo2;
             this.pictureBox1.Location = new System.Drawing.Point(2, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(38, 34);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -258,9 +258,9 @@
             this.Profile.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Profile.Image = ((System.Drawing.Image)(resources.GetObject("Profile.Image")));
             this.Profile.Location = new System.Drawing.Point(5, 413);
-            this.Profile.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Profile.Margin = new System.Windows.Forms.Padding(5);
             this.Profile.Name = "Profile";
-            this.Profile.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Profile.Padding = new System.Windows.Forms.Padding(5);
             this.Profile.Size = new System.Drawing.Size(70, 70);
             this.Profile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Profile.TabIndex = 1;
@@ -269,11 +269,11 @@
             // 
             // Settings
             // 
-            this.Settings.Image = global::Chat_Virtual___Cliente.Properties.Resources.Settingss;
+            this.Settings.Image = ((System.Drawing.Image)(resources.GetObject("Settings.Image")));
             this.Settings.Location = new System.Drawing.Point(5, 490);
-            this.Settings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Settings.Margin = new System.Windows.Forms.Padding(2);
             this.Settings.Name = "Settings";
-            this.Settings.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Settings.Padding = new System.Windows.Forms.Padding(5);
             this.Settings.Size = new System.Drawing.Size(70, 70);
             this.Settings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Settings.TabIndex = 4;
@@ -286,7 +286,7 @@
             this.Chats.Image = global::Chat_Virtual___Cliente.Properties.Resources.Menu_48px;
             this.Chats.Location = new System.Drawing.Point(5, 85);
             this.Chats.Name = "Chats";
-            this.Chats.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Chats.Padding = new System.Windows.Forms.Padding(5);
             this.Chats.Size = new System.Drawing.Size(70, 70);
             this.Chats.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Chats.TabIndex = 2;
@@ -301,7 +301,7 @@
             this.Groups.InitialImage = null;
             this.Groups.Location = new System.Drawing.Point(5, 165);
             this.Groups.Name = "Groups";
-            this.Groups.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Groups.Padding = new System.Windows.Forms.Padding(5);
             this.Groups.Size = new System.Drawing.Size(70, 70);
             this.Groups.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Groups.TabIndex = 3;
@@ -311,10 +311,10 @@
             // Home
             // 
             this.Home.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Home.Image = global::Chat_Virtual___Cliente.Properties.Resources.Home;
+            this.Home.Image = ((System.Drawing.Image)(resources.GetObject("Home.Image")));
             this.Home.Location = new System.Drawing.Point(5, 5);
             this.Home.Name = "Home";
-            this.Home.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Home.Padding = new System.Windows.Forms.Padding(5);
             this.Home.Size = new System.Drawing.Size(70, 70);
             this.Home.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Home.TabIndex = 0;

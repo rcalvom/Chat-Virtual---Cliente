@@ -82,7 +82,6 @@
             this.password.Size = new System.Drawing.Size(400, 33);
             this.password.TabIndex = 1;
             this.password.UseSystemPasswordChar = true;
-            this.password.TextChanged += new System.EventHandler(this.Password_TextChanged);
             this.password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Password_KeyPress);
             // 
             // SingIn
@@ -323,7 +322,6 @@
             this.Name = "LoginWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Loggin";
-            this.Load += new System.EventHandler(this.LoginWindow_Load);
             this.topPane.ResumeLayout(false);
             this.closeButtonPanel.ResumeLayout(false);
             this.minButtonPanel.ResumeLayout(false);

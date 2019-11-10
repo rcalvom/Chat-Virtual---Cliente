@@ -465,7 +465,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 chat.Enabled = true;
 
                 sendButton.BackColor = Color.Transparent;
-                //sendButton.Image = ;
+                sendButton.Image = Chat_Virtual___Cliente.Properties.Resources.SendIcon;
                 sendButton.Cursor = Cursors.Hand;
                 sendButton.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right);
                 sendButton.Location = new Point(this.ViewPanel.Width - 41, this.ViewPanel.Height - 30);
@@ -513,6 +513,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             NewChatTextBox.TabIndex = 2;
             NewChatTextBox.Multiline = false;
             NewChatTextBox.TabStop = true;
+            NewChatTextBox.KeyPress += new KeyPressEventHandler(Search_Chat);
             AditionalComponents.Add(NewChatPanel);
         }
 
@@ -692,6 +693,20 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             AditionalComponents.Add(newPanel);
             LastGroup = newPanel;
+        }
+
+        private void Search_Chat(object sender, KeyPressEventArgs e) {
+            string a = "";
+            Console.WriteLine("Pues has hecho enter");
+            if (sender is TextBox t) {
+                a = t.Text;
+                t.Clear();
+            }
+            if (e.KeyChar == (int)Keys.Enter) {
+                model.CanWrite.WaitOne();
+                model.toWrite.Enqueue(new Chat(model.singleton.userName, a));
+                model.CanWrite.Release();
+            }
         }
     }
 }

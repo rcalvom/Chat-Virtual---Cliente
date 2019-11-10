@@ -157,26 +157,14 @@ namespace Chat_Virtual___Cliente {
             }
         }
 
-        private void LoginWindow_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Password_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Password_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void Password_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == (int)Keys.Enter)
             {
                 this.SingIn_Click(sender, e);
             }
         }
 
-        private void User_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void User_KeyPress(object sender, KeyPressEventArgs e) {
             if (e.KeyChar == (int)Keys.Enter)
             {
                 this.SingIn_Click(sender, e);
