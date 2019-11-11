@@ -149,6 +149,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                     TaskTree.Nodes[0].Nodes.Add(ta.Tree[2]);
                     TaskTree.Nodes[1].Nodes.Add(ta.Tree[3]);
                     TaskTree.Nodes[1].Nodes.Add(ta.Tree[4]);
+                } else if (data is ShippingData.Profile profile) {
+
                 }
 
                 if (currentView == CurrentView.InChat) {

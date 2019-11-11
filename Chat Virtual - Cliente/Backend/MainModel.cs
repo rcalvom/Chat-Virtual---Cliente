@@ -60,8 +60,8 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         private new bool Write() {
+            Data a = ToWriteDequeue();
             try {
-                Data a = ToWriteDequeue();
                 if (a == default) {
                     return false;
                 }
@@ -70,7 +70,7 @@ namespace Chat_Virtual___Cliente.Backend {
                 singleton.Writer.Write(toSend);
                 return true;
             } catch (Exception) {
-                ToWriteEnqueue(toWrite.Dequeue());
+                ToWriteEnqueue(a);
                 return false;
             }
         }
