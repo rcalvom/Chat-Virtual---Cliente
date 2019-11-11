@@ -10,8 +10,8 @@ namespace Chat_Virtual___Cliente.Backend {
 
         protected bool runThread;
         protected bool threads;
-        public Semaphore CanRead { get; set; }
-        public Semaphore CanWrite { get; set; }
+        protected Semaphore CanRead;
+        protected Semaphore CanWrite;
         public int CurrentGroup { get; set; }
         public string CurrentChat { get; set; }
         public HashTable<string, UserChat> chats { get; set; }
@@ -24,10 +24,8 @@ namespace Chat_Virtual___Cliente.Backend {
             groups = new HashTable<int, Group>(20);
             threads = true;
             runThread = false;
-            CanRead = new Semaphore(0, 1);
-            CanWrite = new Semaphore(0, 1);
-            CanRead.Release();
-            CanWrite.Release();
+            CanRead = new Semaphore(1, 1);
+            CanWrite = new Semaphore(1, 1);
             Thread thread = new Thread(DataControl);
             thread.Start();
         }
@@ -63,43 +61,64 @@ namespace Chat_Virtual___Cliente.Backend {
 
         private new bool Write() {
             try {
-                CanWrite.WaitOne();
-                if (!toWrite.IsEmpty()) {
-                    Byte[] toSend = Serializer.Serialize(toWrite.GetFrontElement());
-                    singleton.Writer.Write(toSend.Length);
-                    singleton.Writer.Write(toSend);
-                    toWrite.Dequeue();
+                Data a = ToWriteDequeue();
+                if (a == default) {
+                    return false;
                 }
-                CanWrite.Release();
+                Byte[] toSend = Serializer.Serialize(a);
+                singleton.Writer.Write(toSend.Length);
+                singleton.Writer.Write(toSend);
                 return true;
             } catch (Exception) {
-                toWrite.Enqueue(toWrite.Dequeue());
-                CanWrite.Release();
+                ToWriteEnqueue(toWrite.Dequeue());
                 return false;
             }
         }
 
         private new bool Read() {
             try {
-                CanRead.WaitOne();
                 if (singleton.stream.DataAvailable) {
                     int size = singleton.Reader.ReadInt32();
                     byte[] data = new byte[size];
                     data = singleton.Reader.ReadBytes(size);
                     object a = Serializer.Deserialize(data);
-                    toRead.Enqueue((Data)a);
+                    ToReadEnqueue((Data)a);
 
                     if (a is Profile p) {
                         singleton.ProfilePicture = p.Image;
                         singleton.Status = p.Status;
                     }
                 }
-                CanRead.Release();
                 return true;
             } catch (Exception) {
-                CanRead.Release();
                 return false;
             }
+        }
+
+        public void ToWriteEnqueue(Data a) {
+            CanWrite.WaitOne();
+            toWrite.Enqueue(a);
+            CanWrite.Release();
+        }
+
+        public void ToReadEnqueue(Data a) {
+            CanRead.WaitOne();
+            toRead.Enqueue(a);
+            CanRead.Release();
+        }
+
+        public Data ToWriteDequeue() {
+            CanWrite.WaitOne();
+            Data a = toWrite.Dequeue();
+            CanWrite.Release();
+            return a;
+        }
+
+        public Data ToReadDequeue() {
+            CanRead.WaitOne();
+            Data a = toRead.Dequeue();
+            CanRead.Release();
+            return a;
         }
     }
 }

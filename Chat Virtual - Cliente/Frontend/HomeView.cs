@@ -97,55 +97,58 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
             while (subprocess) {
-                model.CanRead.WaitOne();
-                bool emptyQueue = model.toRead.IsEmpty();
-                model.CanRead.Release();
-                if (!emptyQueue) {
-                    model.CanRead.WaitOne();
-                    Data data = model.toRead.Dequeue();
-                    model.CanRead.Release();
-                    if (data is ShippingData.Message) {
-                        if (data is ChatMessage chatMessage) {
-                            Console.WriteLine("Sender: " + chatMessage.Sender);
-                            Console.WriteLine("Receiver: " + chatMessage.Receiver);
-                            Console.WriteLine("Content: " + chatMessage.Content);
-                            UserChat receiver = model.chats.Search(chatMessage.Receiver);
-                            if (receiver == default) {
-                                //Hay que crear el nuevo chat
-                            } else
-                                receiver.NewMessages.Enqueue(chatMessage);
-                        } else if (data is GroupMessage groupMessage) {
-                            Console.WriteLine("Sender: " + groupMessage.Sender);
-                            Console.WriteLine("Id group receiver: " + groupMessage.IdGroupReceiver);
-                            Console.WriteLine("Content: " + groupMessage.Content);
-                            Group receiver = model.groups.Search(groupMessage.IdGroupReceiver);
-                            receiver.NewMessages.Enqueue(groupMessage);
-                        }
-                    } else if (data is ChatGroup chatGroup) {
-                        Group newGroup = new Group(chatGroup.idGroup, chatGroup.name);
-                        model.groups.AddElement(newGroup.code, newGroup);
-                    } else if (data is Chat chat) {
-                        UserChat newChat;
-                        Console.WriteLine("Me ha llegado un chat");
-                        if (chat.memberOne.Equals(model.singleton.userName))
-                            newChat = new UserChat(chat.memberTwo);
+                Data data = model.ToReadDequeue();
+                if (data == default)
+                    return;
+                Console.WriteLine("Algo");
+                if (data is ShippingData.Message) {
+                    if (data is ChatMessage chatMessage) {
+                        Console.WriteLine("Sender: " + chatMessage.Sender);
+                        Console.WriteLine("Receiver: " + chatMessage.Receiver);
+                        Console.WriteLine("Content: " + chatMessage.Content);
+                        string user;
+                        if (model.singleton.userName.Equals(chatMessage.Sender))
+                            user = chatMessage.Receiver;
                         else
-                            newChat = new UserChat(chat.memberOne);
-                        model.chats.AddElement(newChat.member, newChat);
-                    } else if(data is RequestAnswer requestAnswer) {
+                            user = chatMessage.Sender;
+                        UserChat c = new UserChat(user);
+                        int index = model.chats.AddElement(user, c);
+                        if (index != -1)
+                            AddChat(c);
 
-                    } else if (data is RequestError requestError) {
-
-                    } else if (data is ShippingData.Profile p) {
-                        Singleton.GetSingleton().ProfilePicture = p.Image;
-                        Singleton.GetSingleton().Status = p.Status;
-                    } else if (data is TreeActivities ta) {
-                        TaskTree.Nodes.Add(ta.Tree[0]);
-                        TaskTree.Nodes[0].Nodes.Add(ta.Tree[1]);
-                        TaskTree.Nodes[0].Nodes.Add(ta.Tree[2]);
-                        TaskTree.Nodes[1].Nodes.Add(ta.Tree[3]);
-                        TaskTree.Nodes[1].Nodes.Add(ta.Tree[4]);
+                    } else if (data is GroupMessage groupMessage) {
+                        Console.WriteLine("Sender: " + groupMessage.Sender);
+                        Console.WriteLine("Id group receiver: " + groupMessage.IdGroupReceiver);
+                        Console.WriteLine("Content: " + groupMessage.Content);
+                        Group receiver = model.groups.Search(groupMessage.IdGroupReceiver);
+                        receiver.NewMessages.Enqueue(groupMessage);
                     }
+                } else if (data is ChatGroup chatGroup) {
+                    Group newGroup = new Group(chatGroup.idGroup, chatGroup.name);
+                    model.groups.AddElement(newGroup.code, newGroup);
+                } else if (data is Chat chat) {
+                    Console.WriteLine("Me ha llegado un chat");
+                    UserChat newChat;
+                    if (chat.memberOne.Equals(model.singleton.userName))
+                        newChat = new UserChat(chat.memberTwo);
+                    else
+                        newChat = new UserChat(chat.memberOne);
+                    model.chats.AddElement(newChat.member, newChat);
+                    if (currentView == CurrentView.ViewChats || currentView == CurrentView.InChat)
+                        AddChat(newChat);
+                } else if(data is RequestAnswer requestAnswer) {
+
+                } else if (data is RequestError requestError) {
+
+                } else if (data is ShippingData.Profile p) {
+                    Singleton.GetSingleton().ProfilePicture = p.Image;
+                    Singleton.GetSingleton().Status = p.Status;
+                } else if (data is TreeActivities ta) {
+                    TaskTree.Nodes.Add(ta.Tree[0]);
+                    TaskTree.Nodes[0].Nodes.Add(ta.Tree[1]);
+                    TaskTree.Nodes[0].Nodes.Add(ta.Tree[2]);
+                    TaskTree.Nodes[1].Nodes.Add(ta.Tree[3]);
+                    TaskTree.Nodes[1].Nodes.Add(ta.Tree[4]);
                 }
 
                 if (currentView == CurrentView.InChat) {
@@ -309,6 +312,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     if(c.element is TextBox tx) {
                         content = tx.Text;
                         tx.Clear();
+                        break;
                     }
                 }
             }
@@ -317,14 +321,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ms.Sender = model.singleton.userName;
                 ms.Receiver = model.CurrentChat;
                 ms.Content = content;
-                model.CanWrite.WaitOne();
-                model.toWrite.Enqueue(ms);
-                model.CanWrite.Release();
+                model.ToWriteEnqueue(ms);
             } else if (currentView == CurrentView.InGroup) {
                 GroupMessage ms = new GroupMessage(model.CurrentGroup, model.singleton.userName, content);
-                model.CanWrite.WaitOne();
-                model.toWrite.Enqueue(ms);
-                model.CanWrite.Release();
+                model.ToWriteEnqueue(ms);
             }
         }
 
@@ -709,14 +709,11 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void Search_Chat(object sender, KeyPressEventArgs e) {
             string a = "";
             if (e.KeyChar == (int)Keys.Enter) {
-                Console.WriteLine("Pues has hecho enter");
                 if (sender is TextBox t) {
                     a = t.Text;
                     t.Clear();
                 }
-                model.CanWrite.WaitOne();
-                model.toWrite.Enqueue(new Chat(model.singleton.userName, a));
-                model.CanWrite.Release();
+                model.ToWriteEnqueue(new Chat(model.singleton.userName, a));
             }
         }
     }
