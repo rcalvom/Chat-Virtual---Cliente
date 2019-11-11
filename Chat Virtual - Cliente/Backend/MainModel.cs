@@ -30,6 +30,52 @@ namespace Chat_Virtual___Cliente.Backend {
             thread.Start();
         }
 
+        public void ToWriteEnqueue(Data a)
+        {
+            CanWrite.WaitOne();
+            toWrite.Enqueue(a);
+            CanWrite.Release();
+        }
+
+        public void ToReadEnqueue(Data a)
+        {
+            CanRead.WaitOne();
+            toRead.Enqueue(a);
+            CanRead.Release();
+        }
+
+        public Data ToWriteDequeue()
+        {
+            CanWrite.WaitOne();
+            Data a = toWrite.Dequeue();
+            CanWrite.Release();
+            return a;
+        }
+
+        public Data ToReadDequeue()
+        {
+            CanRead.WaitOne();
+            Data a = toRead.Dequeue();
+            CanRead.Release();
+            return a;
+        }
+
+        private void DataControl()
+        {
+            runThread = true;
+            while (threads)
+            {
+                Write();
+                Read();
+            }
+            runThread = false;
+        }
+        public new void Disconnect()
+        {
+            threads = false;
+            this.singleton.Client.Close();
+        }
+
         public new bool Connect() {
             try {
                 singleton.Client.Connect("25.7.220.122", 7777);
@@ -43,20 +89,6 @@ namespace Chat_Virtual___Cliente.Backend {
                 threads = false;
                 return false;
             }
-        }
-
-        public new void Disconnect() {
-            threads = false;
-            this.singleton.Client.Close();
-        }
-
-        private void DataControl() {
-            runThread = true;
-            while (threads) {
-                Write();
-                Read();
-            }
-            runThread = false;
         }
 
         private new bool Write() {
@@ -95,30 +127,6 @@ namespace Chat_Virtual___Cliente.Backend {
             }
         }
 
-        public void ToWriteEnqueue(Data a) {
-            CanWrite.WaitOne();
-            toWrite.Enqueue(a);
-            CanWrite.Release();
-        }
-
-        public void ToReadEnqueue(Data a) {
-            CanRead.WaitOne();
-            toRead.Enqueue(a);
-            CanRead.Release();
-        }
-
-        public Data ToWriteDequeue() {
-            CanWrite.WaitOne();
-            Data a = toWrite.Dequeue();
-            CanWrite.Release();
-            return a;
-        }
-
-        public Data ToReadDequeue() {
-            CanRead.WaitOne();
-            Data a = toRead.Dequeue();
-            CanRead.Release();
-            return a;
-        }
+        
     }
 }
