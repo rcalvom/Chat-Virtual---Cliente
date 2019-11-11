@@ -46,6 +46,7 @@
             this.Home = new System.Windows.Forms.PictureBox();
             this.receptor = new System.ComponentModel.BackgroundWorker();
             this.MainDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.TaskTree = new System.Windows.Forms.TreeView();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.resizeButtonPanel.SuspendLayout();
@@ -55,6 +56,7 @@
             this.minButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.mainPanel.SuspendLayout();
+            this.actionPanel.SuspendLayout();
             this.optionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Profile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).BeginInit();
@@ -228,6 +230,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.actionPanel.AutoScroll = true;
             this.actionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
+            this.actionPanel.Controls.Add(this.TaskTree);
             this.actionPanel.Location = new System.Drawing.Point(80, 60);
             this.actionPanel.Margin = new System.Windows.Forms.Padding(0);
             this.actionPanel.MinimumSize = new System.Drawing.Size(120, 263);
@@ -332,6 +335,14 @@
             this.MainDrag.TargetControl = this.topPane;
             this.MainDrag.Vertical = true;
             // 
+            // TaskTree
+            // 
+            this.TaskTree.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
+            this.TaskTree.Location = new System.Drawing.Point(3, 353);
+            this.TaskTree.Name = "TaskTree";
+            this.TaskTree.Size = new System.Drawing.Size(237, 153);
+            this.TaskTree.TabIndex = 0;
+            // 
             // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -356,6 +367,7 @@
             this.minButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
+            this.actionPanel.ResumeLayout(false);
             this.optionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Profile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).EndInit();
@@ -389,5 +401,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox Settings;
         private Bunifu.Framework.UI.BunifuDragControl MainDrag;
+        public System.Windows.Forms.TreeView TaskTree;
     }
 }

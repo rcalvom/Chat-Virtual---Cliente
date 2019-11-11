@@ -136,6 +136,15 @@ namespace Chat_Virtual___Cliente.Frontend {
 
                     } else if (data is RequestError requestError) {
 
+                    } else if (data is ShippingData.Profile p) {
+                        Singleton.GetSingleton().ProfilePicture = p.Image;
+                        Singleton.GetSingleton().Status = p.Status;
+                    } else if (data is TreeActivities ta) {
+                        TaskTree.Nodes.Add(ta.Tree[0]);
+                        TaskTree.Nodes[0].Nodes.Add(ta.Tree[1]);
+                        TaskTree.Nodes[0].Nodes.Add(ta.Tree[2]);
+                        TaskTree.Nodes[1].Nodes.Add(ta.Tree[3]);
+                        TaskTree.Nodes[1].Nodes.Add(ta.Tree[4]);
                     }
                 }
 

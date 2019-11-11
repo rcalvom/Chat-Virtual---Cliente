@@ -16,9 +16,11 @@ namespace Chat_Virtual___Cliente.Frontend
         public Profile()
         {
             InitializeComponent();
-            labelUser.Text += ""+Backend.Singleton.GetSingleton().userName;
-            pictureBox1.Image = Serializer.DeserializeImage(Backend.Singleton.GetSingleton().ProfilePicture);
-            LStatus.Text = Backend.Singleton.GetSingleton().Status;
+            try {
+                labelUser.Text += "" + Backend.Singleton.GetSingleton().userName;
+                pictureBox1.Image = Serializer.DeserializeImage(Backend.Singleton.GetSingleton().ProfilePicture);
+                LStatus.Text = Backend.Singleton.GetSingleton().Status;
+            } catch (Exception) { }
         }
 
         private void Panel1_Paint(object sender, PaintEventArgs e)

@@ -2,8 +2,8 @@
 using System.Threading;
 using DataStructures;
 using ShippingData;
-using ShippingData.Comunication;
 using Chat_Virtual___Cliente.Communication;
+using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Backend {
     class MainModel : Model {
@@ -80,7 +80,7 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         private new bool Read() {
-            //try {
+            try {
                 CanRead.WaitOne();
                 if (singleton.stream.DataAvailable) {
                     int size = singleton.Reader.ReadInt32();
@@ -92,17 +92,14 @@ namespace Chat_Virtual___Cliente.Backend {
                     if (a is Profile p) {
                         singleton.ProfilePicture = p.Image;
                         singleton.Status = p.Status;
-                    } else if(a is TreeActivities ta) {
-                    ;    
-
                     }
                 }
                 CanRead.Release();
                 return true;
-            /*} catch (Exception) {
+            } catch (Exception) {
                 CanRead.Release();
                 return false;
-            }*/
+            }
         }
     }
 }
