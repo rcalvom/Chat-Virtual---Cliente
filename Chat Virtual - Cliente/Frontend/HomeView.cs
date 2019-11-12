@@ -606,7 +606,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     return;
                 }
             } else {
-                if (!ActiveChats.IsEmpty()) {
+                if (ActiveChats.Size>=2) {
                     Panel p = ActiveChats.Get(0);
                     if (p.Name.Equals("EmptyChat")) {
                         actionPanel.Controls.Remove(p);
@@ -629,7 +629,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                             continue;
                     foreach (Control control in ActiveChats.Get(count).Controls) {
                         if(control is PictureBox picture) {
-                            //picture.Image = userChat.profile.Image;
+                            picture.Image = Serializer.DeserializeImage(userChat.profile.Image);
                         }
                     }
                 }
@@ -723,7 +723,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                 Data data = model.ToReadDequeue();
                 if (data == default)
                     return;
-                Console.WriteLine("Algo");
                 if (data is ShippingData.Message) {
                     if (data is ChatMessage chatMessage) {
                         Console.WriteLine("Sender: " + chatMessage.Sender);
@@ -771,6 +770,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     UserChat uc = model.chats.Search(profile.Name);
                     if (uc != default) {
                         uc.profile = profile;
+                    }
+                    if (profile.Name.Equals(model.singleton.userName)) {
+                        model.singleton.Status = profile.Status;
+                        model.singleton.ProfilePicture = profile.Image;
                     }
                 }
 

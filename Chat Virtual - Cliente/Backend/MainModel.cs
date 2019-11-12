@@ -30,48 +30,45 @@ namespace Chat_Virtual___Cliente.Backend {
             thread.Start();
         }
 
-        public void ToWriteEnqueue(Data a)
-        {
+        public void ToWriteEnqueue(Data a) {
             CanWrite.WaitOne();
             toWrite.Enqueue(a);
             CanWrite.Release();
         }
 
-        public void ToReadEnqueue(Data a)
-        {
+        public void ToReadEnqueue(Data a) {
             CanRead.WaitOne();
             toRead.Enqueue(a);
             CanRead.Release();
         }
 
-        public Data ToWriteDequeue()
-        {
+        public Data ToWriteDequeue() {
             CanWrite.WaitOne();
             Data a = toWrite.Dequeue();
             CanWrite.Release();
             return a;
         }
 
-        public Data ToReadDequeue()
-        {
+        public Data ToReadDequeue() {
             CanRead.WaitOne();
             Data a = toRead.Dequeue();
             CanRead.Release();
             return a;
         }
 
-        private void DataControl()
-        {
+        private void DataControl() {
             runThread = true;
-            while (threads)
-            {
-                Write();
+            while (threads) {
+                Data data = ToWriteDequeue();
+                if (data != default)
+                    if (!Write(data))
+                        ToWriteEnqueue(data);
                 Read();
             }
             runThread = false;
         }
-        public new void Disconnect()
-        {
+
+        public new void Disconnect() {
             threads = false;
             this.singleton.Client.Close();
         }
@@ -91,18 +88,15 @@ namespace Chat_Virtual___Cliente.Backend {
             }
         }
 
-        private new bool Write() {
-            Data a = ToWriteDequeue();
+        private bool Write(Data a) {
             try {
-                if (a == default) {
-                    return false;
-                }
                 Byte[] toSend = Serializer.Serialize(a);
+                if (toSend.Length <= 0)
+                    return false;
                 singleton.Writer.Write(toSend.Length);
                 singleton.Writer.Write(toSend);
                 return true;
             } catch (Exception) {
-                ToWriteEnqueue(a);
                 return false;
             }
         }
@@ -115,18 +109,11 @@ namespace Chat_Virtual___Cliente.Backend {
                     data = singleton.Reader.ReadBytes(size);
                     object a = Serializer.Deserialize(data);
                     ToReadEnqueue((Data)a);
-
-                    if (a is Profile p) {
-                        singleton.ProfilePicture = p.Image;
-                        singleton.Status = p.Status;
-                    }
                 }
                 return true;
             } catch (Exception) {
                 return false;
             }
         }
-
-        
     }
 }
