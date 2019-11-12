@@ -307,7 +307,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             time.Name = "Time";
             time.Size = new Size(42, 13);
             time.TabStop = false;
-            time.Text = ms.Hour.ToString();
+            time.Text = ms.date.Hour.ToString();
             time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
             //message panel
             message.BorderStyle = BorderStyle.FixedSingle;
@@ -337,7 +337,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if (ms.date.Day > ms.date.Day) {
                     message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
                     RecentMessages.Push(message);
-                } else if (ms.Hour < ms.Hour) {
+                } else if (ms.date.Hour < ms.date.Hour) {
                     message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
                     OldMessages.Push(message);
                 } else {
@@ -391,7 +391,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             time.Name = "Time";
             time.Size = new Size(42, 13);
             time.TabStop = false;
-            time.Text = ms.Hour.ToString();
+            time.Text = ms.date.Hour.ToString();
             time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
             //message panel
             message.BorderStyle = BorderStyle.FixedSingle;
@@ -421,7 +421,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if (ms.date.Day > ms.date.Day) {
                     message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
                     RecentMessages.Push(message);
-                } else if (ms.Hour < ms.Hour) {
+                } else if (ms.date.Hour < ms.date.Hour) {
                     message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
                     OldMessages.Push(message);
                 } else {
