@@ -7,6 +7,20 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+struct ControlParameters {
+    //General
+    public Size size;
+    public AnchorStyles anchor;
+    public Point position;
+    //Para panel
+    public BorderStyle borderStyle;
+    //Para picture box
+    public Image image;
+    public PictureBoxSizeMode pictureBoxSizeMode;
+    //Para label
+    public string text;
+};
+
 enum CurrentView {
     InChat, InGroup, InHome, InProfile, ViewChats, ViewGroups
 };
@@ -27,7 +41,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private delegate void AddIn(Control toAdd, Control In);
         private delegate void DeleteIn(Control toAdd, Control In);
-        private delegate void CopySizeOf(Control controlOne, Control controlTwo);
+        private delegate void CopyParametersOf(Control controlOne, ControlParameters controlTwo);
         private delegate void ChangeImageOf(PictureBox pb, Image image);
 
         public HomeView() {
@@ -236,15 +250,14 @@ namespace Chat_Virtual___Cliente.Frontend {
                 this.ViewPanel.Controls.Add(sendButton);
 
                 chat.Anchor = ((AnchorStyles)(((AnchorStyles.Bottom | AnchorStyles.Left) | AnchorStyles.Right)));
-                chat.BackColor = Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+                chat.BackColor = Color.FromArgb(64, 64, 64);
                 chat.BorderStyle = BorderStyle.FixedSingle;
-                chat.Font = new Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                chat.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+                chat.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                chat.ForeColor = Color.FromArgb(224, 224, 224);
                 chat.ImeMode = ImeMode.NoControl;
                 chat.Name = "chatBox";
                 chat.MinimumSize = new Size(0, 24);
-                chat.MaximumSize = new Size(1000000, 150);
-                chat.Size = new Size(ViewPanel.Width - 50, 35);
+                chat.Size = new Size(ViewPanel.Width - 50, 25);
                 chat.Location = new Point(6, ViewPanel.Height - 30);
                 chat.TabIndex = 1;
                 chat.Multiline = true;
@@ -253,13 +266,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                 chat.Enabled = true;
 
                 sendButton.BackColor = Color.Transparent;
-                sendButton.Image = Chat_Virtual___Cliente.Properties.Resources.SendIcon;
+                sendButton.Image = Properties.Resources.SendIcon;
                 sendButton.Cursor = Cursors.Hand;
                 sendButton.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right);
                 sendButton.Location = new Point(this.ViewPanel.Width - 41, this.ViewPanel.Height - 30);
                 sendButton.Name = "SendButton";
                 sendButton.TabStop = false;
-                sendButton.Size = new Size(35, 35);
+                sendButton.Size = new Size(25, 25);
                 sendButton.SizeMode = PictureBoxSizeMode.StretchImage;
                 sendButton.Click += new EventHandler(this.Send_Click);
 
@@ -509,29 +522,36 @@ namespace Chat_Virtual___Cliente.Frontend {
             AddControl(user, newPanel);
 
             //panel
-            newPanel.Size = new Size(actionPanel.Width, 50);
-            newPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+            ControlParameters cp = new ControlParameters();
+            cp.size = new Size(actionPanel.Width, 50);
+            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right); ;
+            cp.position = new Point(0, newPanel.Height * i);
+            cp.borderStyle = BorderStyle.FixedSingle;
+            CopyParameters(newPanel, cp);
             newPanel.BackColor = Color.Transparent;
-            newPanel.BorderStyle = BorderStyle.FixedSingle;
             newPanel.Name = c.profile.Name;
             newPanel.TabStop = false;
             newPanel.MouseEnter += new EventHandler(Chat_MouseEnter);
             newPanel.MouseLeave += new EventHandler(Chat_MouseLeave);
             newPanel.Click += new EventHandler(Chat_Click);
-            newPanel.Location = new Point(0,newPanel.Height*i);
 
             //pictureBox
-            photo.Size = new Size(40, 40);
-            photo.SizeMode = PictureBoxSizeMode.StretchImage;
-            //photo.Image = c.photo;
-            photo.Location = new Point(10, 10);
-            photo.TabStop = false;
+            cp = new ControlParameters();
+            cp.size = new Size(40, 40);
+            cp.position = new Point(10, 10);
+            cp.pictureBoxSizeMode = PictureBoxSizeMode.StretchImage;
+            if (c.profile.Image != null) {
+                cp.image = Serializer.DeserializeImage(c.profile.Image);
+            }
+            CopyParameters(photo, cp);
 
             //label
-            user.Text = c.profile.Name;
-            user.Location = new Point(50, 10);
-            user.Size = new Size(newPanel.Width - 60, 20);
-            user.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+            cp = new ControlParameters();
+            cp.size = new Size(newPanel.Width - 60, 20);
+            cp.position = new Point(50, 10);
+            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+            cp.text = c.profile.Name;
+            CopyParameters(user, cp);
             user.BackColor = Color.Transparent;
             user.ForeColor = Color.FromArgb(200, 200, 200);
             user.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
@@ -603,11 +623,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                     l.Location = new Point(0, 0);
 
                     AddControl(l, p);
-                    CopySize(p, l);
+                    ControlParameters cp = new ControlParameters();
+                    cp.position = new Point(3, 3);
+                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
+                    cp.size = l.Size;
+                    CopyParameters(p, cp);
                     p.Name = "EmptyChat";
-                    p.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
                     p.BackColor = Color.Transparent;
-                    p.Location = new Point(3, 3);
                     return;
                 }
             } else {
@@ -662,11 +684,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                     l.Location = new Point(0, 0);
 
                     AddControl(l, p);
+                    ControlParameters cp = new ControlParameters();
+                    cp.position = new Point(3, 3);
+                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
+                    cp.size = l.Size;
+                    CopyParameters(p, cp);
                     p.Name = "EmptyChat";
-                    CopySize(p, l);
-                    p.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
                     p.BackColor = Color.Transparent;
-                    p.Location = new Point(3, 3);
                     return;
                 }
             } else {
@@ -814,12 +838,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
-        private void CopySize(Control inWhichIWillCopy, Control theOther) {
+        private void CopyParameters(Control inWhichIWillCopy, ControlParameters theOther) {
             if (inWhichIWillCopy.InvokeRequired) {
-                var d = new CopySizeOf(this.CopySize);
+                var d = new CopyParametersOf(this.CopyParameters);
                 inWhichIWillCopy.Invoke(d, inWhichIWillCopy, theOther);
             } else {
-                inWhichIWillCopy.Size = theOther.Size;
+                inWhichIWillCopy.Size = theOther.size;
+                inWhichIWillCopy.Anchor = theOther.anchor;
+                inWhichIWillCopy.Location = theOther.position;
+                if (inWhichIWillCopy is Panel panel) {
+                    panel.BorderStyle = theOther.borderStyle;
+                } else if (inWhichIWillCopy is PictureBox pictureBox) {
+                    pictureBox.Image = theOther.image;
+                    pictureBox.SizeMode = theOther.pictureBoxSizeMode;
+                } else if (inWhichIWillCopy is Label label) {
+                    label.Text = theOther.text;
+                }
             }
         }
 
