@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 struct ControlParameters {
     //General
+    public bool autoSize;
     public Size size;
     public AnchorStyles anchor;
     public Point position;
@@ -19,6 +20,7 @@ struct ControlParameters {
     public PictureBoxSizeMode pictureBoxSizeMode;
     //Para label
     public string text;
+    public ContentAlignment contentAlignment;
 };
 
 enum CurrentView {
@@ -162,10 +164,11 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Listo
         private void Send_Click(object sender, EventArgs e) {
             string content = "";
-            ChainNode<Control> c = AditionalComponents.GetNode(0);
-            while (c!=null) {
-                if (c.element.Name.Equals("chatBox")) {
-                    if(c.element is TextBox tx) {
+            Iterator<Control> i = AditionalComponents.Iterator();
+            while (i.HasNext()) {
+                Control c = i.Next();
+                if (c.Name.Equals("chatBox")) {
+                    if(c is TextBox tx) {
                         content = tx.Text;
                         tx.Clear();
                         break;
@@ -217,14 +220,17 @@ namespace Chat_Virtual___Cliente.Frontend {
             NewChatTextBox.TabIndex = 2;
             NewChatTextBox.Multiline = false;
             NewChatTextBox.TabStop = true;
-            NewChatTextBox.KeyPress += new KeyPressEventHandler(Search_Chat);
+            NewChatTextBox.KeyPress += new KeyPressEventHandler(EnterKeyPress);
             AditionalComponents.Add(NewChatPanel);
         }
 
-        private void Search_Chat(object sender, KeyPressEventArgs e) {
+        private void EnterKeyPress(object sender, KeyPressEventArgs e) {
             string a = "";
             if (e.KeyChar == (int)Keys.Enter) {
                 if (sender is TextBox t) {
+                    if (t.Name.Equals("chatBox")) {
+                        Send_Click(t, e);
+                    }
                     a = t.Text;
                     t.Clear();
                 }
@@ -257,7 +263,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 chat.ImeMode = ImeMode.NoControl;
                 chat.Name = "chatBox";
                 chat.MinimumSize = new Size(0, 24);
-                chat.Size = new Size(ViewPanel.Width - 50, 25);
+                chat.Size = new Size(ViewPanel.Width - 50, 22);
                 chat.Location = new Point(6, ViewPanel.Height - 30);
                 chat.TabIndex = 1;
                 chat.Multiline = true;
@@ -269,10 +275,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                 sendButton.Image = Properties.Resources.SendIcon;
                 sendButton.Cursor = Cursors.Hand;
                 sendButton.Anchor = (AnchorStyles)(AnchorStyles.Bottom | AnchorStyles.Right);
-                sendButton.Location = new Point(this.ViewPanel.Width - 41, this.ViewPanel.Height - 30);
+                sendButton.Location = new Point(this.ViewPanel.Width - 36, this.ViewPanel.Height - 30);
                 sendButton.Name = "SendButton";
                 sendButton.TabStop = false;
-                sendButton.Size = new Size(25, 25);
+                sendButton.Size = new Size(22, 22);
                 sendButton.SizeMode = PictureBoxSizeMode.StretchImage;
                 sendButton.Click += new EventHandler(this.Send_Click);
 
@@ -299,70 +305,81 @@ namespace Chat_Virtual___Cliente.Frontend {
             AddControl(content, message);
             AddControl(time, message);
             //user label
-            user.AutoSize = true;
-            user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
+            ControlParameters cp = new ControlParameters();
+            cp.autoSize = true;
+            cp.anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
+            cp.position = new Point(2, 2);
+            cp.size = new Size(ViewPanel.Width - 4, 18);
+            cp.text = ms.Sender;
+            cp.contentAlignment = ContentAlignment.MiddleLeft;
+            CopyParameters(user, cp);
             user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
             user.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            user.Location = new Point(2, 2);
             user.Name = "UserName";
-            user.Size = new Size(ViewPanel.Width - 4, 18);
             user.TabStop = false;
-            user.Text = ms.Sender;
             //content label
-            content.AutoSize = true;
-            content.Anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
-            content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-            content.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            content.Location = new Point(2, 30);
+            cp = new ControlParameters();
+            cp.autoSize = true;
+            cp.anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
+            cp.position = new Point(2, 30);
+            cp.size = new Size(ViewPanel.Width - 4, 20);
+            cp.text = ms.Content;
+            cp.contentAlignment = ContentAlignment.MiddleLeft;
+            CopyParameters(content, cp);
+            content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            content.ForeColor = Color.FromArgb(200, 200, 200);
             content.Name = "Content";
-            content.Size = new Size(ViewPanel.Width - 4, 20);
             content.TabStop = false;
-            content.Text = ms.Content;
             //time label
-            time.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
-            time.AutoSize = true;
-            time.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            cp = new ControlParameters();
+            cp.anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+            cp.position = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+            cp.size = new Size(42, 13);
+            cp.text = ms.date.Hour.ToString();
+            cp.contentAlignment = ContentAlignment.MiddleRight;
+            cp.autoSize = true;
+            CopyParameters(time, cp);
+            time.ForeColor = Color.FromArgb(200, 200, 200);
             time.Name = "Time";
-            time.Size = new Size(42, 13);
             time.TabStop = false;
-            time.Text = ms.date.Hour.ToString();
-            time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
             //message panel
-            message.BorderStyle = BorderStyle.FixedSingle;
-            message.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
-            message.Name = "Message";
-            message.Size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
-            message.TabStop = false;
+            cp = new ControlParameters();
+            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+            cp.borderStyle = BorderStyle.FixedSingle;
+            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
             if (FirstMessage == null) {
                 FirstMessage = ms;
                 message.Location = new Point(0, 0);
             } else {
                 if (ms.date.Year < FirstMessage.date.Year) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
+                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
                     OldMessages.Push(message);
                 } else if (ms.date.Year > FirstMessage.date.Year) {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
+                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
                     RecentMessages.Push(message);
                 } else if (ms.date.Month < ms.date.Month) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
+                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
                     OldMessages.Push(message);
                 } else if (ms.date.Month > ms.date.Month) {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
+                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
                     RecentMessages.Push(message);
                 } else if (ms.date.Day < ms.date.Day) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
+                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
                     OldMessages.Push(message);
                 } else if (ms.date.Day > ms.date.Day) {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
+                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
                     RecentMessages.Push(message);
                 } else if (ms.date.Hour < ms.date.Hour) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
+                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
                     OldMessages.Push(message);
                 } else {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
+                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
                     RecentMessages.Push(message);
                 }
             }
+            CopyParameters(message, cp);
+            message.Name = "Message";
+            message.TabStop = false;
         }
 
         private void AddGroupMessage(Group chat) {
@@ -551,6 +568,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.position = new Point(50, 10);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
             cp.text = c.profile.Name;
+            cp.contentAlignment = ContentAlignment.MiddleLeft;
             CopyParameters(user, cp);
             user.BackColor = Color.Transparent;
             user.ForeColor = Color.FromArgb(200, 200, 200);
@@ -674,17 +692,19 @@ namespace Chat_Virtual___Cliente.Frontend {
                     AddControl(l, actionPanel);
                     ActiveChats.Add(p);
 
-                    l.Text = "Aún no tienes ningún grupo";
-                    l.Size = new Size(actionPanel.Width - 6, 20);
-                    l.TextAlign = ContentAlignment.MiddleCenter;
-                    l.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
+                    ControlParameters cp = new ControlParameters();
+                    cp.text = "Aún no tienes ningún grupo";
+                    cp.size = new Size(actionPanel.Width - 6, 20);
+                    cp.contentAlignment = ContentAlignment.MiddleCenter;
+                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
+                    cp.position = new Point(0, 0);
+                    CopyParameters(p, cp);
                     l.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
                     l.ForeColor = Color.FromArgb(200, 200, 200);
                     l.AutoSize = false;
-                    l.Location = new Point(0, 0);
 
                     AddControl(l, p);
-                    ControlParameters cp = new ControlParameters();
+                    cp = new ControlParameters();
                     cp.position = new Point(3, 3);
                     cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
                     cp.size = l.Size;
@@ -847,12 +867,15 @@ namespace Chat_Virtual___Cliente.Frontend {
                 inWhichIWillCopy.Anchor = theOther.anchor;
                 inWhichIWillCopy.Location = theOther.position;
                 if (inWhichIWillCopy is Panel panel) {
+                    panel.AutoSize = theOther.autoSize;
                     panel.BorderStyle = theOther.borderStyle;
                 } else if (inWhichIWillCopy is PictureBox pictureBox) {
                     pictureBox.Image = theOther.image;
                     pictureBox.SizeMode = theOther.pictureBoxSizeMode;
                 } else if (inWhichIWillCopy is Label label) {
+                    label.AutoSize = theOther.autoSize;
                     label.Text = theOther.text;
+                    label.TextAlign = theOther.contentAlignment;
                 }
             }
         }
