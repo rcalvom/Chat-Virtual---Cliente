@@ -25,6 +25,11 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private DynamicArray<Panel> ActiveChats;
 
+        private delegate void AddIn(Control toAdd, Control In);
+        private delegate void DeleteIn(Control toAdd, Control In);
+        private delegate void CopySizeOf(Control controlOne, Control controlTwo);
+        private delegate void ChangeImageOf(PictureBox pb, Image image);
+
         public HomeView() {
             InitializeComponent();
             model = new MainModel();
@@ -276,10 +281,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             } else {
                 return;
             }
-            this.ViewPanel.Controls.Add(message);
-            message.Controls.Add(user);
-            message.Controls.Add(content);
-            message.Controls.Add(time);
+            AddControl(message, ViewPanel);
+            AddControl(user, message);
+            AddControl(content, message);
+            AddControl(time, message);
             //user label
             user.AutoSize = true;
             user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
@@ -360,10 +365,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             } else {
                 return;
             }
-            this.ViewPanel.Controls.Add(message);
-            message.Controls.Add(user);
-            message.Controls.Add(content);
-            message.Controls.Add(time);
+            AddControl(message, ViewPanel);
+            AddControl(user, message);
+            AddControl(content, message);
+            AddControl(time, message);
             //user label
             user.AutoSize = true;
             user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
@@ -499,9 +504,9 @@ namespace Chat_Virtual___Cliente.Frontend {
             Panel newPanel = new Panel();
             PictureBox photo = new PictureBox();
             Label user = new Label();
-            this.actionPanel.Controls.Add(newPanel);
-            newPanel.Controls.Add(photo);
-            newPanel.Controls.Add(user);
+            AddControl(newPanel, actionPanel);
+            AddControl(photo, newPanel);
+            AddControl(user, newPanel);
 
             //panel
             newPanel.Size = new Size(actionPanel.Width, 50);
@@ -543,10 +548,10 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void AddGroup(Group c, int i) {
             Panel newPanel = new Panel();
             PictureBox photo = new PictureBox();
-            Label user = new Label();
-            this.actionPanel.Controls.Add(newPanel);
-            newPanel.Controls.Add(photo);
-            newPanel.Controls.Add(user);
+            Label group = new Label();
+            AddControl(newPanel, actionPanel);
+            AddControl(photo, newPanel);
+            AddControl(group, newPanel);
  
             newPanel.Size = new Size(actionPanel.Width, 50);
             newPanel.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
@@ -566,13 +571,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             photo.TabStop = false;
 
             //label
-            user.Text = c.name;
-            user.Location = new Point(50, 10);
-            user.Size = new Size(newPanel.Width - 60, 20);
-            user.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
-            user.BackColor = Color.Transparent;
-            user.ForeColor = Color.FromArgb(200, 200, 200);
-            user.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            group.Text = c.name;
+            group.Location = new Point(50, 10);
+            group.Size = new Size(newPanel.Width - 60, 20);
+            group.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+            group.BackColor = Color.Transparent;
+            group.ForeColor = Color.FromArgb(200, 200, 200);
+            group.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
             c.visible = true;
             ActiveChats.Add(newPanel);
@@ -585,7 +590,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 if (ActiveChats.IsEmpty()) {
                     Panel p = new Panel();
                     Label l = new Label();
-                    this.actionPanel.Controls.Add(l);
+                    AddControl(p, actionPanel);
                     ActiveChats.Add(p);
 
                     l.Text = "Aún no tienes ningún chat";
@@ -597,10 +602,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     l.AutoSize = false;
                     l.Location = new Point(0, 0);
 
-                    p.Controls.Add(l);
+                    AddControl(l, p);
+                    CopySize(p, l);
                     p.Name = "EmptyChat";
-                    p.Size = l.Size;
-                    p.Anchor = l.Anchor;
+                    p.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
                     p.BackColor = Color.Transparent;
                     p.Location = new Point(3, 3);
                     return;
@@ -609,7 +614,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 if (ActiveChats.Size>=2) {
                     Panel p = ActiveChats.Get(0);
                     if (p.Name.Equals("EmptyChat")) {
-                        actionPanel.Controls.Remove(p);
+                        DeleteControl(p, actionPanel);
                         ActiveChats.RemoveElement(p);
                     }
 
@@ -644,7 +649,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 if (ActiveChats.IsEmpty()) {
                     Panel p = new Panel();
                     Label l = new Label();
-                    this.actionPanel.Controls.Add(l);
+                    AddControl(l, actionPanel);
                     ActiveChats.Add(p);
 
                     l.Text = "Aún no tienes ningún grupo";
@@ -656,10 +661,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     l.AutoSize = false;
                     l.Location = new Point(0, 0);
 
-                    p.Controls.Add(l);
+                    AddControl(l, p);
                     p.Name = "EmptyChat";
-                    p.Size = l.Size;
-                    p.Anchor = l.Anchor;
+                    CopySize(p, l);
+                    p.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
                     p.BackColor = Color.Transparent;
                     p.Location = new Point(3, 3);
                     return;
@@ -720,9 +725,19 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
             while (subprocess) {
+                if (currentView == CurrentView.InChat) {
+                    AddChatMessage(model.chats.Search(model.CurrentChat));
+                } else if (currentView == CurrentView.InGroup) {
+                    AddGroupMessage(model.groups.Search(model.CurrentGroup));
+                } else {
+                    RemoveMessages();
+                }
+
+                ManagmentChat();
+                ManagmentGroup();
                 Data data = model.ToReadDequeue();
                 if (data == default)
-                    return;
+                    continue;
                 if (data is ShippingData.Message) {
                     if (data is ChatMessage chatMessage) {
                         Console.WriteLine("Sender: " + chatMessage.Sender);
@@ -776,17 +791,44 @@ namespace Chat_Virtual___Cliente.Frontend {
                         model.singleton.ProfilePicture = profile.Image;
                     }
                 }
+            }
+        }
 
-                if(currentView == CurrentView.InChat) {
-                    AddChatMessage(model.chats.Search(model.CurrentChat));
-                } else if (currentView == CurrentView.InGroup) {
-                    AddGroupMessage(model.groups.Search(model.CurrentGroup));
-                } else {
-                    RemoveMessages();
-                }
 
-                ManagmentChat();
-                ManagmentGroup();
+        //Delegados
+        private void AddControl(Control toAdd, Control In) {
+            if (In.InvokeRequired) {
+                var d = new AddIn(AddControl);
+                In.Invoke(d, toAdd, In);
+            } else {
+                In.Controls.Add(toAdd);
+            }
+        }
+
+        private void DeleteControl(Control toDelete, Control In) {
+            if (In.InvokeRequired) {
+                var d = new AddIn(DeleteControl);
+                In.Invoke(d, toDelete, In);
+            } else {
+                In.Controls.Remove(toDelete);
+            }
+        }
+
+        private void CopySize(Control inWhichIWillCopy, Control theOther) {
+            if (inWhichIWillCopy.InvokeRequired) {
+                var d = new CopySizeOf(this.CopySize);
+                inWhichIWillCopy.Invoke(d, inWhichIWillCopy, theOther);
+            } else {
+                inWhichIWillCopy.Size = theOther.Size;
+            }
+        }
+
+        private void ChangeImage(PictureBox pictureBox, Image image) {
+            if (pictureBox.InvokeRequired) {
+                var d = new ChangeImageOf(this.ChangeImage);
+                pictureBox.Invoke(d, pictureBox, image);
+            } else {
+                pictureBox.Image = image;
             }
         }
     }
