@@ -6,13 +6,15 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using static ShippingData.Message;
 
 struct ControlParameters {
     //General
-    public bool autoSize;
+    public bool tabStop;
+    public string name;
     public Size size;
     public AnchorStyles anchor;
-    public Point position;
+    public Point location;
     //Para panel
     public BorderStyle borderStyle;
     //Para picture box
@@ -21,6 +23,11 @@ struct ControlParameters {
     //Para label
     public string text;
     public ContentAlignment contentAlignment;
+    //Para panel y label
+    public bool autoSize;
+    public Font font;
+    public Color foreColor;
+    public Color backColor;
 };
 
 enum CurrentView {
@@ -230,6 +237,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 if (sender is TextBox t) {
                     if (t.Name.Equals("chatBox")) {
                         Send_Click(t, e);
+                        return;
                     }
                     a = t.Text;
                     t.Clear();
@@ -287,6 +295,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
+        //Delegado listo
         private void AddChatMessage(UserChat chat) {
             Panel message = new Panel();
             Label user = new Label();
@@ -308,40 +317,40 @@ namespace Chat_Virtual___Cliente.Frontend {
             ControlParameters cp = new ControlParameters();
             cp.autoSize = true;
             cp.anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
-            cp.position = new Point(2, 2);
+            cp.location = new Point(2, 2);
             cp.size = new Size(ViewPanel.Width - 4, 18);
             cp.text = ms.Sender;
             cp.contentAlignment = ContentAlignment.MiddleLeft;
+            cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, (0));
+            cp.foreColor = Color.FromArgb(224, 224, 224);
+            cp.name = "UserName";
+            cp.tabStop = false;
             CopyParameters(user, cp);
-            user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-            user.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            user.Name = "UserName";
-            user.TabStop = false;
             //content label
             cp = new ControlParameters();
             cp.autoSize = true;
             cp.anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
-            cp.position = new Point(2, 30);
+            cp.location = new Point(2, 30);
             cp.size = new Size(ViewPanel.Width - 4, 20);
             cp.text = ms.Content;
             cp.contentAlignment = ContentAlignment.MiddleLeft;
+            cp.font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cp.foreColor = Color.FromArgb(200, 200, 200);
+            cp.name = "Content";
+            cp.tabStop = false;
             CopyParameters(content, cp);
-            content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            content.ForeColor = Color.FromArgb(200, 200, 200);
-            content.Name = "Content";
-            content.TabStop = false;
             //time label
             cp = new ControlParameters();
             cp.anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
-            cp.position = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+            cp.location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
             cp.size = new Size(42, 13);
             cp.text = ms.date.Hour.ToString();
             cp.contentAlignment = ContentAlignment.MiddleRight;
             cp.autoSize = true;
+            cp.foreColor = Color.FromArgb(200, 200, 200);
+            cp.name = "Time";
+            cp.tabStop = false;
             CopyParameters(time, cp);
-            time.ForeColor = Color.FromArgb(200, 200, 200);
-            time.Name = "Time";
-            time.TabStop = false;
             //message panel
             cp = new ControlParameters();
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
@@ -349,39 +358,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
             if (FirstMessage == null) {
                 FirstMessage = ms;
-                message.Location = new Point(0, 0);
+               cp.location = new Point(0, 0);
             } else {
-                if (ms.date.Year < FirstMessage.date.Year) {
-                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
-                    OldMessages.Push(message);
-                } else if (ms.date.Year > FirstMessage.date.Year) {
-                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
-                    RecentMessages.Push(message);
-                } else if (ms.date.Month < ms.date.Month) {
-                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
-                    OldMessages.Push(message);
-                } else if (ms.date.Month > ms.date.Month) {
-                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
-                    RecentMessages.Push(message);
-                } else if (ms.date.Day < ms.date.Day) {
-                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
-                    OldMessages.Push(message);
-                } else if (ms.date.Day > ms.date.Day) {
-                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
-                    RecentMessages.Push(message);
-                } else if (ms.date.Hour < ms.date.Hour) {
-                    cp.position = new Point(0, OldMessages.Peek().Location.Y - message.Height);
+                if (ms.date.CompareTo(FirstMessage.date) < 0) {
+                    cp.location = new Point(0, OldMessages.Peek().Location.Y - cp.size.Height);
                     OldMessages.Push(message);
                 } else {
-                    cp.position = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
+                    cp.location = new Point(0, RecentMessages.Peek().Location.Y + cp.size.Height);
                     RecentMessages.Push(message);
                 }
             }
+            cp.name = "Message";
+            cp.tabStop = false;
             CopyParameters(message, cp);
-            message.Name = "Message";
-            message.TabStop = false;
         }
 
+        //Delegado listo
         private void AddGroupMessage(Group chat) {
             Panel message = new Panel();
             Label user = new Label();
@@ -400,73 +392,63 @@ namespace Chat_Virtual___Cliente.Frontend {
             AddControl(content, message);
             AddControl(time, message);
             //user label
-            user.AutoSize = true;
-            user.Anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
-            user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-            user.ForeColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            user.Location = new Point(2, 2);
-            user.Name = "UserName";
-            user.Size = new Size(ViewPanel.Width - 4, 18);
-            user.TabStop = false;
-            user.Text = ms.Sender;
+            ControlParameters cp = new ControlParameters();
+            cp.autoSize = true;
+            cp.anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
+            cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            cp.foreColor = Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            cp.location = new Point(2, 2);
+            cp.name = "UserName";
+            cp.size = new Size(ViewPanel.Width - 4, 18);
+            cp.tabStop = false;
+            cp.text = ms.Sender;
+            CopyParameters(user, cp);
             //content label
-            content.AutoSize = true;
-            content.Anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
-            content.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-            content.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            content.Location = new Point(2, 30);
-            content.Name = "Content";
-            content.Size = new Size(ViewPanel.Width - 4, 20);
-            content.TabStop = false;
-            content.Text = ms.Content;
+            cp = new ControlParameters();
+            cp.autoSize = true;
+            cp.anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
+            cp.font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            cp.foreColor = Color.FromArgb(200, 200, 200);
+            cp.location = new Point(2, 30);
+            cp.name = "Content";
+            cp.size = new Size(ViewPanel.Width - 4, 20);
+            cp.tabStop = false;
+            cp.text = ms.Content;
+            CopyParameters(content, cp);
             //time label
-            time.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
-            time.AutoSize = true;
-            time.ForeColor = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            time.Name = "Time";
-            time.Size = new Size(42, 13);
-            time.TabStop = false;
-            time.Text = ms.date.Hour.ToString();
-            time.Location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+            cp = new ControlParameters();
+            cp.anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+            cp.autoSize = true;
+            cp.foreColor = Color.FromArgb(200, 200, 200);
+            cp.name = "Time";
+            cp.size = new Size(42, 13);
+            cp.tabStop = false;
+            cp.text = ms.date.Hour.ToString();
+            cp.location = new Point(ViewPanel.Width - time.Width - 3, ViewPanel.Height - 16);
+            CopyParameters(time, cp);
             //message panel
-            message.BorderStyle = BorderStyle.FixedSingle;
-            message.Anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
-            message.Name = "Message";
-            message.Size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
-            message.TabStop = false;
+            cp = new ControlParameters();
+            cp.borderStyle = BorderStyle.FixedSingle;
+            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+            cp.name = "Message";
+            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
+            cp.tabStop = false;
             if (FirstMessage == null) {
                 FirstMessage = ms;
-                message.Location = new Point(0, 0);
+                cp.location = new Point(0, 0);
             } else {
-                if (ms.date.Year < FirstMessage.date.Year) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
-                    OldMessages.Push(message);
-                } else if (ms.date.Year > FirstMessage.date.Year) {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
-                    RecentMessages.Push(message);
-                } else if (ms.date.Month < ms.date.Month) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
-                    OldMessages.Push(message);
-                } else if (ms.date.Month > ms.date.Month) {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
-                    RecentMessages.Push(message);
-                } else if (ms.date.Day < ms.date.Day) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
-                    OldMessages.Push(message);
-                } else if (ms.date.Day > ms.date.Day) {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
-                    RecentMessages.Push(message);
-                } else if (ms.date.Hour < ms.date.Hour) {
-                    message.Location = new Point(0, OldMessages.Peek().Location.Y - message.Height);
+                if (ms.date.CompareTo(FirstMessage.date) < 0) {
+                    cp.location = new Point(0, OldMessages.Peek().Location.Y - cp.size.Height);
                     OldMessages.Push(message);
                 } else {
-                    message.Location = new Point(0, RecentMessages.Peek().Location.Y + message.Height);
+                    cp.location = new Point(0, RecentMessages.Peek().Location.Y + cp.size.Height);
                     RecentMessages.Push(message);
                 }
             }
+            CopyParameters(message, cp);
         }
 
-        //Estado: Listo
+        //Delegados listos
         private void RemoveMessages() {
             FirstMessage = null;
             if (currentView == CurrentView.InChat) {
@@ -482,7 +464,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                             } else if (l.Name.Equals("Content")) {
                                 ms.Content = l.Text;
                             } else if (l.Name.Equals("Time")) {
-
+                                ms.date = new Date(DateTime.Parse(l.Text));
                             }
                         }
                     }
@@ -492,11 +474,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                         ms.Receiver = model.singleton.userName;
                     }
                     uc.messages.Push(ms);
-                    this.ViewPanel.Controls.Remove(p);
+                    DeleteControl(p, ViewPanel);
                 }
                 while (!OldMessages.IsEmpty()) {
                     Panel p = OldMessages.Pop();
-                    this.ViewPanel.Controls.Remove(p);
+                    DeleteControl(p, ViewPanel);
                 }
             } else if (currentView == CurrentView.InGroup) {
                 GroupMessage gm;
@@ -516,15 +498,16 @@ namespace Chat_Virtual___Cliente.Frontend {
                         }
                     }
                     group.messages.Push(gm);
-                    this.ViewPanel.Controls.Remove(p);
+                    DeleteControl(p, ViewPanel);
                 }
                 while (!OldMessages.IsEmpty()) {
                     Panel p = OldMessages.Pop();
-                    this.ViewPanel.Controls.Remove(p);
+                    DeleteControl(p, ViewPanel);
                 }
             }
         }
 
+        //Delgado listo
         /// <summary>
         /// Añade un panel con la informacion del chat en el ActionPanel
         /// </summary>
@@ -542,12 +525,12 @@ namespace Chat_Virtual___Cliente.Frontend {
             ControlParameters cp = new ControlParameters();
             cp.size = new Size(actionPanel.Width, 50);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right); ;
-            cp.position = new Point(0, newPanel.Height * i);
+            cp.location = new Point(0, newPanel.Height * i);
             cp.borderStyle = BorderStyle.FixedSingle;
+            cp.backColor = Color.Transparent;
+            cp.name = c.profile.Name;
+            cp.tabStop = false;
             CopyParameters(newPanel, cp);
-            newPanel.BackColor = Color.Transparent;
-            newPanel.Name = c.profile.Name;
-            newPanel.TabStop = false;
             newPanel.MouseEnter += new EventHandler(Chat_MouseEnter);
             newPanel.MouseLeave += new EventHandler(Chat_MouseLeave);
             newPanel.Click += new EventHandler(Chat_Click);
@@ -555,7 +538,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             //pictureBox
             cp = new ControlParameters();
             cp.size = new Size(40, 40);
-            cp.position = new Point(10, 10);
+            cp.location = new Point(10, 10);
             cp.pictureBoxSizeMode = PictureBoxSizeMode.StretchImage;
             if (c.profile.Image != null) {
                 cp.image = Serializer.DeserializeImage(c.profile.Image);
@@ -565,19 +548,20 @@ namespace Chat_Virtual___Cliente.Frontend {
             //label
             cp = new ControlParameters();
             cp.size = new Size(newPanel.Width - 60, 20);
-            cp.position = new Point(50, 10);
+            cp.location = new Point(50, 10);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
             cp.text = c.profile.Name;
             cp.contentAlignment = ContentAlignment.MiddleLeft;
+            cp.backColor = Color.Transparent;
+            cp.foreColor = Color.FromArgb(200, 200, 200);
+            cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CopyParameters(user, cp);
-            user.BackColor = Color.Transparent;
-            user.ForeColor = Color.FromArgb(200, 200, 200);
-            user.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
             c.visible = true;
             ActiveChats.Add(newPanel);
         }
 
+        //Delegado pendiente
         /// <summary>
         /// Añade un panel con la información del grupo en el ActionPanel
         /// </summary>
@@ -621,6 +605,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             ActiveChats.Add(newPanel);
         }
 
+        //Delegado listo
         private void ManagmentChat() {
             if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats)) {
                 return;
@@ -631,23 +616,25 @@ namespace Chat_Virtual___Cliente.Frontend {
                     AddControl(p, actionPanel);
                     ActiveChats.Add(p);
 
-                    l.Text = "Aún no tienes ningún chat";
-                    l.Size = new Size(actionPanel.Width - 6, 20);
+                    ControlParameters cp = new ControlParameters();
+                    cp.text = "Aún no tienes ningún chat";
+                    cp.size = new Size(actionPanel.Width - 6, 20);
+                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
+                    cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                    cp.foreColor = Color.FromArgb(200, 200, 200);
+                    cp.autoSize = false;
+                    cp.location = new Point(0, 0);
+                    CopyParameters(l, cp);
                     l.TextAlign = ContentAlignment.MiddleCenter;
-                    l.Anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
-                    l.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-                    l.ForeColor = Color.FromArgb(200, 200, 200);
-                    l.AutoSize = false;
-                    l.Location = new Point(0, 0);
 
                     AddControl(l, p);
-                    ControlParameters cp = new ControlParameters();
-                    cp.position = new Point(3, 3);
+                    cp = new ControlParameters();
+                    cp.location = new Point(3, 3);
                     cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
                     cp.size = l.Size;
+                    cp.name = "EmptyChat";
+                    cp.backColor = Color.Transparent;
                     CopyParameters(p, cp);
-                    p.Name = "EmptyChat";
-                    p.BackColor = Color.Transparent;
                     return;
                 }
             } else {
@@ -682,6 +669,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
+        //Delegado listo
         private void ManagmentGroup() {
             if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats)) {
                 return;
@@ -697,27 +685,27 @@ namespace Chat_Virtual___Cliente.Frontend {
                     cp.size = new Size(actionPanel.Width - 6, 20);
                     cp.contentAlignment = ContentAlignment.MiddleCenter;
                     cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
-                    cp.position = new Point(0, 0);
+                    cp.location = new Point(0, 0);
+                    cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                    cp.foreColor = Color.FromArgb(200, 200, 200);
+                    cp.autoSize = false;
                     CopyParameters(p, cp);
-                    l.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-                    l.ForeColor = Color.FromArgb(200, 200, 200);
-                    l.AutoSize = false;
 
                     AddControl(l, p);
                     cp = new ControlParameters();
-                    cp.position = new Point(3, 3);
+                    cp.location = new Point(3, 3);
                     cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
                     cp.size = l.Size;
+                    cp.name = "EmptyChat";
+                    cp.backColor = Color.Transparent;
                     CopyParameters(p, cp);
-                    p.Name = "EmptyChat";
-                    p.BackColor = Color.Transparent;
                     return;
                 }
             } else {
                 if (!ActiveChats.IsEmpty()) {
                     Panel p = ActiveChats.Get(0);
                     if (p.Name.Equals("EmptyChat")) {
-                        actionPanel.Controls.Remove(p);
+                        DeleteControl(p, actionPanel);
                         ActiveChats.RemoveElement(p);
                     }
 
@@ -734,10 +722,11 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
+        //Delegado listo
         private void RemoveActiveChats() {
             Iterator<Panel> i = ActiveChats.Iterator();
             while (i.HasNext())
-                actionPanel.Controls.Remove(i.Next());
+                DeleteControl(i.Next(), actionPanel);
             ActiveChats = new DynamicArray<Panel>();
         }
 
@@ -863,12 +852,17 @@ namespace Chat_Virtual___Cliente.Frontend {
                 var d = new CopyParametersOf(this.CopyParameters);
                 inWhichIWillCopy.Invoke(d, inWhichIWillCopy, theOther);
             } else {
+                inWhichIWillCopy.TabStop = theOther.tabStop;
                 inWhichIWillCopy.Size = theOther.size;
                 inWhichIWillCopy.Anchor = theOther.anchor;
-                inWhichIWillCopy.Location = theOther.position;
+                inWhichIWillCopy.Location = theOther.location;
+                inWhichIWillCopy.Name = theOther.name;
                 if (inWhichIWillCopy is Panel panel) {
                     panel.AutoSize = theOther.autoSize;
                     panel.BorderStyle = theOther.borderStyle;
+                    panel.ForeColor = theOther.foreColor;
+                    panel.BackColor = theOther.backColor;
+                    panel.Font = theOther.font;
                 } else if (inWhichIWillCopy is PictureBox pictureBox) {
                     pictureBox.Image = theOther.image;
                     pictureBox.SizeMode = theOther.pictureBoxSizeMode;
@@ -876,6 +870,9 @@ namespace Chat_Virtual___Cliente.Frontend {
                     label.AutoSize = theOther.autoSize;
                     label.Text = theOther.text;
                     label.TextAlign = theOther.contentAlignment;
+                    label.ForeColor = theOther.foreColor;
+                    label.BackColor = theOther.backColor;
+                    label.Font = theOther.font;
                 }
             }
         }
