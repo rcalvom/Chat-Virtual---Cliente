@@ -57,6 +57,8 @@ namespace Chat_Virtual___Cliente.Frontend {
         private delegate void ChangeImageOf(PictureBox pb, Image image);
 
         //Semaforos
+        private Semaphore SActiveChats;
+        private Semaphore SAditionalComponents;
 
         public HomeView() {
             InitializeComponent();
@@ -66,6 +68,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             AditionalComponents = new LinkedList<Control>();
             RecentMessages = OldMessages = new LinkedStack<Panel>();
             ActiveChats = new DynamicArray<Panel>();
+            SActiveChats = new Semaphore(1, 1);
+            SAditionalComponents = new Semaphore(1, 1);
             FirstMessage = null;
             this.currentView = CurrentView.InHome;
             receptor.RunWorkerAsync();
@@ -127,6 +131,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         //Estado: Listo
         private void RemoveComponents() {
+            SAditionalComponents.WaitOne();
             while (!AditionalComponents.IsEmpty()) {
                 Control c = AditionalComponents.Remove(0);
                 this.ViewPanel.Controls.Remove(c);
@@ -134,6 +139,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 this.InfoPanel.Controls.Remove(c);
                 this.actionPanel.Controls.Remove(c);
             }
+            SAditionalComponents.Release();
             RemoveMessages();
         }
 
@@ -176,6 +182,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Listo
         private void Send_Click(object sender, EventArgs e) {
             string content = "";
+            SAditionalComponents.WaitOne();
             Iterator<Control> i = AditionalComponents.Iterator();
             while (i.HasNext()) {
                 Control c = i.Next();
@@ -187,6 +194,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
                 }
             }
+            SAditionalComponents.Release();
             if (currentView == CurrentView.InChat) {
                 ChatMessage ms = new ChatMessage();
                 ms.Sender = model.singleton.userName;
@@ -233,13 +241,15 @@ namespace Chat_Virtual___Cliente.Frontend {
             NewChatTextBox.Multiline = false;
             NewChatTextBox.TabStop = true;
             NewChatTextBox.TextChanged += new EventHandler(SearchChat);
+            SAditionalComponents.WaitOne();
             AditionalComponents.Add(NewChatPanel);
+            SAditionalComponents.Release();
         }
 
         private void SearchChat(object sender, EventArgs e) {
             RemoveActiveChats();
             if(sender is TextBox textBox) {
-                if (currentView == CurrentView.ViewChats)
+                if (currentView == CurrentView.ViewChats || currentView == CurrentView.InChat)
                     currentView = CurrentView.SearchingChats;
                 else
                     currentView = CurrentView.SearchingGroups;
@@ -254,6 +264,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Listo
         private void AddChatBox() {
             bool exist = false;
+            SAditionalComponents.WaitOne();
             ChainNode<Control> c = AditionalComponents.GetNode(0);
             while (c != null) {
                 if (c.element.Name.Equals("chatBox")) {
@@ -262,6 +273,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 }
                 c = c.next;
             }
+            SAditionalComponents.Release();
             if (!exist) {
                 TextBox chat = new TextBox();
                 PictureBox sendButton = new PictureBox();
@@ -295,8 +307,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                 sendButton.SizeMode = PictureBoxSizeMode.StretchImage;
                 sendButton.Click += new EventHandler(this.Send_Click);
 
+                SAditionalComponents.WaitOne();
                 AditionalComponents.Add(chat);
                 AditionalComponents.Add(sendButton);
+                SAditionalComponents.Release();
             }
         }
 
@@ -560,7 +574,9 @@ namespace Chat_Virtual___Cliente.Frontend {
             CopyParameters(user, cp);
 
             c.visible = true;
+            SActiveChats.WaitOne();
             ActiveChats.Add(newPanel);
+            SActiveChats.Release();
         }
 
         //Delegado pendiente
@@ -604,7 +620,9 @@ namespace Chat_Virtual___Cliente.Frontend {
             group.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
             c.visible = true;
+            SActiveChats.WaitOne();
             ActiveChats.Add(newPanel);
+            SActiveChats.Release();
         }
 
         //Delegado listo
@@ -612,6 +630,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats || currentView == CurrentView.SearchingChats)) {
                 return;
             } else if (model.chats.IsEmpty()) {
+                SActiveChats.WaitOne();
                 if (ActiveChats.IsEmpty()) {
                     Panel p = new Panel();
                     Label l = new Label();
@@ -622,7 +641,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     cp.text = "Aún no tienes ningún chat";
                     cp.size = new Size(actionPanel.Width - 6, 20);
                     cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
-                    cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+                    cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
                     cp.foreColor = Color.FromArgb(200, 200, 200);
                     cp.autoSize = false;
                     cp.location = new Point(0, 0);
@@ -637,9 +656,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                     cp.name = "EmptyChat";
                     cp.backColor = Color.Transparent;
                     CopyParameters(p, cp);
+                    SActiveChats.Release();
                     return;
+                } else {
+                    SActiveChats.Release();
                 }
             } else {
+                SActiveChats.WaitOne();
                 if (ActiveChats.Size>=2) {
                     Panel p = ActiveChats.Get(0);
                     if (p.Name.Equals("EmptyChat")) {
@@ -648,9 +671,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
 
                 }
+                SActiveChats.Release();
             }
             Iterator<UserChat> i = model.chats.GetAll().Iterator();
-            int count = 0, imageCount = 0;
+            int count = 0;
             while (i.HasNext()) {
                 UserChat c = i.Next();
                 if (currentView == CurrentView.SearchingChats) {
@@ -673,13 +697,14 @@ namespace Chat_Virtual___Cliente.Frontend {
                     if (userChat != default)
                         if (userChat.profile.Image == null)
                             continue;
-                    foreach (Control control in ActiveChats.Get(imageCount).Controls) {
+                    SActiveChats.WaitOne();
+                    foreach (Control control in ActiveChats.Get(count).Controls) {
                         if(control is PictureBox picture) {
-                            //picture.Image = Serializer.DeserializeImage(userChat.profile.Image);
+                            ChangeImage(picture, Serializer.DeserializeImage(userChat.profile.Image));
                         }
                     }
+                    SActiveChats.Release();
                 }
-                imageCount++;
             }
         }
 
@@ -688,6 +713,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats || currentView == CurrentView.SearchingGroups)) {
                 return;
             } else if (model.groups.IsEmpty()) {
+                SActiveChats.WaitOne();
                 if (ActiveChats.IsEmpty()) {
                     Panel p = new Panel();
                     Label l = new Label();
@@ -713,9 +739,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                     cp.name = "EmptyChat";
                     cp.backColor = Color.Transparent;
                     CopyParameters(p, cp);
+                    SActiveChats.Release();
                     return;
+                } else {
+                    SActiveChats.Release();
                 }
             } else {
+                SActiveChats.WaitOne();
                 if (!ActiveChats.IsEmpty()) {
                     Panel p = ActiveChats.Get(0);
                     if (p.Name.Equals("EmptyChat")) {
@@ -724,6 +754,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
 
                 }
+                SActiveChats.Release();
             }
             Iterator<Group> i = model.groups.GetAll().Iterator();
             int count = 0;
@@ -749,10 +780,12 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         //Delegado listo
         private void RemoveActiveChats() {
+            SActiveChats.WaitOne();
             Iterator<Panel> i = ActiveChats.Iterator();
             while (i.HasNext())
                 DeleteControl(i.Next(), actionPanel);
             ActiveChats = new DynamicArray<Panel>();
+            SActiveChats.Release();
             if (currentView == CurrentView.InChat || currentView == CurrentView.ViewChats || currentView == CurrentView.SearchingChats) {
                 Iterator<UserChat> uc = model.chats.GetAll().Iterator();
                 while (uc.HasNext()) {
