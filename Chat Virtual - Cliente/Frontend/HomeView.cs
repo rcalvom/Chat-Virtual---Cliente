@@ -31,7 +31,7 @@ struct ControlParameters {
 };
 
 enum CurrentView {
-    InChat, InGroup, InHome, InProfile, ViewChats, ViewGroups
+    InChat, InGroup, InHome, InProfile, ViewChats, ViewGroups, SearchingChats, SearchingGroups
 };
 
 namespace Chat_Virtual___Cliente.Frontend {
@@ -227,22 +227,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             NewChatTextBox.TabIndex = 2;
             NewChatTextBox.Multiline = false;
             NewChatTextBox.TabStop = true;
-            NewChatTextBox.KeyPress += new KeyPressEventHandler(EnterKeyPress);
+            NewChatTextBox.TextChanged += new EventHandler(SearchChat);
             AditionalComponents.Add(NewChatPanel);
         }
 
-        private void EnterKeyPress(object sender, KeyPressEventArgs e) {
-            string a = "";
-            if (e.KeyChar == (int)Keys.Enter) {
-                if (sender is TextBox t) {
-                    if (t.Name.Equals("chatBox")) {
-                        Send_Click(t, e);
-                        return;
-                    }
-                    a = t.Text;
-                    t.Clear();
-                }
-                model.ToWriteEnqueue(new Chat(model.singleton.userName, a));
+        private void SearchChat(object sender, EventArgs e) {
+            RemoveActiveChats();
+            if(sender is TextBox textBox) {
+                if (currentView == CurrentView.ViewChats)
+                    currentView = CurrentView.SearchingChats;
+                else
+                    currentView = CurrentView.SearchingGroups;
+
+                if (currentView == CurrentView.SearchingChats)
+                    model.ToWriteEnqueue(new Chat(model.singleton.userName, textBox.Text));
+                else
+                    model.ToWriteEnqueue(new ChatGroup(-1, textBox.Text));
             }
         }
 
@@ -607,7 +607,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         //Delegado listo
         private void ManagmentChat() {
-            if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats)) {
+            if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats || currentView == CurrentView.SearchingChats)) {
                 return;
             } else if (model.chats.IsEmpty()) {
                 if (ActiveChats.IsEmpty()) {
@@ -651,8 +651,20 @@ namespace Chat_Virtual___Cliente.Frontend {
             int count = 0;
             while (i.HasNext()) {
                 UserChat c = i.Next();
-                if (!c.visible) {
-                    AddChat(c, count);
+                if (currentView == CurrentView.SearchingChats) {
+                    if (c.searched) {
+                        if (!c.visible) {
+                            AddChat(c, count);
+                        }
+                        count++;
+                    }
+                } else {
+                    if (!c.searched) {
+                        if (!c.visible) {
+                            AddChat(c, count);
+                        }
+                        count++;
+                    }
                 }
                 if (c.profile.Image == null) {
                     UserChat userChat = model.chats.Search(c.profile.Name);
@@ -671,7 +683,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         //Delegado listo
         private void ManagmentGroup() {
-            if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats)) {
+            if (!(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats || currentView == CurrentView.SearchingGroups)) {
                 return;
             } else if (model.groups.IsEmpty()) {
                 if (ActiveChats.IsEmpty()) {
@@ -715,10 +727,21 @@ namespace Chat_Virtual___Cliente.Frontend {
             int count = 0;
             while (i.HasNext()) {
                 Group c = i.Next();
-                if (!c.visible) {
-                    AddGroup(c, count);
+                if (currentView == CurrentView.SearchingChats) {
+                    if (c.searched) {
+                        if (!c.visible) {
+                            AddGroup(c, count);
+                        }
+                        count++;
+                    }
+                } else {
+                    if (!c.searched) {
+                        if (!c.visible) {
+                            AddGroup(c, count);
+                        }
+                        count++;
+                    }
                 }
-                count++;
             }
         }
 
@@ -728,10 +751,30 @@ namespace Chat_Virtual___Cliente.Frontend {
             while (i.HasNext())
                 DeleteControl(i.Next(), actionPanel);
             ActiveChats = new DynamicArray<Panel>();
+            if (currentView == CurrentView.InChat || currentView == CurrentView.ViewChats || currentView == CurrentView.SearchingChats) {
+                Iterator<UserChat> uc = model.chats.GetAll().Iterator();
+                while (uc.HasNext()) {
+                    UserChat chat = uc.Next();
+                    chat.visible = false;
+                    if (chat.searched)
+                        model.chats.Remove(chat.profile.Name);
+                }
+            } else if (currentView == CurrentView.InGroup || currentView == CurrentView.ViewGroups || currentView == CurrentView.SearchingGroups) {
+                Iterator<Group> g = model.groups.GetAll().Iterator();
+                while (g.HasNext()) {
+                    Group group = g.Next();
+                    group.visible = false;
+                    if (group.searched)
+                        model.groups.Remove(group.code);
+                }
+            }
         }
 
         private void Chat_Click(object sender, EventArgs e) {
             AddChatBox();
+            if (currentView == CurrentView.SearchingChats) {
+                RemoveActiveChats();
+            }
             currentView = CurrentView.InChat;
             if (sender is Panel s)
                 model.CurrentChat = s.Name;
@@ -739,6 +782,9 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void Group_Click(object sender, EventArgs e) {
             AddChatBox();
+            if (currentView == CurrentView.SearchingGroups) {
+                RemoveActiveChats();
+            }
             currentView = CurrentView.InGroup;
             if (sender is Panel sn)
                 model.CurrentGroup = int.Parse(sn.Name);
@@ -791,15 +837,24 @@ namespace Chat_Virtual___Cliente.Frontend {
                         receiver.NewMessages.Enqueue(groupMessage);
                     }
                 } else if (data is ChatGroup chatGroup) {
-                    Group newGroup = new Group(chatGroup.idGroup, chatGroup.name);
+                    Group newGroup = new Group();
+                    newGroup.code = chatGroup.idGroup;
+                    newGroup.name = chatGroup.name;
+                    if (currentView == CurrentView.SearchingGroups)
+                        newGroup.searched = true;
+                    else
+                        newGroup.searched = false;
                     model.groups.AddElement(newGroup.code, newGroup);
                 } else if (data is Chat chat) {
-                    Console.WriteLine("Me ha llegado un chat");
                     UserChat newChat;
                     if (chat.memberOne.Equals(model.singleton.userName))
                         newChat = new UserChat(chat.memberTwo);
                     else
                         newChat = new UserChat(chat.memberOne);
+                    if (currentView == CurrentView.SearchingChats)
+                        newChat.searched = true;
+                    else
+                        newChat.searched = false;
                     model.chats.AddElement(newChat.profile.Name, newChat);
                 } else if (data is RequestAnswer requestAnswer) {
 
@@ -818,8 +873,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     UserChat uc = model.chats.Search(profile.Name);
                     if (uc != default) {
                         uc.profile = profile;
-                    }
-                    if (profile.Name.Equals(model.singleton.userName)) {
+                    } else if (profile.Name.Equals(model.singleton.userName)) {
                         model.singleton.Status = profile.Status;
                         model.singleton.ProfilePicture = profile.Image;
                     }

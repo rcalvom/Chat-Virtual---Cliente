@@ -4,6 +4,7 @@ using ShippingData;
 namespace Chat_Virtual___Cliente.Communication {
     class Group {
         public bool visible { get; set; }
+        public bool searched { get; set; }
         public int code { get; set; }
         public string name { get; set; }
         public LinkedList<string> members { get; set; } 

@@ -38,7 +38,7 @@
             this.LStatus = new System.Windows.Forms.Label();
             this.LTStatus = new System.Windows.Forms.Label();
             this.labelUser = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.ChangePassword = new System.Windows.Forms.LinkLabel();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.SingIn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -81,7 +81,7 @@
             this.exitButton.BackColor = System.Drawing.Color.Transparent;
             this.exitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.exitButton.Image = global::Chat_Virtual___Cliente.Properties.Resources.Close_Window__2_48px;
-            this.exitButton.Location = new System.Drawing.Point(539, 7);
+            this.exitButton.Location = new System.Drawing.Point(545, 7);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(25, 25);
             this.exitButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -107,7 +107,7 @@
             this.panel1.Controls.Add(this.LStatus);
             this.panel1.Controls.Add(this.LTStatus);
             this.panel1.Controls.Add(this.labelUser);
-            this.panel1.Controls.Add(this.linkLabel1);
+            this.panel1.Controls.Add(this.ChangePassword);
             this.panel1.Controls.Add(this.pictureBox3);
             this.panel1.Controls.Add(this.SingIn);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -121,7 +121,6 @@
             // 
             // LStatus
             // 
-            this.LStatus.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LStatus.AutoSize = true;
             this.LStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -133,7 +132,6 @@
             // 
             // LTStatus
             // 
-            this.LTStatus.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LTStatus.AutoSize = true;
             this.LTStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -145,7 +143,6 @@
             // 
             // labelUser
             // 
-            this.labelUser.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelUser.AutoSize = true;
             this.labelUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelUser.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
@@ -156,17 +153,20 @@
             this.labelUser.Text = "Usuario:  ";
             this.labelUser.Click += new System.EventHandler(this.LabelUser_Click);
             // 
-            // linkLabel1
+            // ChangePassword
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(41, 259);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(102, 13);
-            this.linkLabel1.TabIndex = 6;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Cambiar Contrasena";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
+            this.ChangePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ChangePassword.AutoSize = true;
+            this.ChangePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChangePassword.LinkColor = System.Drawing.Color.Cyan;
+            this.ChangePassword.Location = new System.Drawing.Point(31, 181);
+            this.ChangePassword.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ChangePassword.Name = "ChangePassword";
+            this.ChangePassword.Size = new System.Drawing.Size(145, 18);
+            this.ChangePassword.TabIndex = 6;
+            this.ChangePassword.TabStop = true;
+            this.ChangePassword.Text = "Cambiar Contraseña";
+            this.ChangePassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
             // 
             // pictureBox3
             // 
@@ -182,7 +182,7 @@
             // 
             // SingIn
             // 
-            this.SingIn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.SingIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SingIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.SingIn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SingIn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -192,7 +192,7 @@
             this.SingIn.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SingIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SingIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SingIn.Location = new System.Drawing.Point(409, 278);
+            this.SingIn.Location = new System.Drawing.Point(449, 315);
             this.SingIn.Name = "SingIn";
             this.SingIn.Size = new System.Drawing.Size(112, 27);
             this.SingIn.TabIndex = 4;
@@ -253,7 +253,7 @@
         private System.Windows.Forms.Button SingIn;
         private Bunifu.Framework.UI.BunifuDragControl ProfileDrag;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel ChangePassword;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label labelUser;
         public System.Windows.Forms.Label LStatus;

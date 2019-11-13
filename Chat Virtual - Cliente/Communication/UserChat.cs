@@ -6,6 +6,7 @@ using ShippingData;
 namespace Chat_Virtual___Cliente.Communication {
     class UserChat {
         public bool visible { get; set; }
+        public bool searched { get; set; }
         public Profile profile { get; set; }
         public LinkedStack<ChatMessage> messages { get; set; }
         public LinkedQueue<ChatMessage> NewMessages { get; set; }
