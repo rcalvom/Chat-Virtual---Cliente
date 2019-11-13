@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 using static ShippingData.Message;
 
 struct ControlParameters {
@@ -42,16 +43,20 @@ namespace Chat_Virtual___Cliente.Frontend {
         private MainModel model;
         private ShippingData.Message FirstMessage;
         private CurrentView currentView;
+
         private LinkedList<Control> AditionalComponents;
         private LinkedStack<Panel> RecentMessages;
         private LinkedStack<Panel> OldMessages;
-
         private DynamicArray<Panel> ActiveChats;
 
         private delegate void AddIn(Control toAdd, Control In);
+        private delegate void AddIn2(Control toAdd, Control In);
         private delegate void DeleteIn(Control toAdd, Control In);
+        private delegate void DeleteIn2(Control toAdd, Control In);
         private delegate void CopyParametersOf(Control controlOne, ControlParameters controlTwo);
         private delegate void ChangeImageOf(PictureBox pb, Image image);
+
+        //Semaforos
 
         public HomeView() {
             InitializeComponent();
@@ -302,12 +307,11 @@ namespace Chat_Virtual___Cliente.Frontend {
             Label content = new Label();
             Label time = new Label();
             ChatMessage ms;
-            if (!chat.NewMessages.IsEmpty()) {
-                ms = chat.NewMessages.Dequeue();
-            } else if (!chat.messages.IsEmpty()) {
-                ms = chat.messages.Pop();
-            } else {
-                return;
+            ms = chat.NewMessageDequeue();
+            if (ms == default) {
+                ms = chat.OldMessagePop();
+                if (ms == default)
+                    return;
             }
             AddControl(message, ViewPanel);
             AddControl(user, message);
@@ -374,18 +378,16 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         //Delegado listo
-        private void AddGroupMessage(Group chat) {
+        private void AddGroupMessage(Group group) {
             Panel message = new Panel();
             Label user = new Label();
             Label content = new Label();
             Label time = new Label();
-            GroupMessage ms;
-            if (!chat.NewMessages.IsEmpty()) {
-                ms = chat.NewMessages.Dequeue();
-            } else if (!chat.messages.IsEmpty()) {
-                ms = chat.messages.Pop();
-            } else {
-                return;
+            GroupMessage ms = group.NewMessageDequeue();
+            if(ms == default) {
+                ms = group.OldMessagePop();
+                if (ms == default)
+                    return;
             }
             AddControl(message, ViewPanel);
             AddControl(user, message);
@@ -473,7 +475,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     } else {
                         ms.Receiver = model.singleton.userName;
                     }
-                    uc.messages.Push(ms);
+                    uc.OldMessagesPush(ms);
                     DeleteControl(p, ViewPanel);
                 }
                 while (!OldMessages.IsEmpty()) {
@@ -497,7 +499,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                             }
                         }
                     }
-                    group.messages.Push(gm);
+                    group.OldMessagesPush(gm);
                     DeleteControl(p, ViewPanel);
                 }
                 while (!OldMessages.IsEmpty()) {
@@ -648,7 +650,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 }
             }
             Iterator<UserChat> i = model.chats.GetAll().Iterator();
-            int count = 0;
+            int count = 0, imageCount = 0;
             while (i.HasNext()) {
                 UserChat c = i.Next();
                 if (currentView == CurrentView.SearchingChats) {
@@ -671,13 +673,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                     if (userChat != default)
                         if (userChat.profile.Image == null)
                             continue;
-                    foreach (Control control in ActiveChats.Get(count).Controls) {
+                    foreach (Control control in ActiveChats.Get(imageCount).Controls) {
                         if(control is PictureBox picture) {
-                            picture.Image = Serializer.DeserializeImage(userChat.profile.Image);
+                            //picture.Image = Serializer.DeserializeImage(userChat.profile.Image);
                         }
                     }
                 }
-                count++;
+                imageCount++;
             }
         }
 
@@ -828,13 +830,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                         else
                             user = chatMessage.Sender;
                         model.chats.AddElement(user, new UserChat(user));
-                        model.chats.Search(user).NewMessages.Enqueue(chatMessage);
+                        model.chats.Search(user).NewMessagesEnqueue(chatMessage);
                     } else if (data is GroupMessage groupMessage) {
                         Console.WriteLine("Sender: " + groupMessage.Sender);
                         Console.WriteLine("Id group receiver: " + groupMessage.IdGroupReceiver);
                         Console.WriteLine("Content: " + groupMessage.Content);
                         Group receiver = model.groups.Search(groupMessage.IdGroupReceiver);
-                        receiver.NewMessages.Enqueue(groupMessage);
+                        receiver.NewMessagesEnqueue(groupMessage);
                     }
                 } else if (data is ChatGroup chatGroup) {
                     Group newGroup = new Group();
@@ -847,6 +849,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     model.groups.AddElement(newGroup.code, newGroup);
                 } else if (data is Chat chat) {
                     UserChat newChat;
+                    Console.WriteLine(chat.memberOne + " " + chat.memberTwo);
                     if (chat.memberOne.Equals(model.singleton.userName))
                         newChat = new UserChat(chat.memberTwo);
                     else
@@ -886,7 +889,16 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void AddControl(Control toAdd, Control In) {
             if (In.InvokeRequired) {
                 var d = new AddIn(AddControl);
-                In.Invoke(d, toAdd, In);
+                In.Invoke(d, new object[] {toAdd, In});
+            } else {
+                AddControl2(toAdd, In);
+            }
+        }
+
+        private void AddControl2(Control toAdd, Control In) {
+            if (toAdd.InvokeRequired) {
+                var d = new AddIn2(AddControl2);
+                toAdd.Invoke(d, new object[] { toAdd, In });
             } else {
                 In.Controls.Add(toAdd);
             }
@@ -894,8 +906,8 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void DeleteControl(Control toDelete, Control In) {
             if (In.InvokeRequired) {
-                var d = new AddIn(DeleteControl);
-                In.Invoke(d, toDelete, In);
+                var d = new DeleteIn(DeleteControl);
+                In.Invoke(d, new object[] { toDelete, In });
             } else {
                 In.Controls.Remove(toDelete);
             }
@@ -923,7 +935,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if (inWhichIWillCopy is Label label) {
                     label.AutoSize = theOther.autoSize;
                     label.Text = theOther.text;
-                    label.TextAlign = theOther.contentAlignment;
+                    //label.TextAlign = theOther.contentAlignment;
                     label.ForeColor = theOther.foreColor;
                     label.BackColor = theOther.backColor;
                     label.Font = theOther.font;
