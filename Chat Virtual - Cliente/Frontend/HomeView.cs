@@ -254,9 +254,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                 else
                     currentView = CurrentView.SearchingGroups;
 
-                if (currentView == CurrentView.SearchingChats)
-                    model.ToWriteEnqueue(new Chat(model.singleton.userName, textBox.Text));
-                else
+                if (currentView == CurrentView.SearchingChats) {
+                    ShippingData.Profile p = new ShippingData.Profile();
+                    p.Name = textBox.Text;
+                    model.ToWriteEnqueue(new Chat(model.singleton.userName, p));
+                } else
                     model.ToWriteEnqueue(new ChatGroup(-1, textBox.Text));
             }
         }
@@ -847,6 +849,12 @@ namespace Chat_Virtual___Cliente.Frontend {
                     RemoveMessages();
                 }
 
+                if (model.singleton.ProfileHasChanged) {
+                    model.ToWriteEnqueue(new ShippingData.Profile(model.singleton.userName, model.singleton.ProfilePicture, model.singleton.Status));
+                    model.singleton.ProfileHasChanged = false;
+                    ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
+                }
+
                 ManagmentChat();
                 ManagmentGroup();
                 Data data = model.ToReadDequeue();
@@ -857,13 +865,16 @@ namespace Chat_Virtual___Cliente.Frontend {
                         Console.WriteLine("Sender: " + chatMessage.Sender);
                         Console.WriteLine("Receiver: " + chatMessage.Receiver);
                         Console.WriteLine("Content: " + chatMessage.Content);
-                        string user;
+                        ShippingData.Profile user = new ShippingData.Profile();
                         if (model.singleton.userName.Equals(chatMessage.Sender))
-                            user = chatMessage.Receiver;
+                            user.Name = chatMessage.Receiver;
                         else
-                            user = chatMessage.Sender;
-                        model.chats.AddElement(user, new UserChat(user));
-                        model.chats.Search(user).NewMessagesEnqueue(chatMessage);
+                            user.Name = chatMessage.Sender;
+                        if (model.chats.Search(user.Name) == default) {
+                            model.chats.AddElement(user.Name, new UserChat(user));
+                            model.ToWriteEnqueue(new Chat(model.singleton.userName, user));
+                        }
+                        model.chats.Search(user.Name).NewMessagesEnqueue(chatMessage);
                     } else if (data is GroupMessage groupMessage) {
                         Console.WriteLine("Sender: " + groupMessage.Sender);
                         Console.WriteLine("Id group receiver: " + groupMessage.IdGroupReceiver);
@@ -882,16 +893,18 @@ namespace Chat_Virtual___Cliente.Frontend {
                     model.groups.AddElement(newGroup.code, newGroup);
                 } else if (data is Chat chat) {
                     UserChat newChat;
-                    Console.WriteLine(chat.memberOne + " " + chat.memberTwo);
-                    if (chat.memberOne.Equals(model.singleton.userName))
-                        newChat = new UserChat(chat.memberTwo);
-                    else
-                        newChat = new UserChat(chat.memberOne);
+                    Console.WriteLine(chat.memberOne + " " + chat.memberTwo.Name);
+                    newChat = new UserChat(chat.memberTwo);
                     if (currentView == CurrentView.SearchingChats)
                         newChat.searched = true;
                     else
                         newChat.searched = false;
-                    model.chats.AddElement(newChat.profile.Name, newChat);
+                    if (model.chats.Search(newChat.profile.Name) == default) {
+                        model.chats.AddElement(newChat.profile.Name, newChat);
+                    } else {
+                        model.chats.Remove(newChat.profile.Name);
+                        model.chats.AddElement(newChat.profile.Name, newChat);
+                    }
                 } else if (data is RequestAnswer requestAnswer) {
 
                 } else if (data is RequestError requestError) {
@@ -899,12 +912,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if (data is ShippingData.Profile p) {
                     Singleton.GetSingleton().ProfilePicture = p.Image;
                     Singleton.GetSingleton().Status = p.Status;
-                } else if (data is TreeActivities ta) {
-                    /*TaskTree.Nodes.Add(ta.Tree[0]);
-                    TaskTree.Nodes[0].Nodes.Add(ta.Tree[1]);
-                    TaskTree.Nodes[0].Nodes.Add(ta.Tree[2]);
-                    TaskTree.Nodes[1].Nodes.Add(ta.Tree[3]);
-                    TaskTree.Nodes[1].Nodes.Add(ta.Tree[4]);*/
+                    ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 } else if (data is ShippingData.Profile profile) {
                     UserChat uc = model.chats.Search(profile.Name);
                     if (uc != default) {

@@ -4,6 +4,7 @@ using System.Net.Sockets;
 
 namespace Chat_Virtual___Cliente.Backend {
     class Singleton {
+        public bool ProfileHasChanged { get; set; }
         public TcpClient Client { get; }
         public NetworkStream stream { get; set; }
         public BinaryWriter Writer { get; set; }

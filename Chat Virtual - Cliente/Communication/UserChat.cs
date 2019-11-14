@@ -25,9 +25,8 @@ namespace Chat_Virtual___Cliente.Communication {
             LastView = DateTime.Now;
         }
 
-        public UserChat(string member) {
-            this.profile = new Profile();
-            profile.Name = member;
+        public UserChat(Profile member) {
+            this.profile = member;
             Messages = new LinkedStack<ChatMessage>();
             NewMessages = new LinkedQueue<ChatMessage>();
             SMessages = new Semaphore(1, 1);

@@ -1,12 +1,6 @@
 ﻿using ShippingData;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Chat_Virtual___Cliente.Backend;
 using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Frontend
@@ -107,7 +101,10 @@ namespace Chat_Virtual___Cliente.Frontend
         }
 
         private void SingIn_Click(object sender, EventArgs e) {
-
+            Singleton s = Singleton.GetSingleton();
+            s.ProfilePicture = Serializer.SerializeImage(pictureBox1.Image);
+            s.Status = LStatus.Text;
+            s.ProfileHasChanged = true;
         }
 
         private void TopPanel_Paint(object sender, PaintEventArgs e) {
