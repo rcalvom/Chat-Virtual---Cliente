@@ -83,3 +83,4 @@ C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\ob
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csproj.CopyComplete
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.exe
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.pdb
+C:\Users\ricar\OneDrive\Documentos\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.TreeView.resources

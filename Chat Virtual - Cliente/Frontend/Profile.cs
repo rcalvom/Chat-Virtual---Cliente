@@ -109,5 +109,13 @@ namespace Chat_Virtual___Cliente.Frontend
         private void SingIn_Click(object sender, EventArgs e) {
 
         }
+
+        private void TopPanel_Paint(object sender, PaintEventArgs e) {
+
+        }
+
+        private void Label2_Click(object sender, EventArgs e) {
+
+        }
     }
 }

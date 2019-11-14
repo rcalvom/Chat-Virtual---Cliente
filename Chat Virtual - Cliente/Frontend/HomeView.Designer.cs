@@ -46,7 +46,7 @@
             this.Home = new System.Windows.Forms.PictureBox();
             this.receptor = new System.ComponentModel.BackgroundWorker();
             this.MainDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.TaskTree = new System.Windows.Forms.TreeView();
+            this.TreeButton = new System.Windows.Forms.PictureBox();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.resizeButtonPanel.SuspendLayout();
@@ -56,13 +56,13 @@
             this.minButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.mainPanel.SuspendLayout();
-            this.actionPanel.SuspendLayout();
             this.optionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Profile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -230,7 +230,6 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.actionPanel.AutoScroll = true;
             this.actionPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.actionPanel.Controls.Add(this.TaskTree);
             this.actionPanel.Location = new System.Drawing.Point(80, 60);
             this.actionPanel.Margin = new System.Windows.Forms.Padding(0);
             this.actionPanel.MinimumSize = new System.Drawing.Size(120, 263);
@@ -243,6 +242,7 @@
             this.optionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.optionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
+            this.optionsPanel.Controls.Add(this.TreeButton);
             this.optionsPanel.Controls.Add(this.Profile);
             this.optionsPanel.Controls.Add(this.Settings);
             this.optionsPanel.Controls.Add(this.Chats);
@@ -335,13 +335,20 @@
             this.MainDrag.TargetControl = this.topPane;
             this.MainDrag.Vertical = true;
             // 
-            // TaskTree
+            // TreeButton
             // 
-            this.TaskTree.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(29)))));
-            this.TaskTree.Location = new System.Drawing.Point(3, 353);
-            this.TaskTree.Name = "TaskTree";
-            this.TaskTree.Size = new System.Drawing.Size(237, 153);
-            this.TaskTree.TabIndex = 0;
+            this.TreeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TreeButton.ErrorImage = null;
+            this.TreeButton.Image = ((System.Drawing.Image)(resources.GetObject("TreeButton.Image")));
+            this.TreeButton.InitialImage = null;
+            this.TreeButton.Location = new System.Drawing.Point(5, 248);
+            this.TreeButton.Name = "TreeButton";
+            this.TreeButton.Padding = new System.Windows.Forms.Padding(5);
+            this.TreeButton.Size = new System.Drawing.Size(70, 70);
+            this.TreeButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.TreeButton.TabIndex = 5;
+            this.TreeButton.TabStop = false;
+            this.TreeButton.Click += new System.EventHandler(this.TreeButton_Click);
             // 
             // HomeView
             // 
@@ -367,13 +374,13 @@
             this.minButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
-            this.actionPanel.ResumeLayout(false);
             this.optionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Profile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -401,6 +408,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox Settings;
         private Bunifu.Framework.UI.BunifuDragControl MainDrag;
-        public System.Windows.Forms.TreeView TaskTree;
+        private System.Windows.Forms.PictureBox TreeButton;
     }
 }

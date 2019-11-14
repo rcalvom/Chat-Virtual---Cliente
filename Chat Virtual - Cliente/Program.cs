@@ -13,8 +13,9 @@ namespace Chat_Virtual___Cliente {
             Singleton singleton = Singleton.GetSingleton();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //HomeView login = new HomeView();
-            LoginWindow login = new LoginWindow();
+            HomeView login = new HomeView();
+            //Frontend.TreeView login = new Frontend.TreeView();
+            //LoginWindow login = new LoginWindow();
             login.Show();
             Application.Run();
         }

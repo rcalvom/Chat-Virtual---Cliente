@@ -63,6 +63,7 @@
             this.TopPanel.Name = "TopPanel";
             this.TopPanel.Size = new System.Drawing.Size(573, 37);
             this.TopPanel.TabIndex = 0;
+            this.TopPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.TopPanel_Paint);
             // 
             // label2
             // 
@@ -75,6 +76,7 @@
             this.label2.Size = new System.Drawing.Size(41, 18);
             this.label2.TabIndex = 8;
             this.label2.Text = "Perfil";
+            this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // exitButton
             // 

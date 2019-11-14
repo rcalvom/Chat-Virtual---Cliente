@@ -900,11 +900,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                     Singleton.GetSingleton().ProfilePicture = p.Image;
                     Singleton.GetSingleton().Status = p.Status;
                 } else if (data is TreeActivities ta) {
-                    TaskTree.Nodes.Add(ta.Tree[0]);
+                    /*TaskTree.Nodes.Add(ta.Tree[0]);
                     TaskTree.Nodes[0].Nodes.Add(ta.Tree[1]);
                     TaskTree.Nodes[0].Nodes.Add(ta.Tree[2]);
                     TaskTree.Nodes[1].Nodes.Add(ta.Tree[3]);
-                    TaskTree.Nodes[1].Nodes.Add(ta.Tree[4]);
+                    TaskTree.Nodes[1].Nodes.Add(ta.Tree[4]);*/
                 } else if (data is ShippingData.Profile profile) {
                     UserChat uc = model.chats.Search(profile.Name);
                     if (uc != default) {
@@ -983,6 +983,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             } else {
                 pictureBox.Image = image;
             }
+        }
+
+        private void TreeButton_Click(object sender, EventArgs e) {
+            new TreeView().ShowDialog();
         }
     }
 }
