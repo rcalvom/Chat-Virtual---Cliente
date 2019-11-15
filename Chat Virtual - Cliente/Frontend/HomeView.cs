@@ -323,6 +323,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             Label content = new Label();
             Label time = new Label();
             ChatMessage ms;
+            if (chat == default)
+                return;
             ms = chat.NewMessageDequeue();
             if (ms == default) {
                 ms = chat.OldMessagePop();
@@ -892,7 +894,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                         newGroup.searched = false;
                     model.groups.AddElement(newGroup.code, newGroup);
                 } else if (data is Chat chat) {
-                    UserChat newChat;
+                    Console.WriteLine(chat.memberOne + " " + chat.memberTwo.Name);
+                    /*UserChat newChat;
                     Console.WriteLine(chat.memberOne + " " + chat.memberTwo.Name);
                     newChat = new UserChat(chat.memberTwo);
                     if (currentView == CurrentView.SearchingChats)
@@ -904,7 +907,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     } else {
                         model.chats.Remove(newChat.profile.Name);
                         model.chats.AddElement(newChat.profile.Name, newChat);
-                    }
+                    }*/
                 } else if (data is RequestAnswer requestAnswer) {
 
                 } else if (data is RequestError requestError) {
@@ -913,14 +916,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                     Singleton.GetSingleton().ProfilePicture = p.Image;
                     Singleton.GetSingleton().Status = p.Status;
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
-                } else if (data is ShippingData.Profile profile) {
-                    UserChat uc = model.chats.Search(profile.Name);
-                    if (uc != default) {
-                        uc.profile = profile;
-                    } else if (profile.Name.Equals(model.singleton.userName)) {
-                        model.singleton.Status = profile.Status;
-                        model.singleton.ProfilePicture = profile.Image;
-                    }
                 }
             }
         }

@@ -39,6 +39,7 @@
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.optionsPanel = new System.Windows.Forms.Panel();
+            this.TreeButton = new System.Windows.Forms.PictureBox();
             this.Profile = new System.Windows.Forms.PictureBox();
             this.Settings = new System.Windows.Forms.PictureBox();
             this.Chats = new System.Windows.Forms.PictureBox();
@@ -46,7 +47,6 @@
             this.Home = new System.Windows.Forms.PictureBox();
             this.receptor = new System.ComponentModel.BackgroundWorker();
             this.MainDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.TreeButton = new System.Windows.Forms.PictureBox();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.resizeButtonPanel.SuspendLayout();
@@ -57,12 +57,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             this.mainPanel.SuspendLayout();
             this.optionsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Profile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -255,6 +255,21 @@
             this.optionsPanel.Size = new System.Drawing.Size(80, 566);
             this.optionsPanel.TabIndex = 0;
             // 
+            // TreeButton
+            // 
+            this.TreeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TreeButton.ErrorImage = null;
+            this.TreeButton.Image = ((System.Drawing.Image)(resources.GetObject("TreeButton.Image")));
+            this.TreeButton.InitialImage = null;
+            this.TreeButton.Location = new System.Drawing.Point(5, 248);
+            this.TreeButton.Name = "TreeButton";
+            this.TreeButton.Padding = new System.Windows.Forms.Padding(5);
+            this.TreeButton.Size = new System.Drawing.Size(70, 70);
+            this.TreeButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.TreeButton.TabIndex = 5;
+            this.TreeButton.TabStop = false;
+            this.TreeButton.Click += new System.EventHandler(this.TreeButton_Click);
+            // 
             // Profile
             // 
             this.Profile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -265,7 +280,7 @@
             this.Profile.Name = "Profile";
             this.Profile.Padding = new System.Windows.Forms.Padding(5);
             this.Profile.Size = new System.Drawing.Size(70, 70);
-            this.Profile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Profile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Profile.TabIndex = 1;
             this.Profile.TabStop = false;
             this.Profile.Click += new System.EventHandler(this.Options_Click);
@@ -335,21 +350,6 @@
             this.MainDrag.TargetControl = this.topPane;
             this.MainDrag.Vertical = true;
             // 
-            // TreeButton
-            // 
-            this.TreeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TreeButton.ErrorImage = null;
-            this.TreeButton.Image = ((System.Drawing.Image)(resources.GetObject("TreeButton.Image")));
-            this.TreeButton.InitialImage = null;
-            this.TreeButton.Location = new System.Drawing.Point(5, 248);
-            this.TreeButton.Name = "TreeButton";
-            this.TreeButton.Padding = new System.Windows.Forms.Padding(5);
-            this.TreeButton.Size = new System.Drawing.Size(70, 70);
-            this.TreeButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.TreeButton.TabIndex = 5;
-            this.TreeButton.TabStop = false;
-            this.TreeButton.Click += new System.EventHandler(this.TreeButton_Click);
-            // 
             // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -375,12 +375,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
             this.optionsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Profile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).EndInit();
             this.ResumeLayout(false);
 
         }
