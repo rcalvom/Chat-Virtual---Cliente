@@ -464,7 +464,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         private System.Windows.Forms.PictureBox Settings;
         private Bunifu.Framework.UI.BunifuDragControl MainDrag;
         private System.Windows.Forms.PictureBox TreeButton;
-
+        /*
         private void Tester() {
             model.singleton.userName = "Fededin";
             string[] chats = {"Juan", "Pedro", "Pablo", "Sebastiasn", "Natalia" };
@@ -481,7 +481,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ms.date = new Date(System.DateTime.Now);
                 model.ToReadEnqueue(ms);
             }
-        }
+        }*/
 
         private System.Windows.Forms.Panel ChatBoxPanel;
         private System.Windows.Forms.TextBox chat;

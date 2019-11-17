@@ -58,14 +58,14 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         private void DataControl() {
-            runThread = true;/*
+            runThread = true;
             while (threads) {
                 Data data = ToWriteDequeue();
                 if (data != default)
                     if (!Write(data))
                         ToWriteEnqueue(data);
                 Read();
-            }*/
+            }
             runThread = false;
         }
 
