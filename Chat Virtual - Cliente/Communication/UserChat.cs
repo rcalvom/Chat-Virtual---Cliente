@@ -23,6 +23,7 @@ namespace Chat_Virtual___Cliente.Communication {
             SMessages = new Semaphore(1, 1);
             SNewMessages = new Semaphore(1, 1);
             LastView = DateTime.Now;
+            searched = false;
         }
 
         public UserChat(Profile member) {

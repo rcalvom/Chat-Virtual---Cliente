@@ -12,16 +12,17 @@ namespace Chat_Virtual___Cliente.Backend {
         protected bool threads;
         protected Semaphore CanRead;
         protected Semaphore CanWrite;
+
         public int CurrentGroup { get; set; }
         public string CurrentChat { get; set; }
-        public HashTable<string, UserChat> chats { get; set; }
-        public HashTable<int, Group> groups { get; set; }
+        public LinkedList<UserChat> chats { get; set; }
+        public LinkedList<Group> groups { get; set; }
 
         public MainModel() {
             singleton = Singleton.GetSingleton();
             toWrite = toRead = new LinkedQueue<Data>();
-            chats = new HashTable<string, UserChat>(50);
-            groups = new HashTable<int, Group>(20);
+            chats = new LinkedList<UserChat>();
+            groups = new LinkedList<Group>();
             threads = true;
             runThread = false;
             CanRead = new Semaphore(1, 1);
@@ -57,14 +58,14 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         private void DataControl() {
-            runThread = true;
+            runThread = true;/*
             while (threads) {
                 Data data = ToWriteDequeue();
                 if (data != default)
                     if (!Write(data))
                         ToWriteEnqueue(data);
                 Read();
-            }
+            }*/
             runThread = false;
         }
 

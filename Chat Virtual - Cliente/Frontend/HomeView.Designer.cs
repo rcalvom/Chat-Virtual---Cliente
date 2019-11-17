@@ -1,4 +1,7 @@
-﻿namespace Chat_Virtual___Cliente.Frontend {
+﻿using ShippingData;
+using static ShippingData.Message;
+
+namespace Chat_Virtual___Cliente.Frontend {
     partial class HomeView {
         /// <summary>
         /// Required designer variable.
@@ -47,6 +50,9 @@
             this.Home = new System.Windows.Forms.PictureBox();
             this.receptor = new System.ComponentModel.BackgroundWorker();
             this.MainDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.ChatBoxPanel = new System.Windows.Forms.Panel();
+            this.sendButton = new System.Windows.Forms.PictureBox();
+            this.chat = new System.Windows.Forms.TextBox();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.resizeButtonPanel.SuspendLayout();
@@ -63,6 +69,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
+            this.ChatBoxPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sendButton)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -175,6 +183,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainPanel.BackColor = System.Drawing.Color.Transparent;
+            this.mainPanel.Controls.Add(this.ChatBoxPanel);
             this.mainPanel.Controls.Add(this.InfoPanel);
             this.mainPanel.Controls.Add(this.ViewPanel);
             this.mainPanel.Controls.Add(this.descriptionPanel);
@@ -350,6 +359,48 @@
             this.MainDrag.TargetControl = this.topPane;
             this.MainDrag.Vertical = true;
             // 
+            // ChatBoxPanel
+            // 
+            this.ChatBoxPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ChatBoxPanel.AutoSize = true;
+            this.ChatBoxPanel.Controls.Add(this.chat);
+            this.ChatBoxPanel.Controls.Add(this.sendButton);
+            this.ChatBoxPanel.Location = new System.Drawing.Point(323, 526);
+            this.ChatBoxPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.ChatBoxPanel.Name = "ChatBoxPanel";
+            this.ChatBoxPanel.Size = new System.Drawing.Size(677, 40);
+            this.ChatBoxPanel.TabIndex = 5;
+            this.ChatBoxPanel.Visible = false;
+            // 
+            // sendButton
+            // 
+            this.sendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sendButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.sendButton.Image = ((System.Drawing.Image)(resources.GetObject("sendButton.Image")));
+            this.sendButton.Location = new System.Drawing.Point(638, 7);
+            this.sendButton.Margin = new System.Windows.Forms.Padding(5);
+            this.sendButton.Name = "sendButton";
+            this.sendButton.Size = new System.Drawing.Size(22, 22);
+            this.sendButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sendButton.TabIndex = 0;
+            this.sendButton.TabStop = false;
+            this.sendButton.Click += new System.EventHandler(this.Send_Click);
+            // 
+            // chat
+            // 
+            this.chat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(64)))));
+            this.chat.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.chat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chat.ForeColor = System.Drawing.SystemColors.Window;
+            this.chat.Location = new System.Drawing.Point(11, 7);
+            this.chat.Multiline = true;
+            this.chat.Name = "chat";
+            this.chat.Size = new System.Drawing.Size(619, 22);
+            this.chat.TabIndex = 1;
+            // 
             // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -374,6 +425,7 @@
             this.minButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             this.mainPanel.ResumeLayout(false);
+            this.mainPanel.PerformLayout();
             this.optionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Profile)).EndInit();
@@ -381,6 +433,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
+            this.ChatBoxPanel.ResumeLayout(false);
+            this.ChatBoxPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sendButton)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -409,5 +464,27 @@
         private System.Windows.Forms.PictureBox Settings;
         private Bunifu.Framework.UI.BunifuDragControl MainDrag;
         private System.Windows.Forms.PictureBox TreeButton;
+
+        private void Tester() {
+            model.singleton.userName = "Fededin";
+            string[] chats = {"Juan", "Pedro", "Pablo", "Sebastiasn", "Natalia" };
+            for(int i = 0; i<5; i++) {
+                ShippingData.Profile p = new ShippingData.Profile();
+                p.Name = chats[i];
+                model.ToReadEnqueue(new Chat("Tu", p, false));
+            }
+            for(int i = 0; i<5; i++) {
+                ChatMessage ms = new ChatMessage();
+                ms.Sender = chats[i];
+                ms.Receiver = model.singleton.userName;
+                ms.Content = "Hey, i'm using SADIRI";
+                ms.date = new Date(System.DateTime.Now);
+                model.ToReadEnqueue(ms);
+            }
+        }
+
+        private System.Windows.Forms.Panel ChatBoxPanel;
+        private System.Windows.Forms.TextBox chat;
+        private System.Windows.Forms.PictureBox sendButton;
     }
 }
