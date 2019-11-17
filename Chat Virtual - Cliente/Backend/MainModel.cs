@@ -8,8 +8,6 @@ using System.Windows.Forms;
 namespace Chat_Virtual___Cliente.Backend {
     class MainModel : Model {
 
-        protected bool runThread;
-        protected bool threads;
         protected Semaphore CanRead;
         protected Semaphore CanWrite;
 
@@ -24,12 +22,8 @@ namespace Chat_Virtual___Cliente.Backend {
             toRead = new LinkedQueue<Data>();
             chats = new LinkedList<UserChat>();
             groups = new LinkedList<Group>();
-            threads = true;
-            runThread = false;
             CanRead = new Semaphore(1, 1);
             CanWrite = new Semaphore(1, 1);
-            Thread thread = new Thread(DataControl);
-            thread.Start();
         }
 
         public void ToWriteEnqueue(Data a) {
@@ -58,20 +52,15 @@ namespace Chat_Virtual___Cliente.Backend {
             return a;
         }
 
-        private void DataControl() {
-            runThread = true;
-            /*while (threads) {
-                Data data = ToWriteDequeue();
-                if (data != default)
-                    if (!Write(data))
-                        ToWriteEnqueue(data);
-                Read();
-            }*/
-            runThread = false;
+        public void DataControl() {
+            Data data = ToWriteDequeue();
+            if (data != default)
+                if (!Write(data))
+                    ToWriteEnqueue(data);
+            Read();
         }
 
         public new void Disconnect() {
-            threads = false;
             this.singleton.Client.Close();
         }
 
@@ -79,13 +68,8 @@ namespace Chat_Virtual___Cliente.Backend {
             try {
                 singleton.Client.Connect("25.7.220.122", 7777);
                 singleton.SetStreams();
-                threads = true;
-                runThread = false;
-                Thread thread = new Thread(DataControl);
-                thread.Start();
                 return true;
             } catch (Exception) {
-                threads = false;
                 return false;
             }
         }
@@ -93,8 +77,6 @@ namespace Chat_Virtual___Cliente.Backend {
         private bool Write(Data a) {
             try {
                 Byte[] toSend = Serializer.Serialize(a);
-                if (toSend.Length <= 0)
-                    return false;
                 singleton.Writer.Write(toSend.Length);
                 singleton.Writer.Write(toSend);
                 return true;
