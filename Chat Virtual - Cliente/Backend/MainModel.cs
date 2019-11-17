@@ -20,7 +20,8 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public MainModel() {
             singleton = Singleton.GetSingleton();
-            toWrite = toRead = new LinkedQueue<Data>();
+            toWrite = new LinkedQueue<Data>();
+            toRead = new LinkedQueue<Data>();
             chats = new LinkedList<UserChat>();
             groups = new LinkedList<Group>();
             threads = true;
@@ -59,13 +60,13 @@ namespace Chat_Virtual___Cliente.Backend {
 
         private void DataControl() {
             runThread = true;
-            while (threads) {
+            /*while (threads) {
                 Data data = ToWriteDequeue();
                 if (data != default)
                     if (!Write(data))
                         ToWriteEnqueue(data);
                 Read();
-            }
+            }*/
             runThread = false;
         }
 

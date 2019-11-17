@@ -48,7 +48,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         private LinkedList<Control> AditionalComponents;
         private LinkedStack<Panel> RecentMessages;
         private LinkedStack<Panel> OldMessages;
-        private DynamicArray<Panel> ActiveChats;
+        private LinkedList<Panel> ActiveChats;
 
         private delegate void AddIn(Control toAdd, Control In);
         private delegate void AddIn2(Control toAdd, Control In);
@@ -69,7 +69,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             subprocess = true;
             AditionalComponents = new LinkedList<Control>();
             RecentMessages = OldMessages = new LinkedStack<Panel>();
-            ActiveChats = new DynamicArray<Panel>();
+            ActiveChats = new LinkedList<Panel>();
             SGraficControl = new Semaphore(1, 1);
             FirstMessage = null;
             this.currentView = CurrentView.InHome;
@@ -219,31 +219,36 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.size = new Size(NewChatPanel.Width - 10, 20);
             cp.location = new Point(5, 28);
             cp.tabStop = true;
-            NewChatTextBox.TextChanged += new EventHandler(SearchChat);
+            NewChatTextBox.KeyPress += new KeyPressEventHandler(SearchChat);
             CopyParameters(NewChatTextBox, cp);
 
             AditionalComponents.Add(NewChatPanel);
         }
 
         //Pendiente
-        private void SearchChat(object sender, EventArgs e) {
-            if(sender is TextBox textBox) {
-                if (currentView == CurrentView.ViewChats || currentView == CurrentView.InChat) {
-                    currentView = CurrentView.SearchingChats;
-                    lastView = currentView;
-                } else {
-                    currentView = CurrentView.SearchingGroups;
-                    lastView = currentView;
-                }
+        private void SearchChat(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar == (int)Keys.Enter) { 
+                if (sender is TextBox textBox) {
+                    SGraficControl.WaitOne();
+                    if (currentView == CurrentView.ViewChats || currentView == CurrentView.InChat) {
+                        currentView = CurrentView.SearchingChats;
+                        lastView = currentView;
+                    } else {
+                        currentView = CurrentView.SearchingGroups;
+                        lastView = currentView;
+                    }
 
-                if (currentView == CurrentView.SearchingChats) {
-                    RemoveActiveChats();
-                    ShippingData.Profile p = new ShippingData.Profile();
-                    p.Name = textBox.Text;
-                    model.ToWriteEnqueue(new Chat(model.singleton.userName, p, true));
-                } else {
-                    RemoveActiveChats();
-                    model.ToWriteEnqueue(new ChatGroup(-1, textBox.Text));
+                    if (currentView == CurrentView.SearchingChats) {
+                        RemoveActiveChats();
+                        ShippingData.Profile p = new ShippingData.Profile();
+                        p.Name = textBox.Text;
+                        model.ToWriteEnqueue(new Chat(model.singleton.userName, p, true));
+                    } else {
+                        RemoveActiveChats();
+                        model.ToWriteEnqueue(new ChatGroup(-1, textBox.Text));
+                    }
+                    textBox.Clear();
+                    SGraficControl.Release();
                 }
             }
         }
@@ -558,7 +563,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         //Pendiente
         private void ManagmentChat() {
-            if (model.chats.IsEmpty()) {
+            /*if (model.chats.IsEmpty()) {
                 if (ActiveChats.IsEmpty()) {
                     Panel p = new Panel();
                     Label l = new Label();
@@ -587,7 +592,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     return;
                 }
             } else {
-                if (ActiveChats.Size>=2) {
+                if (!ActiveChats.IsEmpty()) {
                     Panel p = ActiveChats.Get(0);
                     if (p.Name.Equals("EmptyChat")) {
                         DeleteControl(p, actionPanel);
@@ -595,7 +600,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
 
                 }
-            }
+            }*/
             Iterator<UserChat> i = model.chats.Iterator();
             int count = 0;
             while (i.HasNext()) {
@@ -615,17 +620,18 @@ namespace Chat_Virtual___Cliente.Frontend {
                         }
                         count++;
                     }
-                }
+                }/*
                 if (c.profile.Image == null) {
                     UserChat userChat = SearchChat(c.profile.Name);
                     if (userChat == default || userChat.profile.Image == null)
                         continue;
-                    foreach (Control control in ActiveChats.Get(count-1).Controls) {
+                    foreach (Control control in ActiveChats.Get(imageCount).Controls) {
                         if(control is PictureBox picture) {
                             ChangeImage(picture, Serializer.DeserializeImage(userChat.profile.Image));
                         }
                     }
                 }
+                imageCount++;*/
             }
         }
 
@@ -695,7 +701,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             Iterator<Panel> i = ActiveChats.Iterator();
             while (i.HasNext())
                 DeleteControl(i.Next(), actionPanel);
-            ActiveChats = new DynamicArray<Panel>();
+            ActiveChats = new LinkedList<Panel>();
 
             if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats || lastView == CurrentView.SearchingChats) {
                 Iterator<UserChat> uc = model.chats.Iterator();
@@ -845,7 +851,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                         newGroup.searched = false;
                     model.groups.AddElement(newGroup.code, newGroup);*/
                 } else if (data is Chat chat) {
-                    Console.WriteLine(chat.memberOne + " " + chat.memberTwo.Name);
                     UserChat newChat = new UserChat(chat.memberTwo);
                     newChat.searched = chat.Searched;
                     if (SearchChat(newChat.profile.Name) == default) {
