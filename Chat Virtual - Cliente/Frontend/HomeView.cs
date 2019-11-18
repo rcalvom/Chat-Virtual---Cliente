@@ -993,5 +993,10 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void TreeButton_Click(object sender, EventArgs e) {
             new TreeView().ShowDialog();
         }
+
+        private void ViewPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
