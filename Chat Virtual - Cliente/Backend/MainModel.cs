@@ -57,7 +57,7 @@ namespace Chat_Virtual___Cliente.Backend {
             if (data != default)
                 if (!Write(data))
                     ToWriteEnqueue(data);
-            Read();
+            Read(); 
         }
 
         public new void Disconnect() {
