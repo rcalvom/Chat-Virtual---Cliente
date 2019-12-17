@@ -135,6 +135,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             if (ChatBoxPanel.Visible) {
                 ChangeSize(ViewPanel, new Size(ViewPanel.Width, ViewPanel.Height + ChatBoxPanel.Height));
             }
+            ChangeVisible(ActionPanelScroll, false);
+            ChangeVisible(ViewPanelScroll, false);
             ChangeVisible(ChatBoxPanel, false);
         }
 
@@ -493,7 +495,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             //panel
             ControlParameters cp = new ControlParameters();
-            cp.size = new Size(actionPanel.Width, 50);
+            cp.size = new Size(actionPanel.Width-18, 50);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top); ;
             cp.location = new Point(0, cp.size.Height * i);
             cp.borderStyle = BorderStyle.FixedSingle;
@@ -540,7 +542,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             //panel
             ControlParameters cp = new ControlParameters();
-            cp.size = new Size(actionPanel.Width, 50);
+            cp.size = new Size(actionPanel.Width-17, 50);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top); ;
             cp.location = new Point(0, cp.size.Height * i);
             cp.borderStyle = BorderStyle.FixedSingle;
@@ -806,11 +808,14 @@ namespace Chat_Virtual___Cliente.Frontend {
                     switch (currentView) {
                         case CurrentView.InChat:
                         case CurrentView.InGroup:
+                            ChangeVisible(ViewPanelScroll, true);
+                            ChangeVisible(ActionPanelScroll, true);
                             AddChatSearchElements();
                             AddChatBox();
                             break;
                         case CurrentView.ViewGroups:
                         case CurrentView.ViewChats:
+                            ChangeVisible(ActionPanelScroll, true);
                             AddChatSearchElements();
                             break;
                     }
@@ -820,11 +825,15 @@ namespace Chat_Virtual___Cliente.Frontend {
                     ManagmentChat();
                     if (InChat) {
                         AddChatMessage(SearchChat(model.CurrentChat));
+                    } else {
+                        model.CurrentChat = "";
                     }
                 } else if (InGroup || currentView == CurrentView.ViewGroups || currentView == CurrentView.SearchingGroups) {
                     ManagmentGroup();
                     if (InGroup) {
                         AddGroupMessage(SearchGroup(model.CurrentGroup));
+                    } else {
+                        model.CurrentGroup = -1;
                     }
                 }
                 SGraficControl.Release();
