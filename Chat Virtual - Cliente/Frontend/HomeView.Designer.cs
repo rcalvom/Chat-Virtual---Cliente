@@ -42,7 +42,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.sendButton = new System.Windows.Forms.PictureBox();
             this.InfoPanel = new System.Windows.Forms.Panel();
             this.ViewPanel = new System.Windows.Forms.Panel();
-            this.ViewPanelScroll = new System.Windows.Forms.VScrollBar();
             this.descriptionPanel = new System.Windows.Forms.Panel();
             this.actionPanel = new System.Windows.Forms.Panel();
             this.ActionPanelScroll = new System.Windows.Forms.VScrollBar();
@@ -66,7 +65,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.mainPanel.SuspendLayout();
             this.ChatBoxPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sendButton)).BeginInit();
-            this.ViewPanel.SuspendLayout();
             this.actionPanel.SuspendLayout();
             this.optionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).BeginInit();
@@ -260,7 +258,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ViewPanel.AutoScroll = true;
             this.ViewPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ViewPanel.Controls.Add(this.ViewPanelScroll);
             this.ViewPanel.Location = new System.Drawing.Point(323, 60);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ViewPanel.MinimumSize = new System.Drawing.Size(0, 263);
@@ -268,17 +265,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.ViewPanel.Size = new System.Drawing.Size(677, 506);
             this.ViewPanel.TabIndex = 2;
             this.ViewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.ViewPanel_Paint);
-            // 
-            // ViewPanelScroll
-            // 
-            this.ViewPanelScroll.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ViewPanelScroll.Enabled = false;
-            this.ViewPanelScroll.Location = new System.Drawing.Point(658, 0);
-            this.ViewPanelScroll.Name = "ViewPanelScroll";
-            this.ViewPanelScroll.Size = new System.Drawing.Size(19, 506);
-            this.ViewPanelScroll.TabIndex = 0;
-            this.ViewPanelScroll.Visible = false;
             // 
             // descriptionPanel
             // 
@@ -460,7 +446,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.ChatBoxPanel.ResumeLayout(false);
             this.ChatBoxPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sendButton)).EndInit();
-            this.ViewPanel.ResumeLayout(false);
             this.actionPanel.ResumeLayout(false);
             this.optionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).EndInit();
@@ -519,7 +504,6 @@ namespace Chat_Virtual___Cliente.Frontend {
         private System.Windows.Forms.Panel ChatBoxPanel;
         private System.Windows.Forms.TextBox chat;
         private System.Windows.Forms.PictureBox sendButton;
-        private System.Windows.Forms.VScrollBar ViewPanelScroll;
         private System.Windows.Forms.VScrollBar ActionPanelScroll;
     }
 }

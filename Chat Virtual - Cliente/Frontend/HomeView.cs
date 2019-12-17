@@ -136,7 +136,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ChangeSize(ViewPanel, new Size(ViewPanel.Width, ViewPanel.Height + ChatBoxPanel.Height));
             }
             ChangeVisible(ActionPanelScroll, false);
-            ChangeVisible(ViewPanelScroll, false);
             ChangeVisible(ChatBoxPanel, false);
         }
 
@@ -324,7 +323,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.autoSize = false;
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
             cp.borderStyle = BorderStyle.FixedSingle;
-            cp.size = new Size(ViewPanel.Width - 20, time.Height + content.Height + user.Height + 20);
+            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
             if (FirstMessage == null) {
                 FirstMessage = ms;
                 cp.location = new Point(0, 0);
@@ -405,7 +404,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.autoSize = false;
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
             cp.borderStyle = BorderStyle.FixedSingle;
-            cp.size = new Size(ViewPanel.Width - 20, time.Height + content.Height + user.Height + 20);
+            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
             if (FirstMessage == null) {
                 FirstMessage = ms;
                 cp.location = new Point(0, 0);
@@ -808,7 +807,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                     switch (currentView) {
                         case CurrentView.InChat:
                         case CurrentView.InGroup:
-                            ChangeVisible(ViewPanelScroll, true);
                             ChangeVisible(ActionPanelScroll, true);
                             AddChatSearchElements();
                             AddChatBox();
