@@ -35,7 +35,6 @@
             this.exitButton = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.LStatus = new System.Windows.Forms.Label();
             this.LTStatus = new System.Windows.Forms.Label();
             this.labelUser = new System.Windows.Forms.Label();
             this.ChangePassword = new System.Windows.Forms.LinkLabel();
@@ -43,6 +42,7 @@
             this.SingIn = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ProfileDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.TBStatus = new System.Windows.Forms.TextBox();
             this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -63,7 +63,6 @@
             this.TopPanel.Name = "TopPanel";
             this.TopPanel.Size = new System.Drawing.Size(573, 37);
             this.TopPanel.TabIndex = 0;
-            this.TopPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.TopPanel_Paint);
             // 
             // label2
             // 
@@ -71,12 +70,11 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label2.Location = new System.Drawing.Point(49, 7);
+            this.label2.Location = new System.Drawing.Point(42, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 18);
             this.label2.TabIndex = 8;
             this.label2.Text = "Perfil";
-            this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // exitButton
             // 
@@ -101,12 +99,11 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 29;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.PictureBox2_Click);
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
-            this.panel1.Controls.Add(this.LStatus);
+            this.panel1.Controls.Add(this.TBStatus);
             this.panel1.Controls.Add(this.LTStatus);
             this.panel1.Controls.Add(this.labelUser);
             this.panel1.Controls.Add(this.ChangePassword);
@@ -119,25 +116,13 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(573, 354);
             this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel1_Paint);
-            // 
-            // LStatus
-            // 
-            this.LStatus.AutoSize = true;
-            this.LStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.LStatus.Location = new System.Drawing.Point(204, 139);
-            this.LStatus.Name = "LStatus";
-            this.LStatus.Size = new System.Drawing.Size(178, 18);
-            this.LStatus.TabIndex = 9;
-            this.LStatus.Text = "No hay estado disponible.";
             // 
             // LTStatus
             // 
             this.LTStatus.AutoSize = true;
             this.LTStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.LTStatus.Location = new System.Drawing.Point(204, 102);
+            this.LTStatus.Location = new System.Drawing.Point(204, 112);
             this.LTStatus.Name = "LTStatus";
             this.LTStatus.Size = new System.Drawing.Size(59, 18);
             this.LTStatus.TabIndex = 8;
@@ -153,7 +138,6 @@
             this.labelUser.Size = new System.Drawing.Size(72, 18);
             this.labelUser.TabIndex = 7;
             this.labelUser.Text = "Usuario:  ";
-            this.labelUser.Click += new System.EventHandler(this.LabelUser_Click);
             // 
             // ChangePassword
             // 
@@ -172,6 +156,7 @@
             // 
             // pictureBox3
             // 
+            this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox3.Image = global::Chat_Virtual___Cliente.Properties.Resources.ImageAdd;
             this.pictureBox3.Location = new System.Drawing.Point(130, 121);
             this.pictureBox3.Margin = new System.Windows.Forms.Padding(2);
@@ -205,6 +190,8 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(34, 27);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
@@ -220,6 +207,19 @@
             this.ProfileDrag.Horizontal = true;
             this.ProfileDrag.TargetControl = this.TopPanel;
             this.ProfileDrag.Vertical = true;
+            // 
+            // TBStatus
+            // 
+            this.TBStatus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
+            this.TBStatus.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TBStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.TBStatus.Location = new System.Drawing.Point(207, 140);
+            this.TBStatus.MaxLength = 50;
+            this.TBStatus.Name = "TBStatus";
+            this.TBStatus.Size = new System.Drawing.Size(354, 18);
+            this.TBStatus.TabIndex = 10;
+            this.TBStatus.Text = "I only want to study";
             // 
             // Profile
             // 
@@ -258,7 +258,7 @@
         private System.Windows.Forms.LinkLabel ChangePassword;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.Label labelUser;
-        public System.Windows.Forms.Label LStatus;
         public System.Windows.Forms.Label LTStatus;
+        private System.Windows.Forms.TextBox TBStatus;
     }
 }

@@ -13,18 +13,8 @@ namespace Chat_Virtual___Cliente.Frontend
             try {
                 labelUser.Text += "" + Backend.Singleton.GetSingleton().userName;
                 pictureBox1.Image = Serializer.DeserializeImage(Backend.Singleton.GetSingleton().ProfilePicture);
-                LStatus.Text = Backend.Singleton.GetSingleton().Status;
+                TBStatus.Text = Backend.Singleton.GetSingleton().Status;
             } catch (Exception) { }
-        }
-
-        private void Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void PictureBox2_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
@@ -53,16 +43,6 @@ namespace Chat_Virtual___Cliente.Frontend
             }
         }
 
-        private void Label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PictureBox3_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void PictureBox3_Click_1(object sender, EventArgs e)
         {
             try {
@@ -85,34 +65,17 @@ namespace Chat_Virtual___Cliente.Frontend
             }
         }
 
-        private void Label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
         }
 
-        private void LabelUser_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void SingIn_Click(object sender, EventArgs e) {
             Singleton s = Singleton.GetSingleton();
             s.ProfilePicture = Serializer.SerializeImage(pictureBox1.Image);
-            s.Status = LStatus.Text;
+            s.Status = TBStatus.Text;
             s.ProfileHasChanged = true;
-        }
-
-        private void TopPanel_Paint(object sender, PaintEventArgs e) {
-
-        }
-
-        private void Label2_Click(object sender, EventArgs e) {
-
+            this.Close();
         }
     }
 }
