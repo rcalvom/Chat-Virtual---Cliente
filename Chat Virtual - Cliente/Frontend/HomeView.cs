@@ -166,7 +166,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ms.Receiver = model.CurrentChat;
                 ms.Content = content;
                 model.ToWriteEnqueue(ms);
-                model.ToReadEnqueue(ms);                                    //SOLO PARA PRUEBAS
             } else if (currentView == CurrentView.InGroup) {
                 GroupMessage ms = new GroupMessage(model.CurrentGroup, model.singleton.userName, content);
                 model.ToWriteEnqueue(ms);
@@ -860,7 +859,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Subproceso encargado de recibir los mensajes dados por el servidor
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
-            Tester();
+            //Tester();
             while (subprocess) {
                 if (model.singleton.ProfileHasChanged) {
                     model.ToWriteEnqueue(new ShippingData.Profile(model.singleton.userName, model.singleton.ProfilePicture, model.singleton.Status));
@@ -868,11 +867,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 }
 
-                /*if (model.IsConnected()) {
+                if (model.IsConnected()) {
                     model.DataControl();
                 } else {
                     model.Connect();
-                }*/
+                }
                 
                 Data data = model.ToReadDequeue();
                 if (data == default)
@@ -913,6 +912,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 }
             }
+            while (!model.toWrite.IsEmpty())
+                model.Write();
         }
 
 

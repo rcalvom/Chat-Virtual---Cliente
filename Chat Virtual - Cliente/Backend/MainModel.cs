@@ -70,6 +70,7 @@ namespace Chat_Virtual___Cliente.Backend {
                 singleton.SetStreams();
                 return true;
             } catch (Exception) {
+                Disconnect();
                 return false;
             }
         }
