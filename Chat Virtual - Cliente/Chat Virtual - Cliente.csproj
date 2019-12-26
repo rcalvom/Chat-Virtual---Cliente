@@ -62,7 +62,7 @@
     <Compile Include="Backend\MainModel.cs" />
     <Compile Include="Backend\Model.cs" />
     <Compile Include="Backend\Singleton.cs" />
-    <Compile Include="Frontend\CircularPictureBox.cs">
+    <Compile Include="Frontend\GraphicElements\CircularPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Communication\UserChat.cs" />

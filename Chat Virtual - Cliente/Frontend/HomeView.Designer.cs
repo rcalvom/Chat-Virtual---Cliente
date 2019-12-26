@@ -53,6 +53,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.Home = new System.Windows.Forms.PictureBox();
             this.receptor = new System.ComponentModel.BackgroundWorker();
             this.MainDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.SendImage = new System.Windows.Forms.PictureBox();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.resizeButtonPanel.SuspendLayout();
@@ -71,6 +72,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SendImage)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -200,6 +202,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.ChatBoxPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChatBoxPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ChatBoxPanel.BackColor = System.Drawing.Color.Transparent;
+            this.ChatBoxPanel.Controls.Add(this.SendImage);
             this.ChatBoxPanel.Controls.Add(this.chat);
             this.ChatBoxPanel.Controls.Add(this.sendButton);
             this.ChatBoxPanel.Location = new System.Drawing.Point(323, 526);
@@ -218,7 +222,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.chat.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.chat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chat.ForeColor = System.Drawing.SystemColors.Window;
-            this.chat.Location = new System.Drawing.Point(11, 7);
+            this.chat.Location = new System.Drawing.Point(33, 9);
             this.chat.Multiline = true;
             this.chat.Name = "chat";
             this.chat.Size = new System.Drawing.Size(619, 22);
@@ -229,7 +233,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.sendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sendButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.sendButton.Image = ((System.Drawing.Image)(resources.GetObject("sendButton.Image")));
-            this.sendButton.Location = new System.Drawing.Point(638, 7);
+            this.sendButton.Location = new System.Drawing.Point(650, 9);
             this.sendButton.Margin = new System.Windows.Forms.Padding(5);
             this.sendButton.Name = "sendButton";
             this.sendButton.Size = new System.Drawing.Size(22, 22);
@@ -407,6 +411,21 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.MainDrag.TargetControl = this.topPane;
             this.MainDrag.Vertical = true;
             // 
+            // SendImage
+            // 
+            this.SendImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SendImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(64)))));
+            this.SendImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SendImage.Image = ((System.Drawing.Image)(resources.GetObject("SendImage.Image")));
+            this.SendImage.Location = new System.Drawing.Point(11, 9);
+            this.SendImage.Margin = new System.Windows.Forms.Padding(5);
+            this.SendImage.Name = "SendImage";
+            this.SendImage.Size = new System.Drawing.Size(22, 22);
+            this.SendImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.SendImage.TabIndex = 2;
+            this.SendImage.TabStop = false;
+            this.SendImage.Click += new System.EventHandler(this.SendImage_Click);
+            // 
             // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -441,6 +460,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SendImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -491,5 +511,6 @@ namespace Chat_Virtual___Cliente.Frontend {
         private System.Windows.Forms.Panel ChatBoxPanel;
         private System.Windows.Forms.TextBox chat;
         private System.Windows.Forms.PictureBox sendButton;
+        private System.Windows.Forms.PictureBox SendImage;
     }
 }
