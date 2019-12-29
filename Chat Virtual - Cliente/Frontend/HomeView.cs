@@ -174,7 +174,19 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void SendImage_Click(object sender, EventArgs e) {
-            //Insertar una imagen para enviar :D
+            SendImage sendImage = new SendImage();
+            sendImage.ShowDialog();
+            if(sendImage.ImageSelected != null) {
+                if (currentView == CurrentView.InChat) {
+                    ChatMessage chatMessage = new ChatMessage(model.singleton.userName, model.CurrentChat, sendImage.Coment);
+                    chatMessage.Image = sendImage.ImageSelected;
+                    model.ToWriteEnqueue(chatMessage);
+                } else {
+                    GroupMessage groupMessage = new GroupMessage(model.CurrentGroup, model.singleton.userName, sendImage.Coment);
+                    groupMessage.Image = sendImage.ImageSelected;
+                    model.ToWriteEnqueue(groupMessage);
+                }
+            }
         }
 
         private void AddChatSearchElements() {
@@ -228,11 +240,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     SGraficControl.WaitOne();
                     if (currentView == CurrentView.ViewChats || currentView == CurrentView.InChat) {
                         currentView = CurrentView.SearchingChats;
-                        lastView = currentView;
                     } else {
                         currentView = CurrentView.SearchingGroups;
-                        lastView = currentView;
                     }
+                    lastView = currentView;
 
                     if (currentView == CurrentView.SearchingChats) {
                         ShippingData.Profile p = new ShippingData.Profile();
@@ -273,12 +284,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             AddControl(user, message);
             AddControl(content, message);
             AddControl(time, message);
+
             //user label
             ControlParameters cp = new ControlParameters();
             cp.autoSize = true;
             cp.anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
             cp.location = new Point(2, 2);
-            cp.size = new Size(ViewPanel.Width - 24, 18);
+            cp.size = new Size(ViewPanel.Width - 4, 18);
             cp.text = ms.Sender;
             cp.contentAlignment = ContentAlignment.MiddleLeft;
             cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, (0));
@@ -286,30 +298,43 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.name = "UserName";
             cp.tabStop = false;
             CopyParameters(user, cp);
+
             //content label
             cp = new ControlParameters();
-            cp.autoSize = true;
-            cp.anchor = (AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right) | AnchorStyles.Bottom);
+            if (ms.Content.Length == 0) {
+                cp.autoSize = false;
+                cp.size = new Size(0, 0);
+            } else {
+                cp.anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
+                cp.autoSize = true;
+                cp.size = new Size(ViewPanel.Width - 4, 10);
+                cp.maxSize = new Size(ViewPanel.Width - 4, 0);
+                cp.text = ms.Content;
+                cp.contentAlignment = ContentAlignment.MiddleLeft;
+                cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                cp.foreColor = Color.FromArgb(200, 200, 200);
+            }
             cp.location = new Point(2, 25);
-            cp.size = new Size(ViewPanel.Width - 24, 10);
-            cp.maxSize = new Size(ViewPanel.Width - 24, 0);
-            cp.text = ms.Content;
-            cp.contentAlignment = ContentAlignment.MiddleLeft;
-            cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cp.foreColor = Color.FromArgb(200, 200, 200);
             cp.name = "Content";
             cp.tabStop = false;
             CopyParameters(content, cp);
+
             //image pictureBox
+            cp = new ControlParameters();
+            cp.autoSize = false;
+            cp.anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
+            cp.tabStop = false;
             if (ms.Image != null) {
-                cp = new ControlParameters();
-                cp.location = new Point(2, content.Height + 10);
-                cp.maxSize = new Size(ViewPanel.Width - 24, 0);
-                cp.pictureBoxSizeMode = PictureBoxSizeMode.AutoSize;
                 AddControl(image, message);
-                CopyParameters(image, cp);
-                ChangeImage(image, Serializer.DeserializeImage(ms.Image));
+                cp.size = new Size(ViewPanel.Width - 100, ViewPanel.Width/2);
+                cp.location = new Point(10, content.Location.Y + content.Height + 5);
+                cp.pictureBoxSizeMode = PictureBoxSizeMode.AutoSize;
+                cp.image = Serializer.DeserializeImage(ms.Image);
+            } else {
+                cp.size = new Size(0, 0);
             }
+            CopyParameters(image, cp);
+
             //time label
             cp = new ControlParameters();
             cp.autoSize = true;
@@ -318,18 +343,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cp.text = ms.date.FormatHourAndMinute(false);
             cp.contentAlignment = ContentAlignment.MiddleRight;
-            cp.location = new Point(actionPanel.Width - 110, content.Location.Y + content.Height + 35);
-            Console.WriteLine(cp.location.X + " " + cp.location.Y);
+            if (content.Height == 0) {
+                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + 18 + 35);
+            } else {
+                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + content.Height + 35);
+            }
             cp.foreColor = Color.FromArgb(150, 150, 150);
             cp.name = "Time";
             cp.tabStop = false;
             CopyParameters(time, cp);
+
             //message panel
             cp = new ControlParameters();
             cp.autoSize = false;
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
             cp.borderStyle = BorderStyle.None;
-            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20);
+            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20 + image.Height);
             if (FirstMessage == null) {
                 FirstMessage = ms;
                 cp.location = new Point(0, 0);
@@ -347,7 +376,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.name = chat.profile.Name;
             cp.tabStop = false;
             CopyParameters(message, cp);
-            message.SizeChanged += new EventHandler(ViewSizeChanged);
 
             cp = new ControlParameters();
             cp.autoSize = false;
@@ -448,6 +476,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats) {
                 ChatMessage ms;
                 UserChat uc = SearchChat(RecentMessages.Peek().Name);
+                int count = 0;
                 while (!RecentMessages.IsEmpty()) {
                     ms = new ChatMessage();
                     Panel p = RecentMessages.Pop();
@@ -458,8 +487,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                             } else if (l.Name.Equals("Content")) {
                                 ms.Content = l.Text;
                             } else if (l.Name.Equals("Time")) {
-                                //ms.date = new Date(DateTime.Parse(l.Text));
+                                ms.date.StringToDate(l.Text);
                             }
+                        } else if(c is PictureBox image) {
+                            ms.Image = Serializer.SerializeImage(image.Image);
                         }
                     }
                     if (ms.Sender.Equals(model.singleton.userName)) {
@@ -467,8 +498,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     } else {
                         ms.Receiver = model.singleton.userName;
                     }
-                    uc.OldMessagesPush(ms);
+                    if(count<20)
+                        uc.OldMessagesPush(ms);
                     DeleteControl(p, ViewPanel);
+                    count++;
                 }
                 while (!OldMessages.IsEmpty()) {
                     Panel p = OldMessages.Pop();
@@ -902,7 +935,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Subproceso encargado de recibir los mensajes dados por el servidor
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
-            Tester();
+            //Tester();
             while (subprocess) {
                 if (model.singleton.ProfileHasChanged) {
                     model.ToWriteEnqueue(new ShippingData.Profile(model.singleton.userName, model.singleton.ProfilePicture, model.singleton.Status));
@@ -1052,10 +1085,6 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void TreeButton_Click(object sender, EventArgs e) {
             new TreeView().ShowDialog();
-        }
-
-        private void ViewSizeChanged(object sender, EventArgs e) {
-            RemoveMessages();
         }
     }
 }
