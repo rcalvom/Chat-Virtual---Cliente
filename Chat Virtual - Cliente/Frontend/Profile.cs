@@ -2,18 +2,16 @@
 using System;
 using Chat_Virtual___Cliente.Backend;
 using System.Windows.Forms;
+using System.Drawing;
 
-namespace Chat_Virtual___Cliente.Frontend
-{
-    public partial class Profile : Form
-    {
-        public Profile()
-        {
-            InitializeComponent();
+namespace Chat_Virtual___Cliente.Frontend {
+    public partial class Profile : Form {
+        public Profile() {
+            this.InitializeComponent();
             try {
-                labelUser.Text += "" + Backend.Singleton.GetSingleton().userName;
-                pictureBox1.Image = Serializer.DeserializeImage(Backend.Singleton.GetSingleton().ProfilePicture);
-                TBStatus.Text = Backend.Singleton.GetSingleton().Status;
+                this.LabelUser.Text += "" + Singleton.GetSingleton().userName;
+                this.UserPicture.Image = Serializer.DeserializeImage(Singleton.GetSingleton().ProfilePicture);
+                this.TBStatus.Text = Singleton.GetSingleton().Status;
             } catch (Exception) { }
         }
 
@@ -21,43 +19,44 @@ namespace Chat_Virtual___Cliente.Frontend
             this.Close();
         }
 
-        private void PictureBox1_Click(object sender, EventArgs e) {
-            
+        private void UserPicture_Click(object sender, EventArgs e) {
+            // TODO: ¿Agrandar foto?
         }
 
-        private void PictureBox3_Click_1(object sender, EventArgs e)
-        {
-            try {
-                OpenFileDialog dialog = new OpenFileDialog {
-                    Filter = "jpg files(.*jpg)|*.jpg| PNG files(.*png)|*.png| All Files(*.*)|*.*"
-                };
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    string imageLocation = dialog.FileName;
-                    if (imageLocation != null) {
-                        pictureBox1.ImageLocation = imageLocation;
-                    }
+        private void ChangePicture_Click(object sender, EventArgs e) {
+            OpenFileDialog dialog = new OpenFileDialog {
+                Filter = "JPG files(.*jpg)|*.jpg| PNG files(.*png)|*.png| All Files(*.*)|*.*"
+            };
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                string imageLocation = dialog.FileName;
+                if (imageLocation != null) {
+                    this.UserPicture.ImageLocation = imageLocation;
                 }
+            }
+            dialog.Dispose();
 
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("SASA", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
-        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        private void ChangePassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            ChangePasswordView cpv = new ChangePasswordView();
+            cpv.ShowDialog();
+            cpv.Dispose();
         }
 
         private void SingIn_Click(object sender, EventArgs e) {
             Singleton s = Singleton.GetSingleton();
-            s.ProfilePicture = Serializer.SerializeImage(pictureBox1.Image);
-            s.Status = TBStatus.Text;
+            s.ProfilePicture = Serializer.SerializeImage(this.UserPicture.Image);
+            s.Status = this.TBStatus.Text;
             s.ProfileHasChanged = true;
             this.Close();
+        }
+
+        private void ExitButton_MouseEnter(object sender, EventArgs e) {
+            this.exitButton.BackColor = Color.FromArgb(100, 100, 100);
+        }
+
+        private void ExitButton_MouseLeave(object sender, EventArgs e) {
+            this.exitButton.BackColor = Color.FromArgb(20, 20, 24);
         }
     }
 }

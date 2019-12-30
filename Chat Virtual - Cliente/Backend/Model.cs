@@ -39,7 +39,7 @@ namespace Chat_Virtual___Cliente.Backend {
         public bool Write() {
             try {
                 while (!toWrite.IsEmpty()) {
-                    Byte[] toSend = Serializer.Serialize(toWrite.Dequeue());
+                    byte[] toSend = Serializer.Serialize(toWrite.Dequeue());
                     singleton.Writer.Write(toSend.Length);
                     singleton.Writer.Write(toSend);
                 }

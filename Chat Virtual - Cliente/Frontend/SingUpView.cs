@@ -1,145 +1,105 @@
 ﻿using System;
-using System.Net.Sockets;
-using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
 using ShippingData;
-using DataStructures;
+using System.Drawing;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class SingUpView : Form {
 
-        private Model model;
-        private bool subProcess;
-        private LinkedList<Label> errorLabels;
-
-        private delegate void SetVisible(bool state);
-        private delegate void SetAvailable(bool state, Control button);
+        private readonly Model Model;
 
         public SingUpView() {
-            InitializeComponent();
-            errorLabels = new LinkedList<Label>();
-            model = new Model();
-            subProcess = true;
+            this.InitializeComponent();
+            this.Model = new Model();
         }
 
         private void SingUp_Click(object sender, EventArgs e) {
-            errorLabel.Visible = false;
-            while (!errorLabels.IsEmpty()) {
-                this.Controls.Remove(errorLabels.Get(0));
-                errorLabels.Remove(0);
+            this.Cursor = Cursors.WaitCursor;
+            this.ErrorLabel.Visible = false;
+            if(this.userName.Text.Length == 0 || this.UserLastName.Text.Length == 0 || this.User.Text.Length == 0 ||
+               this.Password.Text.Length == 0 || this.PasswordRepeat.Text.Length == 0){
+                this.ErrorMessage("Ninguno de los campos puede estar vacio.");
+                this.Cursor = Cursors.Default;
+                return;
             }
-
-            if(userName.Text.Length == 0 || userLastName.Text.Length == 0 || user.Text.Length == 0 || password.Text.Length == 0 || passwordRepeat.Text.Length == 0){
-                ErrorMessage("Ninguno de los campos puede estar vacio");
+            if (!this.Password.Text.Equals(this.PasswordRepeat.Text)) {
+                this.ErrorMessage("Los campos de contraseña no coinciden.");
+                this.Cursor = Cursors.Default;
                 return;
             }
 
-            if (!password.Text.Equals(passwordRepeat.Text)) {
-                ErrorMessage("Los campos de contraseña no coinciden");
+            this.Model.toWrite.Enqueue(new SignUp(this.userName.Text + " " + this.UserLastName.Text, this.User.Text, this.Password.Text));
+
+            this.Model.Connect();
+
+            if (!this.Model.Write()) {
+                this.ErrorMessage("No se han podido enviar los datos al servidor.");
+                this.Cursor = Cursors.Default;
                 return;
             }
 
-            model.toWrite.Enqueue(new SignUp(userName.Text + " " + userLastName.Text, user.Text, password.Text));
-
-            model.Connect();
-
-            if (!model.Write()) {
-                ErrorMessage("No se han podido enviar los datos al servidor");
-                return;
+            if (!this.Model.Read()) {
+                this.ErrorMessage("No se ha obtenido respuesta del servidor.");
+                this.Model.Disconnect();
             }
 
-            if (!model.Read()) {
-                ErrorMessage("No se ha obtenido respuesta del servidor");
-                model.Disconnect();
-            }
-
-            if (model.toRead.GetFrontElement() is RequestAnswer answer) {
-                model.toRead.Dequeue();
+            if (this.Model.toRead.GetFrontElement() is RequestAnswer answer) {
+                this.Model.toRead.Dequeue();
                 if (answer.answer) {
-                    subProcess = false;
-                    model.singleton.userName = user.Text;
+                    this.Model.singleton.userName = this.User.Text;
                     HomeView nextView = new HomeView();
                     nextView.Show();
-                    Close();
+                    this.Close();
                 } else {
-                    while (!model.toRead.IsEmpty()) {
-                        if (model.toRead.GetFrontElement() is RequestError error) {
+                    while (!this.Model.toRead.IsEmpty()) {
+                        if (this.Model.toRead.GetFrontElement() is RequestError error) {
                             switch(error.errorCode){
-                                case 0:
-                                    ErrorMessage("El nombre de usuario ya se encuentra en uso");
+                                case 0: {
+                                    this.ErrorMessage("El nombre de usuario ya se encuentra en uso.");
                                     break;
+                                }
                             }
                         }
                     }
                 }
             }
+            this.Cursor = Cursors.Default;
         }
 
         private void Back_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            subProcess = false;
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
-            Close();
+            this.Close();
         }
 
         public void ErrorMessage(string error) {
-            errorLabel.Text = error;
-            errorLabel.Visible = true;
-        }
-
-        private void Refresh_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e) {
-            /*bool lastEstate = true;
-            bool connected = false;
-            while (subProcess) {
-                connected = model.IsConnected();
-                if (connected != lastEstate || !connected) {
-                    if (!connected) {
-                        SetVisibleControl(true);
-                        SetStateButton(false, Back);
-                        SetStateButton(false, SingUp);
-                        model.Connect();
-                    } else {
-                        SetVisibleControl(false);
-                        SetStateButton(true, Back);
-                        SetStateButton(true, SingUp);
-                    }
-                }
-                lastEstate = connected;
-                Thread.Sleep(1000);
-            }*/
-        }
-
-        private void SetVisibleControl(bool state) {
-            if (this.ServerDisconnected.InvokeRequired) {
-                var d = new SetVisible(this.SetVisibleControl);
-                ServerDisconnected.Invoke(d, state);
-            } else {
-                this.ServerDisconnected.Visible = state;
-            }
-        }
-
-        private void SetStateButton(bool state, Control option) {
-            if (option.InvokeRequired) {
-                var d = new SetAvailable(this.SetStateButton);
-                option.Invoke(d, state, option);
-            } else {
-                option.Enabled = state;
-            }
+            this.ErrorLabel.Text = error;
+            this.ErrorLabel.Visible = true;
         }
 
         private void MinButton_Click(object sender, EventArgs e) {
-            WindowState = FormWindowState.Minimized;
+            this.WindowState = FormWindowState.Minimized;
         }
 
         private void ExitButton_Click(object sender, EventArgs e) {
-            subProcess = false;
             Application.Exit();
         }
 
-        private void PictureBox2_Click(object sender, EventArgs e)
-        {
+        private void ExitButton_MouseEnter(object sender, EventArgs e) {
+            this.ExitButton.BackColor = Color.FromArgb(100, 100, 100);
+        }
 
+        private void ExitButton_MouseLeave(object sender, EventArgs e) {
+            this.ExitButton.BackColor = Color.FromArgb(20, 20, 24);
+        }
+
+        private void MinButton_MouseEnter(object sender, EventArgs e) {
+            this.MinButton.BackColor = Color.FromArgb(100, 100, 100);
+        }
+
+        private void MinButton_MouseLeave(object sender, EventArgs e) {
+            this.MinButton.BackColor = Color.FromArgb(20, 20, 24);
         }
     }
 }

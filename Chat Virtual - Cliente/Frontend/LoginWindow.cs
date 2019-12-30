@@ -1,8 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Net.Sockets;
-using System.Threading;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
 using Chat_Virtual___Cliente.Frontend;
@@ -10,165 +7,110 @@ using ShippingData;
 
 namespace Chat_Virtual___Cliente {
 
-    public partial class LoginWindow : Form {
+    public partial class LoginWindow : Form{
 
-        private Model model;
-        private string username;
-        private string userPassword;
-        private bool subProcess;
-
-        private delegate void SetVisible(bool state);
-        private delegate void SetAvailable(bool state, Control button);
+        private readonly Model Model;
+        private string Username;
+        private string UserPassword;
 
         public LoginWindow() {
-            InitializeComponent();
-            this.model = new Model();
-            subProcess = true;
-            Refresh.RunWorkerAsync();
+            this.InitializeComponent();
+            this.Model = new Model();
         }
 
-        private void SingIn_Click(object sender, EventArgs e)
-        {      
-            Cursor = Cursors.WaitCursor;
-            errorLabel.Visible = false;
+        private void SingIn_Click(object sender, EventArgs e) {
+            this.Cursor = Cursors.WaitCursor;
+            this.ErrorLabel.Visible = false;
 
-            username = user.Text;
-            userPassword = password.Text;
+            this.Username = this.User.Text;
+            this.UserPassword = this.Password.Text;
 
-            if (username.Length == 0 || userPassword.Length == 0)
-            {
-                ErrorMessage("Los campos de nombre de usuario y contraseña\nno pueden estar vacios");
-                Cursor = Cursors.Default;
+            if (this.Username.Length == 0 || this.UserPassword.Length == 0) {
+                this.ErrorMessage("Los campos de nombre de usuario y contraseña\nno pueden estar vacios");
+                this.Cursor = Cursors.Default;
                 return;
             }
 
-            user.Clear();
-            password.Clear();
+            this.User.Clear();
+            this.Password.Clear();
 
-            model.toWrite.Enqueue(new SignIn(username, userPassword));
+            this.Model.toWrite.Enqueue(new SignIn(this.Username, this.UserPassword));
 
-            model.Connect();
+            this.Model.Connect();
 
-            if (!model.Write()) {
-                ErrorMessage("Error al enviar los datos al servidor");
-                Cursor = Cursors.Default;
+            if (!this.Model.Write()) {
+                this.ErrorMessage("Error al enviar los datos al servidor");
+                this.Cursor = Cursors.Default;
                 return;
             }
 
-            if (!model.Read()) {
-                ErrorMessage("No se ha obtenido respuesta del servidor");
-                model.Disconnect();
-                Cursor = Cursors.Default;
+            if (!this.Model.Read()) {
+                this.ErrorMessage("No se ha obtenido respuesta del servidor");
+                this.Model.Disconnect();
+                this.Cursor = Cursors.Default;
                 return;
             }
 
-            Data answer = model.toRead.Dequeue();
-            if (answer is RequestAnswer rs)
-            {
-                if (rs.answer)
-                {
-                    subProcess = false;
-                    model.singleton.userName = username;
-                    //MainView m = new MainView();
-                    //m.Show();
+            Data answer = this.Model.toRead.Dequeue();
+            if (answer is RequestAnswer rs) {
+                if (rs.answer) {
+                    this.Model.singleton.userName = Username;
                     HomeView homeView = new HomeView();
                     homeView.Show();
-                    Close();
+                    this.Close();
+                } else {
+                    this.ErrorMessage("Usuario o contraseña incorrectos");
                 }
-                else
-                    ErrorMessage("Usuario o contraseña incorrectos");
             }
-            Cursor = Cursors.Default;
-        }
-
-        private void ExitButton_Click(object sender, EventArgs e) {
-            subProcess = false;
-            Application.Exit();
-        }
-
-        private void MinButton_Click(object sender, EventArgs e) {
-            WindowState = FormWindowState.Minimized;
-        }
-
-        private void MinButton_MouseEnter(object sender, EventArgs e) {
-            minButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
-        }
-        private void MinButton_MouseLeave(object sender, EventArgs e) {
-            minButtonPanel.BackColor = topPane.BackColor;
-        }
-
-        private void ExitButton_MouseEnter(object sender, EventArgs e) {
-            closeButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
-        }
-
-        private void ExitButton_MouseLeave(object sender, EventArgs e) {
-            closeButtonPanel.BackColor = topPane.BackColor;
-        }
-
-        private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            subProcess = false;
-            SingUpView singUpView = new SingUpView();
-            singUpView.Show();
-            Close();
-        }
-
-        public void ErrorMessage(string error) {
-            errorLabel.Text = error;
-            errorLabel.Visible = true;
-        }
-
-        private void Refresh_DoWork(object sender, DoWorkEventArgs e) {
-            /*bool lastEstate = true;
-            bool connected = false;
-            while (subProcess) {
-                connected = model.IsConnected();
-                if (connected != lastEstate || !connected) {
-                    if (!connected) {
-                        SetVisibleControl(true);
-                        SetStateButton(false, SingIn);
-                        SetStateButton(false, SingUp);
-                        model.Connect();
-                    } else {
-                        SetVisibleControl(false);
-                        SetStateButton(true, SingIn);
-                        SetStateButton(true, SingUp);
-                    }
-                }
-                lastEstate = connected;
-                Thread.Sleep(1000);
-            }*/
-        }
-
-        private void SetVisibleControl(bool state) {
-            if (this.ServerDisconnected.InvokeRequired) {
-                var d = new SetVisible(this.SetVisibleControl);
-                ServerDisconnected.Invoke(d, state);
-            } else {
-                this.ServerDisconnected.Visible = state;
-            }
-        }
-
-        private void SetStateButton(bool state, Control option) {
-            if (option.InvokeRequired) {
-                var d = new SetAvailable(this.SetStateButton);
-                option.Invoke(d, state, option);
-            } else {
-                option.Enabled = state;
-            }
+            this.Cursor = Cursors.Default;
         }
 
         private void Password_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == (int)Keys.Enter)
-            {
+            if (e.KeyChar == (int)Keys.Enter) {
                 this.SingIn_Click(sender, e);
             }
         }
 
         private void User_KeyPress(object sender, KeyPressEventArgs e) {
-            if (e.KeyChar == (int)Keys.Enter)
-            {
+            if (e.KeyChar == (int)Keys.Enter) {
                 this.SingIn_Click(sender, e);
             }
         }
+
+        private void ExitButton_Click(object sender, EventArgs e) {
+            Application.Exit();
+        }
+
+        private void MinButton_Click(object sender, EventArgs e) {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void MinButton_MouseEnter(object sender, EventArgs e) {
+            this.MinButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
+        }
+        private void MinButton_MouseLeave(object sender, EventArgs e) {
+            this.MinButtonPanel.BackColor = this.topPane.BackColor;
+        }
+
+        private void ExitButton_MouseEnter(object sender, EventArgs e) {
+            this.CloseButtonPanel.BackColor = Color.FromArgb(100, 100, 100);
+        }
+
+        private void ExitButton_MouseLeave(object sender, EventArgs e) {
+            this.CloseButtonPanel.BackColor = this.topPane.BackColor;
+        }
+
+        private void SingUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            SingUpView singUpView = new SingUpView();
+            singUpView.Show();
+            this.Close();
+        }
+
+        public void ErrorMessage(string error) {
+            this.ErrorLabel.Text = error;
+            this.ErrorLabel.Visible = true;
+        }
+
+        
     }
 }

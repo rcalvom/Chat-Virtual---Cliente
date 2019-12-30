@@ -936,18 +936,19 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
             //Tester();
-            while (subprocess) {
+            ;
+            while (/*subprocess*/true) {
                 if (model.singleton.ProfileHasChanged) {
                     model.ToWriteEnqueue(new ShippingData.Profile(model.singleton.userName, model.singleton.ProfilePicture, model.singleton.Status));
                     model.singleton.ProfileHasChanged = false;
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 }
 
-                /*if (model.IsConnected()) {
+                if (model.IsConnected()) {
                     model.DataControl();
                 } else {
                     model.Connect();
-                }*/
+                }
                 
                 Data data = model.ToReadDequeue();
                 if (data == default)

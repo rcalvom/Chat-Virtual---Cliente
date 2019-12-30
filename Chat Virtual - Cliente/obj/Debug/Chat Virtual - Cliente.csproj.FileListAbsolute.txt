@@ -74,7 +74,6 @@ C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bi
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\bin\Debug\DataStructures.xml
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat Virtual - Cliente.csprojAssemblyReference.cache
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.HomeView.resources
-C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.MainView.resources
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.LoginWindow.resources
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.Profile.resources
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.SingUpView.resources
@@ -88,3 +87,5 @@ C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Clie
 C:\Users\sagon\Documents\GitHub\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.TreeView.resources
 C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.TreeView.resources
 C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.SendImage.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.SendImage.resources
+C:\Users\ricar\Documents\Sadiri\Chat-Virtual---Cliente\Chat Virtual - Cliente\obj\Debug\Chat_Virtual___Cliente.Frontend.ChangePasswordView.resources

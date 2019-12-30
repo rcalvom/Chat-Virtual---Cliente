@@ -62,6 +62,12 @@
     <Compile Include="Backend\MainModel.cs" />
     <Compile Include="Backend\Model.cs" />
     <Compile Include="Backend\Singleton.cs" />
+    <Compile Include="Frontend\ChangePasswordView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frontend\ChangePasswordView.Designer.cs">
+      <DependentUpon>ChangePasswordView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frontend\GraphicElements\CircularPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -78,12 +84,6 @@
     </Compile>
     <Compile Include="Frontend\LoginWindow.Designer.cs">
       <DependentUpon>LoginWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Frontend\MainView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Frontend\MainView.Designer.cs">
-      <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="Frontend\Profile.cs">
       <SubType>Form</SubType>
@@ -111,11 +111,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Frontend\ChangePasswordView.resx">
+      <DependentUpon>ChangePasswordView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frontend\HomeView.resx">
       <DependentUpon>HomeView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Frontend\MainView.resx">
-      <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frontend\LoginWindow.resx">
       <DependentUpon>LoginWindow.cs</DependentUpon>

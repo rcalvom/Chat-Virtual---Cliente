@@ -25,63 +25,60 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginWindow));
-            this.user = new System.Windows.Forms.TextBox();
-            this.password = new System.Windows.Forms.TextBox();
+            this.User = new System.Windows.Forms.TextBox();
+            this.Password = new System.Windows.Forms.TextBox();
             this.SingIn = new System.Windows.Forms.Button();
             this.topPane = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.closeButtonPanel = new System.Windows.Forms.Panel();
+            this.CloseButtonPanel = new System.Windows.Forms.Panel();
             this.exitButton = new System.Windows.Forms.PictureBox();
-            this.minButtonPanel = new System.Windows.Forms.Panel();
+            this.MinButtonPanel = new System.Windows.Forms.Panel();
             this.minButton = new System.Windows.Forms.PictureBox();
             this.labelUser = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.DragControl = new Bunifu.Framework.UI.BunifuDragControl(this.components);
-            this.errorLabel = new System.Windows.Forms.Label();
-            this.Refresh = new System.ComponentModel.BackgroundWorker();
-            this.ServerDisconnected = new System.Windows.Forms.Label();
+            this.ErrorLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.SingUp = new System.Windows.Forms.LinkLabel();
             this.Logo = new System.Windows.Forms.PictureBox();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.closeButtonPanel.SuspendLayout();
+            this.CloseButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).BeginInit();
-            this.minButtonPanel.SuspendLayout();
+            this.MinButtonPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.SuspendLayout();
             // 
-            // user
+            // User
             // 
-            this.user.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.user.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.user.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.user.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.user.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.user.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.user.Location = new System.Drawing.Point(168, 133);
-            this.user.Name = "user";
-            this.user.Size = new System.Drawing.Size(267, 24);
-            this.user.TabIndex = 0;
-            this.user.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.User_KeyPress);
+            this.User.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.User.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.User.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.User.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.User.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.User.Location = new System.Drawing.Point(168, 133);
+            this.User.Name = "User";
+            this.User.Size = new System.Drawing.Size(267, 24);
+            this.User.TabIndex = 0;
+            this.User.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.User_KeyPress);
             // 
-            // password
+            // Password
             // 
-            this.password.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.password.Location = new System.Drawing.Point(168, 163);
-            this.password.Name = "password";
-            this.password.PasswordChar = '*';
-            this.password.Size = new System.Drawing.Size(267, 24);
-            this.password.TabIndex = 1;
-            this.password.UseSystemPasswordChar = true;
-            this.password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Password_KeyPress);
+            this.Password.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.Password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Password.Location = new System.Drawing.Point(168, 163);
+            this.Password.Name = "Password";
+            this.Password.PasswordChar = '*';
+            this.Password.Size = new System.Drawing.Size(267, 24);
+            this.Password.TabIndex = 1;
+            this.Password.UseSystemPasswordChar = true;
+            this.Password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Password_KeyPress);
             // 
             // SingIn
             // 
@@ -107,8 +104,8 @@
             // 
             this.topPane.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
             this.topPane.Controls.Add(this.pictureBox1);
-            this.topPane.Controls.Add(this.closeButtonPanel);
-            this.topPane.Controls.Add(this.minButtonPanel);
+            this.topPane.Controls.Add(this.CloseButtonPanel);
+            this.topPane.Controls.Add(this.MinButtonPanel);
             this.topPane.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPane.Location = new System.Drawing.Point(0, 0);
             this.topPane.Name = "topPane";
@@ -126,16 +123,16 @@
             this.pictureBox1.TabIndex = 19;
             this.pictureBox1.TabStop = false;
             // 
-            // closeButtonPanel
+            // CloseButtonPanel
             // 
-            this.closeButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.closeButtonPanel.BackColor = System.Drawing.Color.Transparent;
-            this.closeButtonPanel.Controls.Add(this.exitButton);
-            this.closeButtonPanel.Location = new System.Drawing.Point(488, 0);
-            this.closeButtonPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.closeButtonPanel.Name = "closeButtonPanel";
-            this.closeButtonPanel.Size = new System.Drawing.Size(32, 34);
-            this.closeButtonPanel.TabIndex = 14;
+            this.CloseButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CloseButtonPanel.BackColor = System.Drawing.Color.Transparent;
+            this.CloseButtonPanel.Controls.Add(this.exitButton);
+            this.CloseButtonPanel.Location = new System.Drawing.Point(488, 0);
+            this.CloseButtonPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.CloseButtonPanel.Name = "CloseButtonPanel";
+            this.CloseButtonPanel.Size = new System.Drawing.Size(32, 34);
+            this.CloseButtonPanel.TabIndex = 14;
             // 
             // exitButton
             // 
@@ -152,16 +149,16 @@
             this.exitButton.MouseEnter += new System.EventHandler(this.ExitButton_MouseEnter);
             this.exitButton.MouseLeave += new System.EventHandler(this.ExitButton_MouseLeave);
             // 
-            // minButtonPanel
+            // MinButtonPanel
             // 
-            this.minButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.minButtonPanel.BackColor = System.Drawing.Color.Transparent;
-            this.minButtonPanel.Controls.Add(this.minButton);
-            this.minButtonPanel.Location = new System.Drawing.Point(456, 0);
-            this.minButtonPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.minButtonPanel.Name = "minButtonPanel";
-            this.minButtonPanel.Size = new System.Drawing.Size(32, 34);
-            this.minButtonPanel.TabIndex = 13;
+            this.MinButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.MinButtonPanel.BackColor = System.Drawing.Color.Transparent;
+            this.MinButtonPanel.Controls.Add(this.minButton);
+            this.MinButtonPanel.Location = new System.Drawing.Point(456, 0);
+            this.MinButtonPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.MinButtonPanel.Name = "MinButtonPanel";
+            this.MinButtonPanel.Size = new System.Drawing.Size(32, 34);
+            this.MinButtonPanel.TabIndex = 13;
             // 
             // minButton
             // 
@@ -209,35 +206,17 @@
             this.DragControl.TargetControl = this.topPane;
             this.DragControl.Vertical = true;
             // 
-            // errorLabel
+            // ErrorLabel
             // 
-            this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.errorLabel.AutoSize = true;
-            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorLabel.ForeColor = System.Drawing.Color.DarkRed;
-            this.errorLabel.Location = new System.Drawing.Point(73, 263);
-            this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(117, 18);
-            this.errorLabel.TabIndex = 11;
-            this.errorLabel.Text = "Aqui hay un label";
-            this.errorLabel.Visible = false;
-            // 
-            // Refresh
-            // 
-            this.Refresh.DoWork += new System.ComponentModel.DoWorkEventHandler(this.Refresh_DoWork);
-            // 
-            // ServerDisconnected
-            // 
-            this.ServerDisconnected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.ServerDisconnected.AutoSize = true;
-            this.ServerDisconnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerDisconnected.ForeColor = System.Drawing.Color.DarkRed;
-            this.ServerDisconnected.Location = new System.Drawing.Point(276, 288);
-            this.ServerDisconnected.Name = "ServerDisconnected";
-            this.ServerDisconnected.Size = new System.Drawing.Size(234, 18);
-            this.ServerDisconnected.TabIndex = 15;
-            this.ServerDisconnected.Text = "Usted se encuentra desconectado";
-            this.ServerDisconnected.Visible = false;
+            this.ErrorLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ErrorLabel.ForeColor = System.Drawing.Color.DarkRed;
+            this.ErrorLabel.Location = new System.Drawing.Point(73, 263);
+            this.ErrorLabel.Name = "ErrorLabel";
+            this.ErrorLabel.Size = new System.Drawing.Size(0, 18);
+            this.ErrorLabel.TabIndex = 11;
+            this.ErrorLabel.Visible = false;
             // 
             // label1
             // 
@@ -263,7 +242,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(191, 18);
             this.label2.TabIndex = 17;
-            this.label2.Text = "si no tienes una cuenta aún.";
+            this.label2.Text = "si aún no tienes una cuenta.";
             // 
             // SingUp
             // 
@@ -290,12 +269,6 @@
             this.Logo.TabIndex = 12;
             this.Logo.TabStop = false;
             // 
-            // notifyIcon1
-            // 
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Conectandose";
-            this.notifyIcon1.Visible = true;
-            // 
             // LoginWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -305,15 +278,14 @@
             this.Controls.Add(this.SingUp);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ServerDisconnected);
             this.Controls.Add(this.Logo);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUser);
             this.Controls.Add(this.topPane);
             this.Controls.Add(this.SingIn);
-            this.Controls.Add(this.password);
-            this.Controls.Add(this.user);
-            this.Controls.Add(this.errorLabel);
+            this.Controls.Add(this.Password);
+            this.Controls.Add(this.User);
+            this.Controls.Add(this.ErrorLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LoginWindow";
@@ -321,9 +293,9 @@
             this.Text = "Loggin";
             this.topPane.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.closeButtonPanel.ResumeLayout(false);
+            this.CloseButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.exitButton)).EndInit();
-            this.minButtonPanel.ResumeLayout(false);
+            this.MinButtonPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
             this.ResumeLayout(false);
@@ -333,8 +305,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox user;
-        private System.Windows.Forms.TextBox password;
+        private System.Windows.Forms.TextBox User;
+        private System.Windows.Forms.TextBox Password;
         private System.Windows.Forms.Button SingIn;
         private System.Windows.Forms.Panel topPane;
         private System.Windows.Forms.PictureBox minButton;
@@ -343,15 +315,12 @@
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.PictureBox Logo;
         private Bunifu.Framework.UI.BunifuDragControl DragControl;
-        private System.Windows.Forms.Panel minButtonPanel;
-        private System.Windows.Forms.Panel closeButtonPanel;
-        private System.Windows.Forms.Label errorLabel;
-        private System.ComponentModel.BackgroundWorker Refresh;
-        private System.Windows.Forms.Label ServerDisconnected;
+        private System.Windows.Forms.Panel MinButtonPanel;
+        private System.Windows.Forms.Panel CloseButtonPanel;
+        private System.Windows.Forms.Label ErrorLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel SingUp;
         private System.Windows.Forms.PictureBox pictureBox1;
-        public System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
