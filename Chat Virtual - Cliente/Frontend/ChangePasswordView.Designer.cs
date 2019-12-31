@@ -52,13 +52,15 @@
             // 
             // topPane
             // 
+            this.topPane.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.topPane.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.topPane.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(24)))));
             this.topPane.Controls.Add(this.pictureBox1);
             this.topPane.Controls.Add(this.CloseButtonPanel);
-            this.topPane.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPane.Location = new System.Drawing.Point(0, 0);
             this.topPane.Name = "topPane";
-            this.topPane.Size = new System.Drawing.Size(807, 34);
+            this.topPane.Size = new System.Drawing.Size(455, 34);
             this.topPane.TabIndex = 22;
             // 
             // pictureBox1
@@ -77,7 +79,7 @@
             this.CloseButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CloseButtonPanel.BackColor = System.Drawing.Color.Transparent;
             this.CloseButtonPanel.Controls.Add(this.ExitButton);
-            this.CloseButtonPanel.Location = new System.Drawing.Point(773, 0);
+            this.CloseButtonPanel.Location = new System.Drawing.Point(421, 0);
             this.CloseButtonPanel.Margin = new System.Windows.Forms.Padding(0);
             this.CloseButtonPanel.Name = "CloseButtonPanel";
             this.CloseButtonPanel.Size = new System.Drawing.Size(32, 34);
@@ -100,11 +102,10 @@
             // 
             // labelPassword
             // 
-            this.labelPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelPassword.AutoSize = true;
             this.labelPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelPassword.Location = new System.Drawing.Point(76, 269);
+            this.labelPassword.Location = new System.Drawing.Point(16, 102);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(132, 18);
             this.labelPassword.TabIndex = 24;
@@ -112,11 +113,10 @@
             // 
             // LCurrentPassword
             // 
-            this.LCurrentPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LCurrentPassword.AutoSize = true;
             this.LCurrentPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LCurrentPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.LCurrentPassword.Location = new System.Drawing.Point(32, 235);
+            this.LCurrentPassword.Location = new System.Drawing.Point(16, 68);
             this.LCurrentPassword.Name = "LCurrentPassword";
             this.LCurrentPassword.Size = new System.Drawing.Size(132, 18);
             this.LCurrentPassword.TabIndex = 23;
@@ -124,7 +124,6 @@
             // 
             // SendChange
             // 
-            this.SendChange.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.SendChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.SendChange.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SendChange.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -134,35 +133,34 @@
             this.SendChange.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SendChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SendChange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SendChange.Location = new System.Drawing.Point(326, 323);
+            this.SendChange.Location = new System.Drawing.Point(315, 168);
             this.SendChange.Name = "SendChange";
             this.SendChange.Size = new System.Drawing.Size(112, 27);
             this.SendChange.TabIndex = 21;
-            this.SendChange.Text = "Iniciar sesión";
+            this.SendChange.Text = "Confirmar";
             this.SendChange.UseVisualStyleBackColor = false;
             this.SendChange.Click += new System.EventHandler(this.SendChange_Click);
             // 
             // User
             // 
-            this.User.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.User.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.User.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.User.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.User.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.User.Location = new System.Drawing.Point(171, 233);
+            this.User.Location = new System.Drawing.Point(160, 66);
             this.User.Name = "User";
             this.User.Size = new System.Drawing.Size(267, 24);
             this.User.TabIndex = 19;
+            this.User.UseSystemPasswordChar = true;
             // 
             // Password
             // 
-            this.Password.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Password.Location = new System.Drawing.Point(171, 263);
+            this.Password.Location = new System.Drawing.Point(160, 96);
             this.Password.Name = "Password";
             this.Password.PasswordChar = '*';
             this.Password.Size = new System.Drawing.Size(267, 24);
@@ -171,11 +169,10 @@
             // 
             // LRepeatPassword
             // 
-            this.LRepeatPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LRepeatPassword.AutoSize = true;
             this.LRepeatPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LRepeatPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.LRepeatPassword.Location = new System.Drawing.Point(76, 299);
+            this.LRepeatPassword.Location = new System.Drawing.Point(16, 132);
             this.LRepeatPassword.Name = "LRepeatPassword";
             this.LRepeatPassword.Size = new System.Drawing.Size(140, 18);
             this.LRepeatPassword.TabIndex = 26;
@@ -183,12 +180,11 @@
             // 
             // RPassword
             // 
-            this.RPassword.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.RPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.RPassword.Location = new System.Drawing.Point(171, 293);
+            this.RPassword.Location = new System.Drawing.Point(160, 126);
             this.RPassword.Name = "RPassword";
             this.RPassword.PasswordChar = '*';
             this.RPassword.Size = new System.Drawing.Size(267, 24);
@@ -210,7 +206,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 523);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
+            this.ClientSize = new System.Drawing.Size(455, 220);
             this.ControlBox = false;
             this.Controls.Add(this.ErrorLabel);
             this.Controls.Add(this.LRepeatPassword);
@@ -221,6 +218,8 @@
             this.Controls.Add(this.SendChange);
             this.Controls.Add(this.User);
             this.Controls.Add(this.Password);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ChangePasswordView";

@@ -936,8 +936,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
             //Tester();
-            ;
-            while (/*subprocess*/true) {
+            while (subprocess) {
                 if (model.singleton.ProfileHasChanged) {
                     model.ToWriteEnqueue(new ShippingData.Profile(model.singleton.userName, model.singleton.ProfilePicture, model.singleton.Status));
                     model.singleton.ProfileHasChanged = false;
