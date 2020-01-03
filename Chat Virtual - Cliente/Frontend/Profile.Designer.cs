@@ -212,7 +212,7 @@
             this.UserPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.UserPicture.TabIndex = 0;
             this.UserPicture.TabStop = false;
-            this.UserPicture.Click += new System.EventHandler(this.UserPicture_Click);
+            this.UserPicture.Click += new System.EventHandler(ChangePicture_Click);
             // 
             // ProfileDrag
             // 

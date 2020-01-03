@@ -19,10 +19,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.Close();
         }
 
-        private void UserPicture_Click(object sender, EventArgs e) {
-            // TODO: ¿Agrandar foto?
-        }
-
         private void ChangePicture_Click(object sender, EventArgs e) {
             OpenFileDialog dialog = new OpenFileDialog {
                 Filter = "JPG files(.*jpg)|*.jpg| PNG files(.*png)|*.png| All Files(*.*)|*.*"
