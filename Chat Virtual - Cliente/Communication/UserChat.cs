@@ -5,7 +5,7 @@ using ShippingData;
 using System.Threading;
 
 namespace Chat_Virtual___Cliente.Communication {
-    class UserChat {
+    public class UserChat {
         public bool visible { get; set; }
         public bool searched { get; set; }
         public Profile profile { get; set; }

@@ -6,15 +6,19 @@ using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class ChangePasswordView : Form {
-        public ChangePasswordView() {
+
+        public MainModel MainModel { get; set; }
+
+        public ChangePasswordView(MainModel MainModel) {
             this.InitializeComponent();
+            this.MainModel = MainModel;
         }
 
         private void SendChange_Click(object sender, EventArgs e) {
             this.ErrorLabel.Visible = false;
             this.Cursor = Cursors.WaitCursor;
             if (this.CurrentPassword.Text.Length == 0 || this.Password.Text.Length == 0 || this.RPassword.Text.Length == 0) {
-                this.ErrorMessage("Los campos no pueden estar vacios."); 
+                this.ErrorMessage("Los campos no pueden estar vacios.");
                 this.Cursor = Cursors.Default;
                 return;
             }
@@ -30,7 +34,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 NewPassword = this.Password.Text
             };
 
-            // TODO: Encolar "data"
+            this.MainModel.ToWriteEnqueue(data);
 
             // Analizar respuesta:
 
@@ -60,6 +64,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.ExitButton.BackColor = Color.FromArgb(20, 20, 24);
         }
 
-        
+
     }
 }

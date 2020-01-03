@@ -3,10 +3,9 @@ using System.Threading;
 using DataStructures;
 using ShippingData;
 using Chat_Virtual___Cliente.Communication;
-using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Backend {
-    class MainModel : Model {
+    public class MainModel : Model {
 
         protected Semaphore CanRead;
         protected Semaphore CanWrite;

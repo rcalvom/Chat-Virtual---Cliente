@@ -1,12 +1,19 @@
-﻿using ShippingData;
+﻿using Chat_Virtual___Cliente.Backend;
+using ShippingData;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class TreeView : Form {
-        public TreeView() {
+
+        public MainModel MainModel { get; set; }
+        public TreeView(MainModel MainModel) {
             this.InitializeComponent();
+            this.MainModel = MainModel;
+            if (Singleton.GetSingleton().tree != null) {
+                this.TaskTree.Nodes[0] = Singleton.GetSingleton().tree;
+            }
         }
 
         private void NewTask_Click(object sender, EventArgs e) {
@@ -38,12 +45,14 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void SaveTree_Click(object sender, EventArgs e) {
             TreeNode[] TreeNodes = new TreeNode[1];
             this.TaskTree.Nodes.CopyTo(TreeNodes, 0);
-            TreeActivities tree = new TreeActivities();
-            tree.Node = TreeNodes[0];
-            //Encolar.
-            //Evaluar respuesta¿?.
-
+            TreeActivities tree = new TreeActivities {
+                Node = TreeNodes[0]
+            };
+            this.MainModel.ToWriteEnqueue(tree);
             this.Close();
+
+            Singleton.GetSingleton().tree = tree.Node;
+
         }
     }
 }

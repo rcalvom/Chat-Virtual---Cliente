@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 
 namespace Chat_Virtual___Cliente.Communication {
-    class Group {
+    public class Group {
         public bool visible { get; set; }
         public bool searched { get; set; }
         public int code { get; set; }

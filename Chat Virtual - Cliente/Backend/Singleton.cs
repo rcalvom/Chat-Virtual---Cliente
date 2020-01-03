@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
+using System.Windows.Forms;
 
 namespace Chat_Virtual___Cliente.Backend {
-    class Singleton {
+    public class Singleton {
         public bool ProfileHasChanged { get; set; }
         public TcpClient Client { get; }
         public NetworkStream stream { get; set; }
@@ -12,6 +13,7 @@ namespace Chat_Virtual___Cliente.Backend {
         public string userName { get; set; }
         public byte[] ProfilePicture { get; set; }
         public string Status { get; set; }
+        public TreeNode tree { get; set; }
 
         private static Singleton singleton;
 

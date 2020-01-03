@@ -6,8 +6,12 @@ using System.Drawing;
 
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class Profile : Form {
-        public Profile() {
+
+        public MainModel MainModel { get; set; }
+
+        public Profile(MainModel MainModel) {
             this.InitializeComponent();
+            this.MainModel = MainModel;
             try {
                 this.LabelUser.Text += "" + Singleton.GetSingleton().userName;
                 this.UserPicture.Image = Serializer.DeserializeImage(Singleton.GetSingleton().ProfilePicture);
@@ -34,7 +38,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void ChangePassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            ChangePasswordView cpv = new ChangePasswordView();
+            ChangePasswordView cpv = new ChangePasswordView(this.MainModel);
             cpv.ShowDialog();
             cpv.Dispose();
         }

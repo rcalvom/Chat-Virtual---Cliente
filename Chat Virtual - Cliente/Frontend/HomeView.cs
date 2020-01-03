@@ -148,7 +148,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             SGraficControl.WaitOne();
             currentView = CurrentView.InProfile;
             SGraficControl.Release();
-            Profile profile = new Profile();
+            Profile profile = new Profile(model);
             profile.ShowDialog();
         }
 
@@ -986,6 +986,9 @@ namespace Chat_Virtual___Cliente.Frontend {
                     Singleton.GetSingleton().ProfilePicture = p.Image;
                     Singleton.GetSingleton().Status = p.Status;
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
+                } else if (data is TreeActivities tree) {
+                    ;
+                    Singleton.GetSingleton().tree = tree.Node;
                 }
             }
             while (!model.toWrite.IsEmpty())
@@ -1084,7 +1087,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void TreeButton_Click(object sender, EventArgs e) {
-            new TreeView().ShowDialog();
+            new TreeView(model).ShowDialog();
         }
     }
 }

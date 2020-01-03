@@ -1,13 +1,11 @@
 ﻿using System;
-using System.IO;
-using System.Net.Sockets;
 using System.Threading;
 using DataStructures;
 using ShippingData;
 
 namespace Chat_Virtual___Cliente.Backend {
 
-    class Model {
+    public class Model {
 
         public Singleton singleton { get; set; }
         public LinkedQueue<Data> toWrite { get; set; }
