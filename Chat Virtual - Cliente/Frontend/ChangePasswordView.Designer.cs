@@ -32,7 +32,7 @@
             this.labelPassword = new System.Windows.Forms.Label();
             this.LCurrentPassword = new System.Windows.Forms.Label();
             this.SendChange = new System.Windows.Forms.Button();
-            this.User = new System.Windows.Forms.TextBox();
+            this.CurrentPassword = new System.Windows.Forms.TextBox();
             this.Password = new System.Windows.Forms.TextBox();
             this.LRepeatPassword = new System.Windows.Forms.Label();
             this.RPassword = new System.Windows.Forms.TextBox();
@@ -141,18 +141,18 @@
             this.SendChange.UseVisualStyleBackColor = false;
             this.SendChange.Click += new System.EventHandler(this.SendChange_Click);
             // 
-            // User
+            // CurrentPassword
             // 
-            this.User.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.User.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.User.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.User.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.User.Location = new System.Drawing.Point(160, 66);
-            this.User.Name = "User";
-            this.User.Size = new System.Drawing.Size(267, 24);
-            this.User.TabIndex = 19;
-            this.User.UseSystemPasswordChar = true;
+            this.CurrentPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.CurrentPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CurrentPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrentPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.CurrentPassword.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.CurrentPassword.Location = new System.Drawing.Point(160, 66);
+            this.CurrentPassword.Name = "CurrentPassword";
+            this.CurrentPassword.Size = new System.Drawing.Size(267, 24);
+            this.CurrentPassword.TabIndex = 19;
+            this.CurrentPassword.UseSystemPasswordChar = true;
             // 
             // Password
             // 
@@ -216,7 +216,7 @@
             this.Controls.Add(this.LCurrentPassword);
             this.Controls.Add(this.topPane);
             this.Controls.Add(this.SendChange);
-            this.Controls.Add(this.User);
+            this.Controls.Add(this.CurrentPassword);
             this.Controls.Add(this.Password);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -245,7 +245,7 @@
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.Label LCurrentPassword;
         private System.Windows.Forms.Button SendChange;
-        private System.Windows.Forms.TextBox User;
+        private System.Windows.Forms.TextBox CurrentPassword;
         private System.Windows.Forms.TextBox Password;
         private System.Windows.Forms.Label LRepeatPassword;
         private System.Windows.Forms.TextBox RPassword;

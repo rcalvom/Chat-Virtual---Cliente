@@ -13,7 +13,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void SendChange_Click(object sender, EventArgs e) {
             this.ErrorLabel.Visible = false;
             this.Cursor = Cursors.WaitCursor;
-            if (this.User.Text.Length == 0 || this.Password.Text.Length == 0 || this.RPassword.Text.Length == 0) {
+            if (this.CurrentPassword.Text.Length == 0 || this.Password.Text.Length == 0 || this.RPassword.Text.Length == 0) {
                 this.ErrorMessage("Los campos no pueden estar vacios."); 
                 this.Cursor = Cursors.Default;
                 return;
@@ -26,12 +26,21 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             ChangePassword data = new ChangePassword {
                 UserName = Singleton.GetSingleton().userName,
+                CurrentPassword = this.CurrentPassword.Text,
                 NewPassword = this.Password.Text
             };
-            // Encolar Data. ¿y la contraseña actual?
-            // Analizar respuesta.
-            this.Cursor = Cursors.WaitCursor;
 
+            // TODO: Encolar "data"
+
+            // Analizar respuesta:
+
+            //si falla el servidor encola (new RequestAnswer(false, 3));
+            //                   (new RequestError(3));
+
+            // si funciona el servidor encola (new RequestAnswer(true, 3));
+
+            this.Cursor = Cursors.WaitCursor;
+            this.Close();
         }
 
         public void ErrorMessage(string error) {

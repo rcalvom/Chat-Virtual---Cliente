@@ -39,9 +39,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             TreeNode[] TreeNodes = new TreeNode[1];
             this.TaskTree.Nodes.CopyTo(TreeNodes, 0);
             TreeActivities tree = new TreeActivities();
-            //tree.Tree = TreeNode[0];
+            tree.Node = TreeNodes[0];
             //Encolar.
             //Evaluar respuesta¿?.
+
             this.Close();
         }
     }
