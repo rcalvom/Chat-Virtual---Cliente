@@ -13,6 +13,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.MainModel = MainModel;
             if (Singleton.GetSingleton().tree != null) {
                 this.TaskTree.Nodes.AddRange(Singleton.GetSingleton().tree);
+                this.TaskTree.ExpandAll();
             }
         }
 
@@ -54,7 +55,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             };
             this.MainModel.ToWriteEnqueue(tree);
             this.Close();
-
         }
     }
 }
