@@ -289,11 +289,11 @@ namespace Chat_Virtual___Cliente.Frontend {
             ControlParameters cp = new ControlParameters();
             cp.autoSize = true;
             cp.anchor = (AnchorStyles)((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right);
-            cp.location = new Point(2, 2);
+            cp.location = new Point(2, 7);
             cp.size = new Size(ViewPanel.Width - 4, 18);
             cp.text = ms.Sender;
             cp.contentAlignment = ContentAlignment.MiddleLeft;
-            cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, (0));
+            cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Bold, GraphicsUnit.Point, (0));
             cp.foreColor = Color.FromArgb(234, 234, 234);
             cp.name = "UserName";
             cp.tabStop = false;
@@ -311,10 +311,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                 cp.maxSize = new Size(ViewPanel.Width - 4, 0);
                 cp.text = ms.Content;
                 cp.contentAlignment = ContentAlignment.MiddleLeft;
-                cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
                 cp.foreColor = Color.FromArgb(200, 200, 200);
             }
-            cp.location = new Point(2, 25);
+            cp.location = new Point(2, 33);
             cp.name = "Content";
             cp.tabStop = false;
             CopyParameters(content, cp);
@@ -344,9 +344,9 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.text = ms.date.FormatHourAndMinute(false);
             cp.contentAlignment = ContentAlignment.MiddleRight;
             if (content.Height == 0) {
-                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + 18 + 35);
+                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + 18 + 30);
             } else {
-                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + content.Height + 35);
+                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + content.Height + 30);
             }
             cp.foreColor = Color.FromArgb(150, 150, 150);
             cp.name = "Time";
@@ -358,7 +358,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.autoSize = false;
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
             cp.borderStyle = BorderStyle.None;
-            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 20 + image.Height);
+            cp.size = new Size(ViewPanel.Width, time.Height + content.Height + user.Height + 27 + image.Height);
             if (FirstMessage == null) {
                 FirstMessage = ms;
                 cp.location = new Point(0, 0);
