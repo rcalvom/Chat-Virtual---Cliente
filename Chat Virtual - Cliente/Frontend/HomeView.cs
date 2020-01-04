@@ -987,8 +987,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     Singleton.GetSingleton().Status = p.Status;
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 } else if (data is TreeActivities tree) {
-                    ;
-                    Singleton.GetSingleton().tree = tree.Node;
+                    Singleton.GetSingleton().tree = tree;
                 }
             }
             while (!model.toWrite.IsEmpty())

@@ -36,15 +36,15 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             this.MainModel.ToWriteEnqueue(data);
 
-            // Analizar respuesta:
+            // TODO: Revisar el manejo el objeto respuesta de la cola.
+            //if (respuesta es afirmativa) { el codigo es 3.
+            //    this.ErrorMessage("Se ha cambiado la contraseña satisfactoriamente.");
+            //} else {
+            //    this.ErrorMessage("La contraseña actual no coincide con la contraseña del sistema.");
+            //}
 
-            //si falla el servidor encola (new RequestAnswer(false, 3));
-            //                   (new RequestError(3));
 
-            // si funciona el servidor encola (new RequestAnswer(true, 3));
-
-            this.Cursor = Cursors.WaitCursor;
-            this.Close();
+            this.Cursor = Cursors.Default;
         }
 
         public void ErrorMessage(string error) {
@@ -64,6 +64,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.ExitButton.BackColor = Color.FromArgb(20, 20, 24);
         }
 
+        private void CurrentPassword_KeyPress(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar == (int)Keys.Enter) {
+                this.SendChange_Click(sender, e);
+            }
+        }
 
+        private void Password_KeyPress(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar == (int)Keys.Enter) {
+                this.SendChange_Click(sender, e);
+            }
+        }
+
+        private void RPassword_KeyPress(object sender, KeyPressEventArgs e) {
+            if (e.KeyChar == (int)Keys.Enter) {
+                this.SendChange_Click(sender, e);
+            }
+        }
     }
 }

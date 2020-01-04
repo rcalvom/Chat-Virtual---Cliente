@@ -24,7 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Tareas pendientes.");
             this.panel1 = new System.Windows.Forms.Panel();
             this.LTitleTB = new System.Windows.Forms.Label();
             this.LTitle = new System.Windows.Forms.Label();
@@ -138,11 +137,7 @@
             this.TaskTree.ForeColor = System.Drawing.Color.White;
             this.TaskTree.Location = new System.Drawing.Point(30, 90);
             this.TaskTree.Name = "TaskTree";
-            treeNode2.Checked = true;
-            treeNode2.Name = "TreeRoot";
-            treeNode2.Text = "Tareas pendientes.";
-            this.TaskTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            this.TaskTree.ShowNodeToolTips = true;
             this.TaskTree.Size = new System.Drawing.Size(389, 292);
             this.TaskTree.TabIndex = 5;
             // 

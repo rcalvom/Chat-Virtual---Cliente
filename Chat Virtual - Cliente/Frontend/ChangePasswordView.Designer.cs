@@ -136,7 +136,7 @@
             this.SendChange.Location = new System.Drawing.Point(315, 168);
             this.SendChange.Name = "SendChange";
             this.SendChange.Size = new System.Drawing.Size(112, 27);
-            this.SendChange.TabIndex = 21;
+            this.SendChange.TabIndex = 4;
             this.SendChange.Text = "Confirmar";
             this.SendChange.UseVisualStyleBackColor = false;
             this.SendChange.Click += new System.EventHandler(this.SendChange_Click);
@@ -151,8 +151,9 @@
             this.CurrentPassword.Location = new System.Drawing.Point(160, 66);
             this.CurrentPassword.Name = "CurrentPassword";
             this.CurrentPassword.Size = new System.Drawing.Size(267, 24);
-            this.CurrentPassword.TabIndex = 19;
+            this.CurrentPassword.TabIndex = 1;
             this.CurrentPassword.UseSystemPasswordChar = true;
+            this.CurrentPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CurrentPassword_KeyPress);
             // 
             // Password
             // 
@@ -164,8 +165,9 @@
             this.Password.Name = "Password";
             this.Password.PasswordChar = '*';
             this.Password.Size = new System.Drawing.Size(267, 24);
-            this.Password.TabIndex = 20;
+            this.Password.TabIndex = 2;
             this.Password.UseSystemPasswordChar = true;
+            this.Password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Password_KeyPress);
             // 
             // LRepeatPassword
             // 
@@ -188,8 +190,9 @@
             this.RPassword.Name = "RPassword";
             this.RPassword.PasswordChar = '*';
             this.RPassword.Size = new System.Drawing.Size(267, 24);
-            this.RPassword.TabIndex = 25;
+            this.RPassword.TabIndex = 3;
             this.RPassword.UseSystemPasswordChar = true;
+            this.RPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RPassword_KeyPress);
             // 
             // ErrorLabel
             // 

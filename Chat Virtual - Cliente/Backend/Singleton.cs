@@ -13,7 +13,7 @@ namespace Chat_Virtual___Cliente.Backend {
         public string userName { get; set; }
         public byte[] ProfilePicture { get; set; }
         public string Status { get; set; }
-        public TreeNode tree { get; set; }
+        public TreeNode[] tree { get; set; }
 
         private static Singleton singleton;
 

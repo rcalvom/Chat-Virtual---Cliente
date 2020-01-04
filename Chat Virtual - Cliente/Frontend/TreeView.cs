@@ -12,20 +12,23 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.InitializeComponent();
             this.MainModel = MainModel;
             if (Singleton.GetSingleton().tree != null) {
-                this.TaskTree.Nodes[0] = Singleton.GetSingleton().tree;
+                this.TaskTree.Nodes.AddRange(Singleton.GetSingleton().tree);
             }
         }
 
         private void NewTask_Click(object sender, EventArgs e) {
-            if(!this.NameText.Text.Equals("") && this.TaskTree.SelectedNode != null) {
+            if (!this.NameText.Text.Equals("") && this.TaskTree.SelectedNode != null) {
                 this.TaskTree.SelectedNode.Nodes.Add(this.NameText.Text);
                 this.TaskTree.SelectedNode.Expand();
+                this.NameText.Text = "";
+            } else if (!this.NameText.Text.Equals("") && this.TaskTree.SelectedNode == null) {
+                this.TaskTree.Nodes.Add(this.NameText.Text);
                 this.NameText.Text = "";
             }
         }
 
         private void RemoveTask_Click(object sender, EventArgs e) {
-            if(this.TaskTree.SelectedNode.Parent != null) {
+            if (this.TaskTree.SelectedNode != null) {
                 this.TaskTree.SelectedNode.Remove();
             }
         }
@@ -43,15 +46,14 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void SaveTree_Click(object sender, EventArgs e) {
-            TreeNode[] TreeNodes = new TreeNode[1];
-            this.TaskTree.Nodes.CopyTo(TreeNodes, 0);
+            Singleton.GetSingleton().tree = new TreeNode[this.TaskTree.Nodes.Count];
+            this.TaskTree.Nodes.CopyTo(Singleton.GetSingleton().tree, 0);
+            this.TaskTree.Nodes.Clear();
             TreeActivities tree = new TreeActivities {
-                Node = TreeNodes[0]
+                Node = Singleton.GetSingleton().tree
             };
             this.MainModel.ToWriteEnqueue(tree);
             this.Close();
-
-            Singleton.GetSingleton().tree = tree.Node;
 
         }
     }
