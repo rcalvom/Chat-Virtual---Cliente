@@ -12,8 +12,10 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.InitializeComponent();
             this.MainModel = MainModel;
             if (Singleton.GetSingleton().tree != null) {
-                this.TaskTree.Nodes.AddRange(Singleton.GetSingleton().tree);
-                this.TaskTree.ExpandAll();
+                try {
+                    this.TaskTree.Nodes.AddRange(Singleton.GetSingleton().tree);
+                    this.TaskTree.ExpandAll();
+                } catch (Exception) { }
             }
         }
 
