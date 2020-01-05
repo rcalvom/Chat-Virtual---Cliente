@@ -62,6 +62,7 @@
     <Compile Include="Backend\MainModel.cs" />
     <Compile Include="Backend\Model.cs" />
     <Compile Include="Backend\Singleton.cs" />
+    <Compile Include="Communication\ChatBase.cs" />
     <Compile Include="Frontend\ChangePasswordView.cs">
       <SubType>Form</SubType>
     </Compile>

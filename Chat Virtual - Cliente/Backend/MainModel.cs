@@ -12,15 +12,19 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public int CurrentGroup { get; set; }
         public string CurrentChat { get; set; }
-        public LinkedList<UserChat> chats { get; set; }
-        public LinkedList<Group> groups { get; set; }
+        public LinkedList<UserChat> Chats { get; set; }
+        public LinkedList<UserChat> SearchedChats { get; set; }
+        public LinkedList<Group> Groups { get; set; }
+        public LinkedList<Group> SearchedGroups { get; set; }
 
         public MainModel() {
             singleton = Singleton.GetSingleton();
             toWrite = new LinkedQueue<Data>();
             toRead = new LinkedQueue<Data>();
-            chats = new LinkedList<UserChat>();
-            groups = new LinkedList<Group>();
+            Chats = new LinkedList<UserChat>();
+            SearchedChats = new LinkedList<UserChat>();
+            Groups = new LinkedList<Group>();
+            SearchedGroups = new LinkedList<Group>();
             CanRead = new Semaphore(1, 1);
             CanWrite = new Semaphore(1, 1);
         }

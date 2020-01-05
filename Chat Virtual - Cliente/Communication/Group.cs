@@ -4,11 +4,8 @@ using System;
 using System.Threading;
 
 namespace Chat_Virtual___Cliente.Communication {
-    public class Group {
-        public bool visible { get; set; }
-        public bool searched { get; set; }
+    public class Group : ChatBase {
         public int code { get; set; }
-        public string name { get; set; }
         public LinkedList<string> members { get; set; }
 
         private LinkedStack<GroupMessage> Messages;
@@ -29,7 +26,7 @@ namespace Chat_Virtual___Cliente.Communication {
 
         public Group(int code, string name) {
             this.code = code;
-            this.name = name;
+            this.Name = name;
             members = new LinkedList<string>();
             Messages = new LinkedStack<GroupMessage>();
             NewMessages = new LinkedQueue<GroupMessage>();
@@ -80,6 +77,15 @@ namespace Chat_Virtual___Cliente.Communication {
             a = NewMessages.Dequeue();
             SNewMessages.Release();
             return a;
+        }
+
+        public override string GetLastMessage() {
+            if (!NewMessages.IsEmpty())
+                return NewMessages.GetFrontElement().Content;
+            else if (!Messages.IsEmpty())
+                return Messages.Peek().Content;
+            else
+                return "¡Bienvenido al grupo!";
         }
     }
 }

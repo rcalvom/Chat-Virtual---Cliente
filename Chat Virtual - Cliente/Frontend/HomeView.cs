@@ -33,7 +33,7 @@ struct ControlParameters {
 };
 
 enum CurrentView {
-    InChat, InGroup, InHome, InProfile, ViewChats, ViewGroups, SearchingChats, SearchingGroups
+    InChat, ViewChats, SearchingChats, InGroup, ViewGroups, SearchingGroups, InHome, InProfile
 };
 
 namespace Chat_Virtual___Cliente.Frontend {
@@ -373,7 +373,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     RecentMessages.Push(message);
                 }
             }
-            cp.name = chat.profile.Name;
+            cp.name = chat.Name;
             cp.tabStop = false;
             CopyParameters(message, cp);
 
@@ -494,7 +494,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                         }
                     }
                     if (ms.Sender.Equals(model.singleton.userName)) {
-                        ms.Receiver = uc.profile.Name;
+                        ms.Receiver = uc.Name;
                     } else {
                         ms.Receiver = model.singleton.userName;
                     }
@@ -534,11 +534,12 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
-        private void AddChat(UserChat c, int i) {
+        private void AddChat(ChatBase chatBase, int i) {
             Panel newPanel = new Panel();
             Panel line = new Panel();
             CircularPictureBox photo = new CircularPictureBox();
             Label user = new Label();
+            Label lastMessage = new Label();
             AddControl(newPanel, actionPanel);
             AddControl(photo, newPanel);
             AddControl(user, newPanel);
@@ -551,20 +552,27 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.location = new Point(0, cp.size.Height * i);
             cp.borderStyle = BorderStyle.None;
             cp.backColor = Color.Transparent;
-            cp.name = c.profile.Name;
+            if (chatBase is Group group) {
+                user.Click += new EventHandler(Group_Click);
+                cp.name = group.code.ToString();
+            } else {
+                user.Click += new EventHandler(Chat_Click);
+                cp.name = chatBase.Name;
+            }
             cp.tabStop = false;
             CopyParameters(newPanel, cp);
             newPanel.MouseEnter += new EventHandler(Chat_MouseEnter);
             newPanel.MouseLeave += new EventHandler(Chat_MouseLeave);
             newPanel.Click += new EventHandler(Chat_Click);
+            chatBase.Panel = newPanel;
 
             //pictureBox
             cp = new ControlParameters();
             cp.size = new Size(40, 40);
             cp.location = new Point(5, 5);
             cp.pictureBoxSizeMode = PictureBoxSizeMode.StretchImage;
-            if (c.profile.Image != null) {
-                cp.image = Serializer.DeserializeImage(c.profile.Image);
+            if (chatBase.Photo != null) {
+                cp.image = Serializer.DeserializeImage(chatBase.Photo);
             }
             CopyParameters(photo, cp);
             photo.MouseEnter += new EventHandler(Chat_MouseEnter);
@@ -573,19 +581,35 @@ namespace Chat_Virtual___Cliente.Frontend {
 
             //label user
             cp = new ControlParameters();
+            cp.autoSize = false;
             cp.size = new Size(newPanel.Width - 60, 20);
-            cp.location = new Point(50, 10);
+            cp.location = new Point(50, 6);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
-            cp.text = c.profile.Name;
+            cp.text = chatBase.Name;
             cp.contentAlignment = ContentAlignment.MiddleLeft;
             cp.backColor = Color.Transparent;
             cp.foreColor = Color.FromArgb(200, 200, 200);
-            cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cp.font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CopyParameters(user, cp);
             user.MouseEnter += new EventHandler(Chat_MouseEnter);
             user.MouseLeave += new EventHandler(Chat_MouseLeave);
-            user.Click += new EventHandler(Chat_Click);
 
+            /*//lastMessage
+            cp = new ControlParameters();
+            cp.autoSize = false;
+            cp.size = new Size(newPanel.Width - 60, 20);
+            cp.location = new Point(50, 25);
+            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
+            cp.text = chatBase.GetLastMessage();
+            cp.contentAlignment = ContentAlignment.MiddleLeft;
+            cp.backColor = Color.Transparent;
+            cp.foreColor = Color.FromArgb(200, 200, 200);
+            cp.font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CopyParameters(user, cp);
+            user.MouseEnter += new EventHandler(Chat_MouseEnter);
+            user.MouseLeave += new EventHandler(Chat_MouseLeave);*/
+
+            //line
             cp = new ControlParameters();
             cp.autoSize = false;
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom); ;
@@ -596,189 +620,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.location = new Point(10, newPanel.Height - 1);
             CopyParameters(line, cp);
 
+            chatBase.Visible = true;
             ActiveChats.Add(newPanel);
-        }
-
-        private void AddGroup(Group c, int i) {
-            Panel newPanel = new Panel();
-            CircularPictureBox photo = new CircularPictureBox();
-            Label user = new Label();
-            AddControl(newPanel, actionPanel);
-            AddControl(photo, newPanel);
-            AddControl(user, newPanel);
-
-            //panel
-            ControlParameters cp = new ControlParameters();
-            cp.size = new Size(actionPanel.Width, 50);
-            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top); ;
-            cp.location = new Point(0, cp.size.Height * i);
-            cp.borderStyle = BorderStyle.None;
-            cp.backColor = Color.Transparent;
-            cp.name = c.code.ToString();
-            cp.tabStop = false;
-            CopyParameters(newPanel, cp);
-            newPanel.MouseEnter += new EventHandler(Chat_MouseEnter);
-            newPanel.MouseLeave += new EventHandler(Chat_MouseLeave);
-            newPanel.Click += new EventHandler(Chat_Click);
-
-            //pictureBox
-            cp = new ControlParameters();
-            cp.size = new Size(40, 40);
-            cp.location = new Point(10, 10);
-            cp.pictureBoxSizeMode = PictureBoxSizeMode.StretchImage;
-            //if (c.Image != null) {
-              //  cp.image = Serializer.DeserializeImage(c.Image);
-            //}
-            CopyParameters(photo, cp);
-
-            //label
-            cp = new ControlParameters();
-            cp.size = new Size(newPanel.Width - 60, 20);
-            cp.location = new Point(50, 10);
-            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
-            cp.text = c.name;
-            cp.contentAlignment = ContentAlignment.MiddleLeft;
-            cp.backColor = Color.Transparent;
-            cp.foreColor = Color.FromArgb(200, 200, 200);
-            cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            CopyParameters(user, cp);
-
-            ActiveChats.Add(newPanel);
-        }
-
-        private void ManagmentChat() {
-            if (model.chats.IsEmpty()) {
-                if (ActiveChats.IsEmpty()) {
-                    Panel p = new Panel();
-                    Label l = new Label();
-                    AddControl(p, actionPanel);
-                    ActiveChats.Add(p);
-
-                    ControlParameters cp = new ControlParameters();
-                    cp.text = "Aún no tienes ningún chat";
-                    cp.size = new Size(actionPanel.Width - 6, 20);
-                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
-                    cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-                    cp.foreColor = Color.FromArgb(200, 200, 200);
-                    cp.autoSize = false;
-                    cp.location = new Point(0, 0);
-                    CopyParameters(l, cp);
-                    l.TextAlign = ContentAlignment.BottomCenter;
-
-                    AddControl(l, p);
-                    cp = new ControlParameters();
-                    cp.location = new Point(-15, 10);
-                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
-                    cp.size = l.Size;
-                    cp.name = "EmptyChat";
-                    cp.backColor = Color.Transparent;
-                    CopyParameters(p, cp);
-                    return;
-                }
-            } else {
-                if (ActiveChats.Size>=2) {
-                    Panel p = ActiveChats.Get(0);
-                    if (p.Name.Equals("EmptyChat")) {
-                        DeleteControl(p, actionPanel);
-                        ActiveChats.RemoveElement(p);
-                    }
-                }
-            }
-            Iterator<UserChat> i = model.chats.Iterator();
-            int count = 0;
-            while (i.HasNext()) {
-                UserChat c = i.Next();
-                if (currentView == CurrentView.SearchingChats) {
-                    if (c.searched) {
-                        if (!c.visible) {
-                            AddChat(c, count);
-                            c.visible = true;
-                        }
-                        count++;
-                    }
-                } else {
-                    if (!c.searched) {
-                        if (!c.visible) {
-                            AddChat(c, count);
-                            c.visible = true;
-                        }
-                        count++;
-                    }
-                }/*
-                if (c.profile.Image == null) {
-                    UserChat userChat = SearchChat(c.profile.Name);
-                    if (userChat == default || userChat.profile.Image == null)
-                        continue;
-                    foreach (Control control in ActiveChats.Get(imageCount).Controls) {
-                        if(control is PictureBox picture) {
-                            ChangeImage(picture, Serializer.DeserializeImage(userChat.profile.Image));
-                        }
-                    }
-                }
-                imageCount++;*/
-            }
-        }
-
-        private void ManagmentGroup() {
-            if (model.groups.IsEmpty()) {
-                if (ActiveChats.IsEmpty()) {
-                    Panel p = new Panel();
-                    Label l = new Label();
-                    AddControl(p, actionPanel);
-                    ActiveChats.Add(p);
-
-                    ControlParameters cp = new ControlParameters();
-                    cp.text = "Aún no tienes ningún grupo";
-                    cp.size = new Size(actionPanel.Width - 6, 20);
-                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
-                    cp.font = new Font("Microsoft Sans Serif", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-                    cp.foreColor = Color.FromArgb(200, 200, 200);
-                    cp.autoSize = false;
-                    cp.location = new Point(0, 0);
-                    CopyParameters(l, cp);
-                    l.TextAlign = ContentAlignment.BottomCenter;
-
-                    AddControl(l, p);
-                    cp = new ControlParameters();
-                    cp.location = new Point(-15, 10);
-                    cp.anchor = (AnchorStyles)((AnchorStyles.Left | AnchorStyles.Right) | AnchorStyles.Top);
-                    cp.size = l.Size;
-                    cp.name = "EmptyChat";
-                    cp.backColor = Color.Transparent;
-                    CopyParameters(p, cp);
-                    return;
-                }
-            } else {
-                if (ActiveChats.Size >= 2) {
-                    Panel p = ActiveChats.Get(0);
-                    if (p.Name.Equals("EmptyChat")) {
-                        DeleteControl(p, actionPanel);
-                        ActiveChats.RemoveElement(p);
-                    }
-                }
-            }
-            Iterator<Group> i = model.groups.Iterator();
-            int count = 0;
-            while (i.HasNext()) {
-                Group c = i.Next();
-                if (currentView == CurrentView.SearchingChats) {
-                    if (c.searched) {
-                        if (!c.visible) {
-                            AddGroup(c, count);
-                            c.visible = true;
-                        }
-                        count++;
-                    }
-                } else {
-                    if (!c.searched) {
-                        if (!c.visible) {
-                            AddGroup(c, count);
-                            c.visible = true;
-                        }
-                        count++;
-                    }
-                }
-            }
         }
 
         private void RemoveActiveChats() {
@@ -786,22 +629,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             while (i.HasNext())
                 DeleteControl(i.Next(), actionPanel);
             ActiveChats = new DynamicArray<Panel>();
+            model.SearchedChats = new LinkedList<UserChat>();
+            model.SearchedGroups = new LinkedList<Group>();
 
             if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats || lastView == CurrentView.SearchingChats) {
-                Iterator<UserChat> uc = model.chats.Iterator();
+                Iterator<UserChat> uc = model.Chats.Iterator();
                 while (uc.HasNext()) {
                     UserChat chat = uc.Next();
-                    chat.visible = false;
-                    if (chat.searched)
-                        model.chats.RemoveElement(chat);
+                    chat.Visible = false;
+                    chat.Panel = null;
                 }
             } else if (lastView == CurrentView.InGroup || lastView == CurrentView.ViewGroups || lastView == CurrentView.SearchingGroups) {
-                Iterator<Group> g = model.groups.Iterator();
+                Iterator<Group> g = model.Groups.Iterator();
                 while (g.HasNext()) {
                     Group group = g.Next();
-                    group.visible = false;
-                    if (group.searched)
-                        model.groups.Remove(group.code);
+                    group.Visible = false;
+                    group.Panel = null;
                 }
             }
         }
@@ -849,10 +692,10 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private UserChat SearchChat(string name) {
-            Iterator<UserChat> i = model.chats.Iterator();
+            Iterator<UserChat> i = model.Chats.Iterator();
             while (i.HasNext()) {
                 UserChat c = i.Next();
-                if (c.profile.Name.Equals(name)) {
+                if (c.Name.Equals(name)) {
                     return c;
                 }
             }
@@ -860,7 +703,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private Group SearchGroup(int code) {
-            Iterator<Group> i = model.groups.Iterator();
+            Iterator<Group> i = model.Groups.Iterator();
             while (i.HasNext()) {
                 Group c = i.Next();
                 if (c.code == code) {
@@ -912,20 +755,55 @@ namespace Chat_Virtual___Cliente.Frontend {
                             break;
                     }
                 }
-                bool InChat = currentView == CurrentView.InChat, InGroup = currentView == CurrentView.InGroup;
-                if(InChat || currentView == CurrentView.ViewChats || currentView == CurrentView.SearchingChats) {
-                    ManagmentChat();
-                    if (InChat) {
-                        AddChatMessage(SearchChat(model.CurrentChat));
-                    } else {
-                        model.CurrentChat = "";
+                if(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats) {
+                    Iterator<UserChat> iterator = model.Chats.Iterator();
+                    int count = 0;
+                    while (iterator.HasNext()) {
+                        UserChat chat = iterator.Next();
+                        if (!chat.Visible)
+                            AddChat(chat, count);
+                        else
+                            foreach (Control c in chat.Panel.Controls)
+                                if (c is PictureBox photo)
+                                    if (photo.Image == null && chat.Photo != null)
+                                        photo.Image = Serializer.DeserializeImage(chat.Photo);
+                        count++;
                     }
-                } else if (InGroup || currentView == CurrentView.ViewGroups || currentView == CurrentView.SearchingGroups) {
-                    ManagmentGroup();
-                    if (InGroup) {
+                    if (currentView == CurrentView.InChat)
+                        AddChatMessage(SearchChat(model.CurrentChat));
+                } else if (currentView == CurrentView.SearchingChats) {
+                    Iterator<UserChat> iterator = model.SearchedChats.Iterator();
+                    int count = 0;
+                    while (iterator.HasNext()) {
+                        UserChat chat = iterator.Next();
+                        if (!chat.Visible)
+                            AddChat(chat, count);
+                        count++;
+                    }
+                } else if (currentView == CurrentView.InGroup || currentView == CurrentView.ViewGroups) {
+                    Iterator<Group> iterator = model.Groups.Iterator();
+                    int count = 0;
+                    while (iterator.HasNext()) {
+                        Group chat = iterator.Next();
+                        if (!chat.Visible)
+                            AddChat(chat, count);
+                        else
+                            foreach (Control c in chat.Panel.Controls)
+                                if (c is PictureBox photo)
+                                    if (photo.Image == null && chat.Photo != null)
+                                        photo.Image = Serializer.DeserializeImage(chat.Photo);
+                        count++;
+                    }
+                    if (currentView == CurrentView.InGroup)
                         AddGroupMessage(SearchGroup(model.CurrentGroup));
-                    } else {
-                        model.CurrentGroup = -1;
+                } else if (currentView == CurrentView.SearchingGroups) {
+                    Iterator<Group> iterator = model.SearchedGroups.Iterator();
+                    int count = 0;
+                    while (iterator.HasNext()) {
+                        Group chat = iterator.Next();
+                        if (!chat.Visible)
+                            AddChat(chat, count);
+                        count++;
                     }
                 }
                 SGraficControl.Release();
@@ -960,7 +838,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                         else
                             user.Name = chatMessage.Sender;
                         if (SearchChat(user.Name) == default) {
-                            model.chats.Add(new UserChat(user));
+                            model.Chats.Add(new UserChat(user));
                             model.ToWriteEnqueue(new Chat(model.singleton.userName, user, false));
                         }
                         SearchChat(user.Name).NewMessagesEnqueue(chatMessage);
@@ -971,12 +849,16 @@ namespace Chat_Virtual___Cliente.Frontend {
                     
                 } else if (data is Chat chat) {
                     UserChat newChat = new UserChat(chat.memberTwo);
-                    newChat.searched = chat.Searched;
-                    if (SearchChat(newChat.profile.Name) == default) {
-                        model.chats.Add(newChat);
+                    if (chat.Searched) {
+                        model.SearchedChats.RemoveElement(newChat);
+                        model.SearchedChats.Add(newChat);
                     } else {
-                        model.chats.RemoveElement(newChat);
-                        model.chats.Add(newChat);
+                        UserChat oldChat = SearchChat(newChat.Name);
+                        if (oldChat != default) {
+                            oldChat.Photo = newChat.Photo;
+                            oldChat.Status = newChat.Status;
+                        } else
+                            model.Chats.Add(newChat);
                     }
                 } else if (data is RequestAnswer requestAnswer) {
 
