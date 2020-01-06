@@ -92,6 +92,9 @@
     <Compile Include="Frontend\Profile.Designer.cs">
       <DependentUpon>Profile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frontend\GraphicElements\RoundedBorderPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Frontend\SendImage.cs">
       <SubType>Form</SubType>
     </Compile>
