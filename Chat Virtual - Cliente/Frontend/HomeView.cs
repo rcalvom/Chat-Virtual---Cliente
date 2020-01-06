@@ -46,6 +46,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         private CurrentView lastView;
         private CurrentView currentView;
 
+        private Panel ActiveChat;
         private LinkedList<Control> AditionalComponents;
         private LinkedStack<Panel> RecentMessages;
         private LinkedStack<Panel> OldMessages;
@@ -77,6 +78,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.currentView = CurrentView.InHome;
             Thread graficControl = new Thread(GraficControl);
             graficControl.Start();
+
             receptor.RunWorkerAsync();
         }
 
@@ -153,7 +155,11 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void Settings_Click(object sender, EventArgs e) {
-            
+
+        }
+
+        private void TreeButton_Click(object sender, EventArgs e) {
+            new TreeView(model).ShowDialog();
         }
 
         private void Send_Click(object sender, EventArgs e) {
@@ -472,6 +478,9 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void RemoveMessages() {
             if (FirstMessage == null)
                 return;
+            InfoPanel.Controls.Remove(ActiveChat);
+            ActiveChat.Dispose();
+            ActiveChat = null;
             FirstMessage = null;
             if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats) {
                 ChatMessage ms;
@@ -582,6 +591,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             //label user
             cp = new ControlParameters();
             cp.autoSize = false;
+            cp.name = "User";
             cp.size = new Size(newPanel.Width - 60, 20);
             cp.location = new Point(50, 6);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
@@ -600,7 +610,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.size = new Size(newPanel.Width - 60, 20);
             cp.location = new Point(50, 25);
             cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Right);
-            cp.text = chatBase.GetLastMessage();
+            cp.text = chatBase.LastMessage.Content;
             cp.contentAlignment = ContentAlignment.MiddleLeft;
             cp.backColor = Color.Transparent;
             cp.foreColor = Color.FromArgb(200, 200, 200);
@@ -649,6 +659,60 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
+        private void AddActiveChatPanel(Panel ClickPanel) {
+            Label user = new Label(), status = new Label(); ;
+            CircularPictureBox photo = new CircularPictureBox(); ;
+            if(ActiveChat == null) {
+                ActiveChat = new Panel();
+                user.Name = "User";
+                status.Name = "Status";
+                ActiveChat.Controls.Add(user);
+                ActiveChat.Controls.Add(status);
+                ActiveChat.Controls.Add(photo);
+                InfoPanel.Controls.Add(ActiveChat);
+            } else {
+                foreach(Control c in ActiveChat.Controls) {
+                    if (c is Label label) {
+                        if (label.Name.Equals("User"))
+                            user = label;
+                        else
+                            status = label;
+                    } else if (c is CircularPictureBox pictureBox) {
+                        photo = pictureBox;
+                    }
+                }
+            }
+
+            foreach(Control c in ClickPanel.Controls) {
+                if(c is Label label) {
+                    if (label.Name.Equals("User"))
+                        user.Text = label.Text;
+                    else
+                        status.Text = label.Text;
+                } else if(c is PictureBox pictureBox) {
+                    photo.Image = pictureBox.Image;
+                }
+            }
+
+            ActiveChat.Size = new Size(ViewPanel.Width + 1, InfoPanel.Height);
+            ActiveChat.Location = new Point(actionPanel.Width - 1, 0);
+            ActiveChat.BackColor = user.BackColor = status.BackColor = Color.Transparent;
+            ActiveChat.AutoSize = user.AutoSize = status.AutoSize = false;
+            ActiveChat.Visible = user.Visible = status.Visible = true;
+            ActiveChat.BorderStyle = BorderStyle.FixedSingle;
+            ActiveChat.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
+
+            photo.Location = new Point(10, 10);
+            photo.Size = new Size(ActiveChat.Height, ActiveChat.Height);
+            photo.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
+            photo.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            user.Font = status.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            user.ForeColor = status.ForeColor = Color.FromArgb(200, 200, 200);
+            user.Size = status.Size = new Size(ViewPanel.Width - photo.Width - 30, 20);
+            user.Location = new Point(photo.Width + 20, 10); status.Location = new Point(photo.Width + 20, InfoPanel.Height - 30);
+        }
+
         private void Chat_Click(object sender, EventArgs e) {
             if (sender is Panel s) {
                 string currentChat = s.Name;
@@ -657,6 +721,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     currentView = CurrentView.InChat;
                     lastView = CurrentView.ViewChats;
                     model.CurrentChat = currentChat;
+                    AddActiveChatPanel(s);
                     SGraficControl.Release();
                 }
             } else if (sender is Control c) {
@@ -666,14 +731,18 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void Group_Click(object sender, EventArgs e) {
             int currentGroup = -1;
-            if (sender is Panel sn)
+            if (sender is Panel sn) { 
                 currentGroup = int.Parse(sn.Name);
-            if (currentGroup != model.CurrentGroup) {
-                SGraficControl.WaitOne();
-                currentView = CurrentView.InGroup;
-                lastView = CurrentView.ViewGroups;
-                model.CurrentGroup = currentGroup;
-                SGraficControl.Release();
+                if (currentGroup != model.CurrentGroup) {
+                    SGraficControl.WaitOne();
+                    currentView = CurrentView.InGroup;
+                    lastView = CurrentView.ViewGroups;
+                    model.CurrentGroup = currentGroup;
+                    AddActiveChatPanel(sn);
+                    SGraficControl.Release();
+                }
+            } else if (sender is Control c) {
+                Chat_Click(c.Parent, e);
             }
         }
 
@@ -813,7 +882,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Subproceso encargado de recibir los mensajes dados por el servidor
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
-            //Tester();
+            Tester();
             while (subprocess) {
                 if (model.singleton.ProfileHasChanged) {
                     model.ToWriteEnqueue(new ShippingData.Profile(model.singleton.userName, model.singleton.ProfilePicture, model.singleton.Status));
@@ -821,11 +890,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 }
 
-                if (model.IsConnected()) {
+                /*if (model.IsConnected()) {
                     model.DataControl();
                 } else {
                     model.Connect();
-                }
+                }*/
                 
                 Data data = model.ToReadDequeue();
                 if (data == default)
@@ -875,7 +944,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             while (!model.toWrite.IsEmpty())
                 model.Write();
         }
-
 
         //Delegados
         private void AddControl(Control toAdd, Control In) {
@@ -965,10 +1033,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             } else {
                 ToChange.Size = new Size(size.Width, size.Height);
             }
-        }
-
-        private void TreeButton_Click(object sender, EventArgs e) {
-            new TreeView(model).ShowDialog();
         }
     }
 }

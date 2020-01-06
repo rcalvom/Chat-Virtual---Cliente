@@ -14,25 +14,18 @@ namespace Chat_Virtual___Cliente.Communication {
         private Semaphore SMessages;
         private Semaphore SNewMessages;
 
-        public DateTime LastView { get; set; }
-
-        public UserChat() {
-            Messages = new LinkedStack<ChatMessage>();
-            NewMessages = new LinkedQueue<ChatMessage>();
-            SMessages = new Semaphore(1, 1);
-            SNewMessages = new Semaphore(1, 1);
-            LastView = DateTime.Now;
-        }
-
         public UserChat(Profile member) {
             this.Name = member.Name;
             this.Photo = member.Image;
             this.Status = member.Status;
+            this.NumNewMessages = 0;
+            this.LastMessage = new Message();
+            this.LastMessage.Content = Status;
+            this.LastMessage.date = new Message.Date(DateTime.Now);
             Messages = new LinkedStack<ChatMessage>();
             NewMessages = new LinkedQueue<ChatMessage>();
             SMessages = new Semaphore(1, 1);
             SNewMessages = new Semaphore(1, 1);
-            LastView = DateTime.Now;
         }
 
         public void OldMessagesPush(ChatMessage a) {
@@ -60,6 +53,10 @@ namespace Chat_Virtual___Cliente.Communication {
         public void NewMessagesEnqueue(ChatMessage a) {
             SNewMessages.WaitOne();
             NewMessages.Enqueue(a);
+            if (LastMessage.date.CompareTo(a.date) < 0) {
+                LastMessage = a;
+                NumNewMessages++;
+            }
             SNewMessages.Release();
         }
 
@@ -77,15 +74,6 @@ namespace Chat_Virtual___Cliente.Communication {
             a = NewMessages.Dequeue();
             SNewMessages.Release();
             return a;
-        }
-
-        public override string GetLastMessage() {
-            if (!NewMessages.IsEmpty())
-                return NewMessages.GetFrontElement().Content;
-            else if (!Messages.IsEmpty())
-                return Messages.Peek().Content;
-            else
-                return Status;
         }
     }
 }
