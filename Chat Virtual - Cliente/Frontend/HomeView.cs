@@ -178,9 +178,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                 DeleteControl(control, InfoPanel);
                 DeleteControl(control, actionPanel);
             }
-            ChatsControls = new LinkedList<Control>();
-            ChangeVisible(InfoPanel, false);
-            ChangeVisible(actionPanel, false);
+            //ChangeVisible(InfoPanel, false);
+            //ChangeVisible(actionPanel, false);
             RemoveChatBox();
             RemoveActiveChatPanel();
             RemoveActiveChats();
@@ -294,7 +293,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Events
 
         private void Send_Click(object sender, EventArgs e) {
-            string content = chat.Text.Trim();
+            string content = chat.Text;
             chat.Clear();
             if (content.Length == 0)
                 return;
@@ -315,7 +314,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             sendImage.ShowDialog();
             if(sendImage.ImageSelected != null) {
                 if (currentView == CurrentView.InChat) {
-                    ChatMessage chatMessage = new ChatMessage(model.singleton.userName, model.CurrentChat, sendImage.Coment.Trim());
+                    ChatMessage chatMessage = new ChatMessage(model.singleton.userName, model.CurrentChat, sendImage.Coment);
                     chatMessage.Image = sendImage.ImageSelected;
                     model.ToWriteEnqueue(chatMessage);
                 } else {
@@ -399,25 +398,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                 newPanel.BackColor = Color.Transparent;
             else if (sender is Control s)
                 Chat_MouseLeave(s.Parent, e);
-        }
-
-        private void ChatBoxEnter(object sender, KeyEventArgs e) {
-            if(e.Shift && e.KeyCode == Keys.Enter) {
-                TextBox textBox = sender as TextBox;
-                textBox.AppendText("\n");
-            } else if (e.KeyCode == Keys.Enter) {
-                Send_Click(sender, new EventArgs());
-            }
-        }
-
-        private void ChatBoxTextChanged(object sender, EventArgs e) {
-            TextBox txtBody = sender as TextBox;
-            const int padding = 3;
-            int numLines = txtBody.GetLineFromCharIndex(txtBody.TextLength) + 1;
-            int border = txtBody.Height - txtBody.ClientSize.Height;
-            int newHeight = txtBody.Font.Height * numLines + padding + border;
-            if(newHeight < 100)
-                txtBody.Height = txtBody.Font.Height * numLines + padding + border;
         }
 
         //Add controls
@@ -541,7 +521,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             } else {
                 cp.anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
                 cp.autoSize = true;
-                cp.size = new Size(ViewPanel.Width - 10, 10);
+                cp.size = new Size(ViewPanel.Width - 4, 10);
                 cp.maxSize = new Size(ViewPanel.Width - 4, 0);
                 cp.text = ms.Content;
                 cp.contentAlignment = ContentAlignment.MiddleLeft;
@@ -577,7 +557,11 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.font = new Font("Microsoft Sans Serif", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cp.text = ms.date.FormatHourAndMinute(false);
             cp.contentAlignment = ContentAlignment.MiddleRight;
-            cp.location = new Point(actionPanel.Width - 110, content.Location.Y + 18 + 30);
+            if (content.Height == 0) {
+                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + 18 + 30);
+            } else {
+                cp.location = new Point(actionPanel.Width - 110, content.Location.Y + content.Height + 30);
+            }
             cp.foreColor = Color.FromArgb(150, 150, 150);
             cp.name = "Time";
             cp.tabStop = false;
@@ -830,7 +814,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             ActiveChat.BackColor = user.BackColor = status.BackColor = Color.Transparent;
             ActiveChat.AutoSize = user.AutoSize = status.AutoSize = false;
             ActiveChat.Visible = user.Visible = status.Visible = true;
-            ActiveChat.BorderStyle = BorderStyle.None;
+            ActiveChat.BorderStyle = BorderStyle.FixedSingle;
             ActiveChat.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
 
             photo.Location = new Point(10, 10);
@@ -845,6 +829,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         //Funciones
+
         private UserChat SearchChat(string name) {
             Iterator<UserChat> i = model.Chats.Iterator();
             while (i.HasNext()) {

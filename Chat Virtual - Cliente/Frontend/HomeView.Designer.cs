@@ -48,13 +48,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.actionPanel = new System.Windows.Forms.Panel();
             this.optionsPanel = new System.Windows.Forms.Panel();
             this.TreeButton = new System.Windows.Forms.PictureBox();
-            this.Profile = new Chat_Virtual___Cliente.Frontend.CircularPictureBox();
             this.Settings = new System.Windows.Forms.PictureBox();
             this.Chats = new System.Windows.Forms.PictureBox();
             this.Groups = new System.Windows.Forms.PictureBox();
             this.Home = new System.Windows.Forms.PictureBox();
             this.receptor = new System.ComponentModel.BackgroundWorker();
             this.MainDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.Profile = new Chat_Virtual___Cliente.Frontend.CircularPictureBox();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.resizeButtonPanel.SuspendLayout();
@@ -70,11 +70,11 @@ namespace Chat_Virtual___Cliente.Frontend {
             ((System.ComponentModel.ISupportInitialize)(this.sendButton)).BeginInit();
             this.optionsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Profile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Profile)).BeginInit();
             this.SuspendLayout();
             // 
             // topPane
@@ -196,7 +196,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.mainPanel.Location = new System.Drawing.Point(0, 34);
             this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(1000, 566);
+            this.mainPanel.Size = new System.Drawing.Size(1228, 830);
             this.mainPanel.TabIndex = 0;
             // 
             // ChatBoxPanel
@@ -208,7 +208,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.ChatBoxPanel.Controls.Add(this.ChatColorPanel);
             this.ChatBoxPanel.Location = new System.Drawing.Point(323, 533);
             this.ChatBoxPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.ChatBoxPanel.MinimumSize = new System.Drawing.Size(0, 33);
             this.ChatBoxPanel.Name = "ChatBoxPanel";
             this.ChatBoxPanel.Size = new System.Drawing.Size(677, 33);
             this.ChatBoxPanel.TabIndex = 5;
@@ -227,7 +226,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.ChatColorPanel.Name = "ChatColorPanel";
             this.ChatColorPanel.Size = new System.Drawing.Size(667, 22);
             this.ChatColorPanel.TabIndex = 3;
-            this.ChatColorPanel.SizeChanged += new System.EventHandler(this.SizeChatPanelChanged);
             // 
             // SendImage
             // 
@@ -266,16 +264,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.chat.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.chat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.chat.ForeColor = System.Drawing.SystemColors.Window;
-            this.chat.Location = new System.Drawing.Point(32, 3);
+            this.chat.Location = new System.Drawing.Point(32, 2);
             this.chat.Margin = new System.Windows.Forms.Padding(0);
             this.chat.MaxLength = 2000;
-            this.chat.MinimumSize = new System.Drawing.Size(20, 16);
             this.chat.Multiline = true;
             this.chat.Name = "chat";
-            this.chat.Size = new System.Drawing.Size(604, 16);
+            this.chat.Size = new System.Drawing.Size(604, 20);
             this.chat.TabIndex = 1;
-            this.chat.TextChanged += new System.EventHandler(this.ChatBoxTextChanged);
-            this.chat.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChatBoxEnter);
             // 
             // InfoPanel
             // 
@@ -364,22 +359,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.TreeButton.TabStop = false;
             this.TreeButton.Click += new System.EventHandler(this.TreeButton_Click);
             // 
-            // Profile
-            // 
-            this.Profile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.Profile.BackColor = System.Drawing.Color.Transparent;
-            this.Profile.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Profile.Image = ((System.Drawing.Image)(resources.GetObject("Profile.Image")));
-            this.Profile.Location = new System.Drawing.Point(5, 413);
-            this.Profile.Margin = new System.Windows.Forms.Padding(5);
-            this.Profile.Name = "Profile";
-            this.Profile.Padding = new System.Windows.Forms.Padding(5);
-            this.Profile.Size = new System.Drawing.Size(70, 70);
-            this.Profile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.Profile.TabIndex = 1;
-            this.Profile.TabStop = false;
-            this.Profile.Click += new System.EventHandler(this.Options_Click);
-            // 
             // Settings
             // 
             this.Settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -446,6 +425,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             this.MainDrag.TargetControl = this.topPane;
             this.MainDrag.Vertical = true;
             // 
+            // Profile
+            // 
+            this.Profile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Profile.BackColor = System.Drawing.Color.Transparent;
+            this.Profile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Profile.Image = ((System.Drawing.Image)(resources.GetObject("Profile.Image")));
+            this.Profile.Location = new System.Drawing.Point(5, 413);
+            this.Profile.Margin = new System.Windows.Forms.Padding(5);
+            this.Profile.Name = "Profile";
+            this.Profile.Padding = new System.Windows.Forms.Padding(5);
+            this.Profile.Size = new System.Drawing.Size(70, 70);
+            this.Profile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.Profile.TabIndex = 1;
+            this.Profile.TabStop = false;
+            this.Profile.Click += new System.EventHandler(this.Options_Click);
+            // 
             // HomeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -478,37 +473,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             ((System.ComponentModel.ISupportInitialize)(this.sendButton)).EndInit();
             this.optionsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TreeButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Profile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Settings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Chats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Groups)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Home)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Profile)).EndInit();
             this.ResumeLayout(false);
 
-        }
-
-        private void SizeChatPanelChanged(object sender, System.EventArgs e) {
-            ChatBoxPanel.Height = ChatColorPanel.Height + 11;
-            ViewPanel.Height = mainPanel.Height - ChatBoxPanel.Height;
-            ChatBoxPanel.Location = new System.Drawing.Point(ViewPanel.Location.X, ViewPanel.Height);
-        }
-
-        private void Tester() {
-            model.singleton.userName = "Fededin";
-            string[] chats = { "Juan", "Pedro", "Pablo", "Sebastiasn", "Carlos" };
-            for (int i = 0; i < 5; i++) {
-                ShippingData.Profile p = new ShippingData.Profile();
-                p.Name = chats[i];
-                model.ToReadEnqueue(new Chat("Tu", p, false));
-            }
-            for (int i = 0; i < 5; i++) {
-                ChatMessage ms = new ChatMessage();
-                ms.Sender = chats[i];
-                ms.Receiver = model.singleton.userName;
-                ms.Content = "Hey, i'm using SADIRI";
-                ms.date = new Date(System.DateTime.Now);
-                model.ToReadEnqueue(ms);
-            }
         }
 
         #endregion
@@ -535,6 +506,25 @@ namespace Chat_Virtual___Cliente.Frontend {
         private System.Windows.Forms.PictureBox Settings;
         private Bunifu.Framework.UI.BunifuDragControl MainDrag;
         private System.Windows.Forms.PictureBox TreeButton;
+        
+        private void Tester() {
+            model.singleton.userName = "Fededin";
+            string[] chats = {"Juan", "Pedro", "Pablo", "Sebastiasn", "Carlos" };
+            for(int i = 0; i<5; i++) {
+                ShippingData.Profile p = new ShippingData.Profile();
+                p.Name = chats[i];
+                model.ToReadEnqueue(new Chat("Tu", p, false));
+            }
+            for(int i = 0; i<5; i++) {
+                ChatMessage ms = new ChatMessage();
+                ms.Sender = chats[i];
+                ms.Receiver = model.singleton.userName;
+                ms.Content = "Hey, i'm using SADIRI";
+                ms.date = new Date(System.DateTime.Now);
+                model.ToReadEnqueue(ms);
+            }
+        }
+
         private System.Windows.Forms.Panel ChatBoxPanel;
         private System.Windows.Forms.TextBox chat;
         private System.Windows.Forms.PictureBox sendButton;
