@@ -47,7 +47,8 @@ namespace Chat_Virtual___Cliente.Frontend {
         private CurrentView currentView;
 
         private Panel ActiveChat;
-        private LinkedList<Control> AditionalComponents;
+        private LinkedList<Control> ChatsControls;
+        private LinkedList<Control> HomeControls;
         private LinkedStack<Panel> RecentMessages;
         private LinkedStack<Panel> OldMessages;
         private DynamicArray<Panel> ActiveChats;
@@ -60,6 +61,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         private delegate void ChangeImageOf(PictureBox pb, Image image);
         private delegate void ChangeVisibilityState(Control control, bool Visible);
         private delegate void ChangeSizeOf(Control control, Size size);
+        private delegate void DisposeAControl(Control control);
 
         //Semaforos
         private Semaphore SGraficControl;
@@ -69,18 +71,21 @@ namespace Chat_Virtual___Cliente.Frontend {
             model = new MainModel();
             maximized = false;
             subprocess = true;
-            AditionalComponents = new LinkedList<Control>();
+            ChatsControls = new LinkedList<Control>();
+            HomeControls = new LinkedList<Control>();
             RecentMessages = new LinkedStack<Panel>();
             OldMessages = new LinkedStack<Panel>();
             ActiveChats = new DynamicArray<Panel>();
             SGraficControl = new Semaphore(1, 1);
             FirstMessage = null;
-            this.currentView = CurrentView.InHome;
+            this.currentView = this.lastView = CurrentView.InHome;
             Thread graficControl = new Thread(GraficControl);
             graficControl.Start();
 
             receptor.RunWorkerAsync();
         }
+
+        //Main events
 
         private void MinButton_Click(object sender, EventArgs e) {
             WindowState = FormWindowState.Minimized;
@@ -145,14 +150,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             SGraficControl.Release();
         }
 
-        //Pendiente
         private void Options_Click(object sender, EventArgs e) {
             SGraficControl.WaitOne();
             currentView = CurrentView.InProfile;
             SGraficControl.Release();
             Profile profile = new Profile(model);
             profile.ShowDialog();
-        }
+        }  //Pendiente
 
         private void Settings_Click(object sender, EventArgs e) {
 
@@ -161,6 +165,132 @@ namespace Chat_Virtual___Cliente.Frontend {
         private void TreeButton_Click(object sender, EventArgs e) {
             new TreeView(model).ShowDialog();
         }
+
+        //Remove controls
+        private void RemoveHomeElements() {
+
+        }  //Pendiente
+
+        private void RemoveChatsElements() {
+            Iterator<Control> controls = ChatsControls.Iterator();
+            while (controls.HasNext()) {
+                Control control = controls.Next();
+                DeleteControl(control, InfoPanel);
+                DeleteControl(control, actionPanel);
+            }
+            //ChangeVisible(InfoPanel, false);
+            //ChangeVisible(actionPanel, false);
+            RemoveChatBox();
+            RemoveActiveChatPanel();
+            RemoveActiveChats();
+        }
+
+        private void RemoveChatBox() {
+            if (ChatBoxPanel.Visible) {
+                ChangeVisible(ChatBoxPanel, false);
+                ChangeSize(ViewPanel, new Size(ViewPanel.Width, ViewPanel.Height + ChatBoxPanel.Height));
+            }
+        }
+
+        private void RemoveMessages() {
+            if (FirstMessage == null)
+                return;
+            FirstMessage = null;
+            if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats) {
+                ChatMessage ms;
+                UserChat uc = SearchChat(RecentMessages.Peek().Name);
+                int count = 0;
+                while (!RecentMessages.IsEmpty()) {
+                    ms = new ChatMessage();
+                    Panel p = RecentMessages.Pop();
+                    foreach (Control c in p.Controls) {
+                        if (c is Label l) {
+                            if (l.Name.Equals("UserName")) {
+                                ms.Sender = l.Text;
+                            } else if (l.Name.Equals("Content")) {
+                                ms.Content = l.Text;
+                            } else if (l.Name.Equals("Time")) {
+                                ms.date.StringToDate(l.Text);
+                            }
+                        } else if (c is PictureBox image) {
+                            ms.Image = Serializer.SerializeImage(image.Image);
+                        }
+                    }
+                    if (ms.Sender.Equals(model.singleton.userName)) {
+                        ms.Receiver = uc.Name;
+                    } else {
+                        ms.Receiver = model.singleton.userName;
+                    }
+                    if (count < 20)
+                        uc.OldMessagesPush(ms);
+                    DeleteControl(p, ViewPanel);
+                    count++;
+                }
+                while (!OldMessages.IsEmpty()) {
+                    Panel p = OldMessages.Pop();
+                    DeleteControl(p, ViewPanel);
+                }
+            } else if (lastView == CurrentView.InGroup || lastView == CurrentView.ViewGroups) {
+                GroupMessage gm;
+                Group group = SearchGroup(int.Parse(RecentMessages.Peek().Name));
+                while (!RecentMessages.IsEmpty()) {
+                    gm = new GroupMessage(group.code);
+                    Panel p = RecentMessages.Pop();
+                    foreach (Control c in p.Controls) {
+                        if (c is Label l) {
+                            if (l.Name.Equals("UserName")) {
+                                gm.Sender = l.Text;
+                            } else if (l.Name.Equals("Content")) {
+                                gm.Content = l.Text;
+                            } else if (l.Name.Equals("Time")) {
+
+                            }
+                        }
+                    }
+                    group.OldMessagesPush(gm);
+                    DeleteControl(p, ViewPanel);
+                }
+                while (!OldMessages.IsEmpty()) {
+                    Panel p = OldMessages.Pop();
+                    DeleteControl(p, ViewPanel);
+                }
+            }
+        }
+
+        private void RemoveActiveChats() {
+            Iterator<Panel> i = ActiveChats.Iterator();
+            while (i.HasNext())
+                DeleteControl(i.Next(), actionPanel);
+            ActiveChats = new DynamicArray<Panel>();
+            model.SearchedChats = new LinkedList<UserChat>();
+            model.SearchedGroups = new LinkedList<Group>();
+
+            if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats || lastView == CurrentView.SearchingChats) {
+                Iterator<UserChat> uc = model.Chats.Iterator();
+                while (uc.HasNext()) {
+                    UserChat chat = uc.Next();
+                    chat.Visible = false;
+                    chat.Panel = null;
+                }
+            } else if (lastView == CurrentView.InGroup || lastView == CurrentView.ViewGroups || lastView == CurrentView.SearchingGroups) {
+                Iterator<Group> g = model.Groups.Iterator();
+                while (g.HasNext()) {
+                    Group group = g.Next();
+                    group.Visible = false;
+                    group.Panel = null;
+                }
+            }
+        }
+
+        private void RemoveActiveChatPanel() {
+            if(ActiveChat != null) {
+                DeleteControl(ActiveChat, InfoPanel);
+                DisposeControl(ActiveChat);
+                ActiveChat = null;
+            }
+        }
+
+        //Events
 
         private void Send_Click(object sender, EventArgs e) {
             string content = chat.Text;
@@ -195,46 +325,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             }
         }
 
-        private void AddChatSearchElements() {
-            ControlParameters cp = new ControlParameters();
-            Panel NewChatPanel = new Panel();
-            Label NewChatLabel = new Label();
-            TextBox NewChatTextBox = new TextBox();
-            AddControl(NewChatPanel, InfoPanel);
-
-            cp.location = new Point(0, 0);
-            cp.size = new Size(actionPanel.Width, InfoPanel.Height);
-            cp.backColor = Color.Transparent;
-            cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Top);
-            cp.borderStyle = BorderStyle.FixedSingle;
-            AddControl(NewChatLabel, NewChatPanel);
-            AddControl(NewChatTextBox, NewChatPanel);
-            CopyParameters(NewChatPanel, cp);
-
-            cp = new ControlParameters();
-            cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cp.foreColor = Color.FromArgb(220, 220, 220);
-            cp.location = new Point(5, 5);
-            cp.size = new Size(actionPanel.Width - 10, 18);
-            cp.text = "Busca o inicia un nuevo chat";
-            CopyParameters(NewChatLabel, cp);
-
-            cp = new ControlParameters();
-            cp.anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
-            cp.backColor = Color.FromArgb(64, 64, 64);
-            cp.borderStyle = BorderStyle.FixedSingle;
-            cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cp.foreColor = Color.FromArgb(224, 224, 224);
-            cp.name = "NewChat";
-            cp.size = new Size(NewChatPanel.Width - 20, 20);
-            cp.location = new Point(10, 28);
-            cp.tabStop = true;
-            NewChatTextBox.TextChanged += new EventHandler(SearchChat);
-            CopyParameters(NewChatTextBox, cp);
-
-            AditionalComponents.Add(NewChatPanel);
-        }
-
         private void SearchChat(object sender, EventArgs e) {
             if (sender is TextBox textBox) {
                 if (textBox.Text.Length == 0) {
@@ -260,6 +350,124 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
                     SGraficControl.Release();
                 }
+            }
+        }
+
+        private void Chat_Click(object sender, EventArgs e) {
+            if (sender is Panel s) {
+                string currentChat = s.Name;
+                if (!currentChat.Equals(model.CurrentChat)) {
+                    SGraficControl.WaitOne();
+                    currentView = CurrentView.InChat;
+                    lastView = CurrentView.ViewChats;
+                    model.CurrentChat = currentChat;
+                    AddActiveChatPanel(s);
+                    SGraficControl.Release();
+                }
+            } else if (sender is Control c) {
+                Chat_Click(c.Parent, e);
+            }
+        }
+
+        private void Group_Click(object sender, EventArgs e) {
+            int currentGroup = -1;
+            if (sender is Panel sn) {
+                currentGroup = int.Parse(sn.Name);
+                if (currentGroup != model.CurrentGroup) {
+                    SGraficControl.WaitOne();
+                    currentView = CurrentView.InGroup;
+                    lastView = CurrentView.ViewGroups;
+                    model.CurrentGroup = currentGroup;
+                    AddActiveChatPanel(sn);
+                    SGraficControl.Release();
+                }
+            } else if (sender is Control c) {
+                Chat_Click(c.Parent, e);
+            }
+        }
+
+        private void Chat_MouseEnter(object sender, EventArgs e) {
+            if (sender is Panel newPanel)
+                newPanel.BackColor = Color.FromArgb(100, 100, 100);
+            else if (sender is Control s)
+                Chat_MouseEnter(s.Parent, e);
+        }
+
+        private void Chat_MouseLeave(object sender, EventArgs e) {
+            if (sender is Panel newPanel)
+                newPanel.BackColor = Color.Transparent;
+            else if (sender is Control s)
+                Chat_MouseLeave(s.Parent, e);
+        }
+
+        //Add controls
+        private void AddHomeElements() {
+
+        }  //Pendiente
+
+        private void AddChatSearchElements(string LabelText) {
+            bool Exist = false;
+            Label text = new Label();
+            Iterator<Control> controls = ChatsControls.Iterator();
+            while (controls.HasNext()) {
+                Control control = controls.Next();
+                if (control.Name.Equals("Search")) {
+                    Exist = true;
+                    foreach(Control control1 in control.Controls) {
+                        if(control1 is Label l) {
+                            text = l;
+                        }
+                    }
+                    break;
+                }
+            }
+            if (!Exist) {
+                ControlParameters cp = new ControlParameters();
+                Panel NewChatPanel = new Panel();
+                Label NewChatLabel = new Label();
+                TextBox NewChatTextBox = new TextBox();
+                AddControl(NewChatPanel, InfoPanel);
+
+                cp.location = new Point(0, 0);
+                cp.size = new Size(actionPanel.Width, InfoPanel.Height);
+                cp.backColor = Color.Transparent;
+                cp.anchor = (AnchorStyles)(AnchorStyles.Left | AnchorStyles.Top);
+                cp.borderStyle = BorderStyle.FixedSingle;
+                cp.name = "Search";
+                AddControl(NewChatLabel, NewChatPanel);
+                AddControl(NewChatTextBox, NewChatPanel);
+                CopyParameters(NewChatPanel, cp);
+
+                cp = new ControlParameters();
+                cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                cp.foreColor = Color.FromArgb(220, 220, 220);
+                cp.location = new Point(5, 5);
+                cp.size = new Size(actionPanel.Width - 10, 18);
+                cp.text = LabelText;
+                CopyParameters(NewChatLabel, cp);
+
+                cp = new ControlParameters();
+                cp.anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
+                cp.backColor = Color.FromArgb(64, 64, 64);
+                cp.borderStyle = BorderStyle.FixedSingle;
+                cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                cp.foreColor = Color.FromArgb(224, 224, 224);
+                cp.name = "NewChat";
+                cp.size = new Size(NewChatPanel.Width - 20, 20);
+                cp.location = new Point(10, 28);
+                cp.tabStop = true;
+                NewChatTextBox.TextChanged += new EventHandler(SearchChat);
+                CopyParameters(NewChatTextBox, cp);
+
+                ChatsControls.Add(NewChatPanel);
+            } else {
+                ControlParameters cp = new ControlParameters();
+                cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                cp.foreColor = Color.FromArgb(220, 220, 220);
+                cp.location = new Point(5, 5);
+                cp.size = new Size(actionPanel.Width - 10, 18);
+                cp.text = LabelText;
+                CopyParameters(text, cp);
             }
         }
 
@@ -475,76 +683,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             CopyParameters(message, cp);
         }
 
-        private void RemoveMessages() {
-            if (ActiveChat != null) {
-                DeleteControl(ActiveControl, InfoPanel);
-                ActiveChat.Dispose();
-                ActiveChat = null;
-            }
-            if (FirstMessage == null)
-                return;
-            FirstMessage = null;
-            if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats) {
-                ChatMessage ms;
-                UserChat uc = SearchChat(RecentMessages.Peek().Name);
-                int count = 0;
-                while (!RecentMessages.IsEmpty()) {
-                    ms = new ChatMessage();
-                    Panel p = RecentMessages.Pop();
-                    foreach (Control c in p.Controls) {
-                        if (c is Label l) {
-                            if (l.Name.Equals("UserName")) {
-                                ms.Sender = l.Text;
-                            } else if (l.Name.Equals("Content")) {
-                                ms.Content = l.Text;
-                            } else if (l.Name.Equals("Time")) {
-                                ms.date.StringToDate(l.Text);
-                            }
-                        } else if(c is PictureBox image) {
-                            ms.Image = Serializer.SerializeImage(image.Image);
-                        }
-                    }
-                    if (ms.Sender.Equals(model.singleton.userName)) {
-                        ms.Receiver = uc.Name;
-                    } else {
-                        ms.Receiver = model.singleton.userName;
-                    }
-                    if(count<20)
-                        uc.OldMessagesPush(ms);
-                    DeleteControl(p, ViewPanel);
-                    count++;
-                }
-                while (!OldMessages.IsEmpty()) {
-                    Panel p = OldMessages.Pop();
-                    DeleteControl(p, ViewPanel);
-                }
-            } else if (lastView == CurrentView.InGroup || lastView == CurrentView.ViewGroups) {
-                GroupMessage gm;
-                Group group = SearchGroup(int.Parse(RecentMessages.Peek().Name));
-                while (!RecentMessages.IsEmpty()) {
-                    gm = new GroupMessage(group.code);
-                    Panel p = RecentMessages.Pop();
-                    foreach (Control c in p.Controls) {
-                        if (c is Label l) {
-                            if (l.Name.Equals("UserName")) {
-                                gm.Sender = l.Text;
-                            } else if (l.Name.Equals("Content")) {
-                                gm.Content = l.Text;
-                            } else if (l.Name.Equals("Time")) {
-
-                            }
-                        }
-                    }
-                    group.OldMessagesPush(gm);
-                    DeleteControl(p, ViewPanel);
-                }
-                while (!OldMessages.IsEmpty()) {
-                    Panel p = OldMessages.Pop();
-                    DeleteControl(p, ViewPanel);
-                }
-            }
-        }
-
         private void AddChat(ChatBase chatBase, int i) {
             Panel newPanel = new Panel();
             Panel line = new Panel();
@@ -636,31 +774,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             ActiveChats.Add(newPanel);
         }
 
-        private void RemoveActiveChats() {
-            Iterator<Panel> i = ActiveChats.Iterator();
-            while (i.HasNext())
-                DeleteControl(i.Next(), actionPanel);
-            ActiveChats = new DynamicArray<Panel>();
-            model.SearchedChats = new LinkedList<UserChat>();
-            model.SearchedGroups = new LinkedList<Group>();
-
-            if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats || lastView == CurrentView.SearchingChats) {
-                Iterator<UserChat> uc = model.Chats.Iterator();
-                while (uc.HasNext()) {
-                    UserChat chat = uc.Next();
-                    chat.Visible = false;
-                    chat.Panel = null;
-                }
-            } else if (lastView == CurrentView.InGroup || lastView == CurrentView.ViewGroups || lastView == CurrentView.SearchingGroups) {
-                Iterator<Group> g = model.Groups.Iterator();
-                while (g.HasNext()) {
-                    Group group = g.Next();
-                    group.Visible = false;
-                    group.Panel = null;
-                }
-            }
-        }
-
         private void AddActiveChatPanel(Panel ClickPanel) {
             Label user = new Label(), status = new Label(); ;
             CircularPictureBox photo = new CircularPictureBox(); ;
@@ -715,52 +828,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             user.Location = new Point(photo.Width + 20, 10); status.Location = new Point(photo.Width + 20, InfoPanel.Height - 30);
         }
 
-        private void Chat_Click(object sender, EventArgs e) {
-            if (sender is Panel s) {
-                string currentChat = s.Name;
-                if (!currentChat.Equals(model.CurrentChat)) {
-                    SGraficControl.WaitOne();
-                    currentView = CurrentView.InChat;
-                    lastView = CurrentView.ViewChats;
-                    model.CurrentChat = currentChat;
-                    AddActiveChatPanel(s);
-                    SGraficControl.Release();
-                }
-            } else if (sender is Control c) {
-                Chat_Click(c.Parent, e);
-            }
-        }
-
-        private void Group_Click(object sender, EventArgs e) {
-            int currentGroup = -1;
-            if (sender is Panel sn) { 
-                currentGroup = int.Parse(sn.Name);
-                if (currentGroup != model.CurrentGroup) {
-                    SGraficControl.WaitOne();
-                    currentView = CurrentView.InGroup;
-                    lastView = CurrentView.ViewGroups;
-                    model.CurrentGroup = currentGroup;
-                    AddActiveChatPanel(sn);
-                    SGraficControl.Release();
-                }
-            } else if (sender is Control c) {
-                Chat_Click(c.Parent, e);
-            }
-        }
-
-        private void Chat_MouseEnter(object sender, EventArgs e) {
-            if (sender is Panel newPanel)
-                newPanel.BackColor = Color.FromArgb(100, 100, 100);
-            else if (sender is Control s)
-                Chat_MouseEnter(s.Parent, e);
-        }
-
-        private void Chat_MouseLeave(object sender, EventArgs e) {
-            if (sender is Panel newPanel)
-                newPanel.BackColor = Color.Transparent;
-            else if (sender is Control s)
-                Chat_MouseLeave(s.Parent, e);
-        }
+        //Funciones
 
         private UserChat SearchChat(string name) {
             Iterator<UserChat> i = model.Chats.Iterator();
@@ -789,42 +857,40 @@ namespace Chat_Virtual___Cliente.Frontend {
                 SGraficControl.WaitOne();
                 if (lastView != currentView) {
 
+                    if (lastView == CurrentView.InChat)
+                        model.CurrentChat = null;
+                    else if (lastView == CurrentView.InGroup)
+                        model.CurrentGroup = -1;
+
                     RemoveMessages();
-                    if (lastView == CurrentView.InChat || lastView == CurrentView.InGroup) {
-                        if (currentView != lastView && ChatBoxPanel.Visible) {
-                            ChangeSize(ViewPanel, new Size(ViewPanel.Width, ViewPanel.Height + ChatBoxPanel.Height));
-                            ChangeVisible(ChatBoxPanel, false);
+                    if(currentView == CurrentView.InChat) {
+                        AddChatBox();
+                    } else if(currentView == CurrentView.ViewChats) {
+                        AddChatSearchElements("Busca o inicia un chat");
+                        ChangeVisible(actionPanel, true);
+                        ChangeVisible(InfoPanel, true);
+                        RemoveActiveChatPanel();
+                        if (lastView != CurrentView.InChat) {
+                            RemoveActiveChats();
                         }
-                    }else if(currentView == CurrentView.InHome) {
+                    } else if (currentView == CurrentView.SearchingChats || currentView == CurrentView.SearchingGroups) {
                         RemoveActiveChats();
-                        ChangeVisible(actionPanel, false);
-                        ChangeVisible(InfoPanel, false);
+                    } else if (currentView == CurrentView.InGroup) {
+                        AddChatBox();
+                    } else if(currentView == CurrentView.ViewGroups) {
+                        AddChatSearchElements("Busca un grupo");
+                        ChangeVisible(actionPanel, true);
+                        ChangeVisible(InfoPanel, true);
+                        RemoveActiveChatPanel();
+                        if (lastView != CurrentView.InGroup) {
+                            RemoveActiveChats();
+                        }
+                    } else { //currentView == CurrentView.InHome
+                        RemoveChatsElements();
+                        AddHomeElements();
                     }
 
                     lastView = currentView;
-                    switch (currentView) {
-                        case CurrentView.InChat:
-                        case CurrentView.InGroup:
-                            AddChatSearchElements();
-                            AddChatBox();
-                            break;
-                        case CurrentView.ViewGroups:
-                        case CurrentView.ViewChats:
-                            RemoveActiveChats();
-                            AddChatSearchElements();
-                            ChangeVisible(actionPanel, true);
-                            ChangeVisible(InfoPanel, true);
-                            break;
-                        case CurrentView.InHome:
-                            RemoveActiveChats();
-                            ChangeVisible(actionPanel, false);
-                            ChangeVisible(InfoPanel, false);
-                            break;
-                        case CurrentView.SearchingChats:
-                        case CurrentView.SearchingGroups:
-                            RemoveActiveChats();
-                            break;
-                    }
                 }
                 if(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats) {
                     Iterator<UserChat> iterator = model.Chats.Iterator();
@@ -1034,6 +1100,15 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ToChange.Invoke(d, ToChange, size);
             } else {
                 ToChange.Size = new Size(size.Width, size.Height);
+            }
+        }
+
+        private void DisposeControl(Control ToDispose) {
+            if (ToDispose.InvokeRequired) {
+                var d = new DisposeAControl(this.DisposeControl);
+                ToDispose.Invoke(d, ToDispose);
+            } else {
+                ToDispose.Dispose();
             }
         }
     }
