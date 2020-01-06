@@ -476,11 +476,13 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void RemoveMessages() {
+            if (ActiveChat != null) {
+                DeleteControl(ActiveControl, InfoPanel);
+                ActiveChat.Dispose();
+                ActiveChat = null;
+            }
             if (FirstMessage == null)
                 return;
-            InfoPanel.Controls.Remove(ActiveChat);
-            ActiveChat.Dispose();
-            ActiveChat = null;
             FirstMessage = null;
             if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats) {
                 ChatMessage ms;
@@ -703,7 +705,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             ActiveChat.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom);
 
             photo.Location = new Point(10, 10);
-            photo.Size = new Size(ActiveChat.Height, ActiveChat.Height);
+            photo.Size = new Size(ActiveChat.Height-20, ActiveChat.Height-20);
             photo.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
             photo.SizeMode = PictureBoxSizeMode.StretchImage;
 
@@ -882,7 +884,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         //Subproceso encargado de recibir los mensajes dados por el servidor
         //Estado: Pendiente
         private void Receptor_DoWork(object sender, DoWorkEventArgs e) {
-            Tester();
+            //Tester();
             while (subprocess) {
                 if (model.singleton.ProfileHasChanged) {
                     model.ToWriteEnqueue(new ShippingData.Profile(model.singleton.userName, model.singleton.ProfilePicture, model.singleton.Status));
@@ -890,11 +892,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 }
 
-                /*if (model.IsConnected()) {
+                if (model.IsConnected()) {
                     model.DataControl();
                 } else {
                     model.Connect();
-                }*/
+                }
                 
                 Data data = model.ToReadDequeue();
                 if (data == default)
