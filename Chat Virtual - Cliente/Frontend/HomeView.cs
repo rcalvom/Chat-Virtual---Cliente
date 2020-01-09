@@ -67,6 +67,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         private delegate void ChangeSizeOf(Control control, Size size);
         private delegate void ChangeLocationOf(Control control, Point point);
         private delegate void DisposeAControl(Control control);
+        private delegate void ChangeScrollPosition(Panel scrollBar, int position);
 
         //Semaforos
         private Semaphore SGraficControl;
@@ -287,7 +288,6 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void Send_Click(object sender, EventArgs e) {
             string content = chat.Text.Trim();
-            chat.Clear();
             if (content.Length == 0)
                 return;
             if (currentView == CurrentView.InChat) {
@@ -300,6 +300,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 GroupMessage ms = new GroupMessage(model.CurrentGroup, model.singleton.userName, content);
                 model.ToWriteEnqueue(ms);
             }
+            chat.Clear();
         }
 
         private void SendImage_Click(object sender, EventArgs e) {
@@ -609,7 +610,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.location = new Point(10, message.Height - 1);
             CopyParameters(line, cp);
 
-            ViewPanel.VerticalScroll.Value = ViewPanel.VerticalScroll.Maximum;
+            ChangeScrollBarPosition(ViewPanel, ViewPanel.VerticalScroll.Maximum);
         }
 
         private void AddGroupMessage(Group group) {
@@ -702,6 +703,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             AddControl(newPanel, actionPanel);
             AddControl(photo, newPanel);
             AddControl(user, newPanel);
+            AddControl(lastMessage, newPanel);
             AddControl(line, newPanel);
 
             //panel
@@ -713,9 +715,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.backColor = Color.Transparent;
             if (chatBase is Group group) {
                 user.Click += new EventHandler(Group_Click);
+                photo.Click += new EventHandler(Group_Click);
+                lastMessage.Click += new EventHandler(Group_Click);
                 cp.name = group.code.ToString();
             } else {
                 user.Click += new EventHandler(Chat_Click);
+                photo.Click += new EventHandler(Chat_Click);
+                lastMessage.Click += new EventHandler(Chat_Click);
                 cp.name = chatBase.Name;
             }
             cp.tabStop = false;
@@ -736,7 +742,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             CopyParameters(photo, cp);
             photo.MouseEnter += new EventHandler(Chat_MouseEnter);
             photo.MouseLeave += new EventHandler(Chat_MouseLeave);
-            photo.Click += new EventHandler(Chat_Click);
 
             //label user
             cp = new ControlParameters();
@@ -749,12 +754,12 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.contentAlignment = ContentAlignment.MiddleLeft;
             cp.backColor = Color.Transparent;
             cp.foreColor = Color.FromArgb(200, 200, 200);
-            cp.font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cp.font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             CopyParameters(user, cp);
             user.MouseEnter += new EventHandler(Chat_MouseEnter);
             user.MouseLeave += new EventHandler(Chat_MouseLeave);
 
-            /*//lastMessage
+            //lastMessage
             cp = new ControlParameters();
             cp.autoSize = false;
             cp.size = new Size(newPanel.Width - 60, 20);
@@ -765,9 +770,9 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.backColor = Color.Transparent;
             cp.foreColor = Color.FromArgb(200, 200, 200);
             cp.font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            CopyParameters(user, cp);
-            user.MouseEnter += new EventHandler(Chat_MouseEnter);
-            user.MouseLeave += new EventHandler(Chat_MouseLeave);*/
+            CopyParameters(lastMessage, cp);
+            lastMessage.MouseEnter += new EventHandler(Chat_MouseEnter);
+            lastMessage.MouseLeave += new EventHandler(Chat_MouseLeave);
 
             //line
             cp = new ControlParameters();
@@ -861,18 +866,22 @@ namespace Chat_Virtual___Cliente.Frontend {
             return default;
         }
 
-        private void OrganizeChats(bool InChats) {
+        private void OrganizeChats() {
             ArrayMaxHeap<Panel> ActiveChats = new ArrayMaxHeap<Panel>();
-            Iterator<ChatBase> iterator;
-            if (InChats) 
-                iterator = model.Chats.Iterator() as Iterator<ChatBase>;
-            else
-                iterator = model.Groups.Iterator() as Iterator<ChatBase>;
-
-            while (iterator.HasNext()) {
-                ChatBase chat = iterator.Next();
-                if(chat.Panel != null)
-                    ActiveChats.Insert((int)chat.LastMessage.date.ToLong(), chat.Panel);
+            if (currentView == CurrentView.InChat || currentView == CurrentView.ViewChats) {
+                Iterator<UserChat> iterator = model.Chats.Iterator();
+                while (iterator.HasNext()) {
+                    UserChat chat = iterator.Next();
+                    if (chat.Panel != null)
+                        ActiveChats.Insert((int)chat.LastMessage.date.ToLong(), chat.Panel);
+                }
+            } else {
+                Iterator<Group> iterator = model.Groups.Iterator();
+                while (iterator.HasNext()) {
+                    Group chat = iterator.Next();
+                    if (chat.Panel != null)
+                        ActiveChats.Insert((int)chat.LastMessage.date.ToLong(), chat.Panel);
+                }
             }
 
             int i = 0;
@@ -938,7 +947,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     if (currentView == CurrentView.InChat)
                         AddChatMessage(SearchChat(model.CurrentChat));
                     if (NeedChange) 
-                        OrganizeChats(true);
+                        OrganizeChats();
                 } else if (currentView == CurrentView.SearchingChats) {
                     Iterator<UserChat> iterator = model.SearchedChats.Iterator();
                     int count = 0;
@@ -963,7 +972,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     if (currentView == CurrentView.InGroup)
                         AddGroupMessage(SearchGroup(model.CurrentGroup));
                     if (NeedChange)
-                        OrganizeChats(false);
+                        OrganizeChats();
                 } else if (currentView == CurrentView.SearchingGroups) {
                     Iterator<Group> iterator = model.SearchedGroups.Iterator();
                     int count = 0;
@@ -1013,7 +1022,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                         }
                         SearchedChat.NewMessagesEnqueue(chatMessage);
                         if (SearchedChat.Panel != null)
-                            OrganizeChats(true);
+                            OrganizeChats();
                     } else if (data is GroupMessage groupMessage) {
                         
                     }
@@ -1163,6 +1172,15 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ToDispose.Invoke(d, ToDispose);
             } else {
                 ToDispose.Dispose();
+            }
+        }
+
+        private void ChangeScrollBarPosition(Panel scrollBar, int position) {
+            if (scrollBar.InvokeRequired) {
+                var d = new ChangeScrollPosition(ChangeScrollBarPosition);
+                scrollBar.Invoke(d, scrollBar, position);
+            } else {
+                scrollBar.VerticalScroll.Value = position;
             }
         }
     }

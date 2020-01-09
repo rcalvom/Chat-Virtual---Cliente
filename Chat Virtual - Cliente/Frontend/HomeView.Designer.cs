@@ -296,6 +296,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ViewPanel.AutoScroll = true;
             this.ViewPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ViewPanel.BackColor = System.Drawing.Color.Transparent;
             this.ViewPanel.Location = new System.Drawing.Point(323, 60);
             this.ViewPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ViewPanel.MinimumSize = new System.Drawing.Size(0, 263);
@@ -489,8 +490,8 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void SizeChatPanelChanged(object sender, System.EventArgs e) {
             ChatBoxPanel.Height = ChatColorPanel.Height + 11;
-            ViewPanel.Height = mainPanel.Height - ChatBoxPanel.Height;
-            ChatBoxPanel.Location = new System.Drawing.Point(ViewPanel.Location.X, ViewPanel.Height);
+            ViewPanel.Height = mainPanel.Height - ChatBoxPanel.Height - InfoPanel.Height;
+            ChatBoxPanel.Location = new System.Drawing.Point(ViewPanel.Location.X, ViewPanel.Height+InfoPanel.Height);
         }
 
         private void Tester() {
