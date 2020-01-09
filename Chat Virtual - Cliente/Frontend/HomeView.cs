@@ -608,6 +608,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.tabStop = false;
             cp.location = new Point(10, message.Height - 1);
             CopyParameters(line, cp);
+
+            ViewPanel.VerticalScroll.Value = ViewPanel.VerticalScroll.Maximum;
         }
 
         private void AddGroupMessage(Group group) {
@@ -1005,7 +1007,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                             user.Name = chatMessage.Sender;
                         UserChat SearchedChat = SearchChat(user.Name);
                         if (SearchedChat == default) {
-                            model.Chats.Add(new UserChat(user));
+                            SearchedChat = new UserChat(user);
+                            model.Chats.Add(SearchedChat);
                             model.ToWriteEnqueue(new Chat(model.singleton.userName, user, false));
                         }
                         SearchedChat.NewMessagesEnqueue(chatMessage);
