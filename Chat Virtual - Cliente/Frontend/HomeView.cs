@@ -288,6 +288,7 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void Send_Click(object sender, EventArgs e) {
             string content = chat.Text.Trim();
+            ClearSearchTextBox();
             if (content.Length == 0)
                 return;
             if (currentView == CurrentView.InChat) {
@@ -889,6 +890,16 @@ namespace Chat_Virtual___Cliente.Frontend {
                 Panel chat = ActiveChats.ExtractMax();
                 ChangeLocation(chat, new Point(0, i*chat.Height));
                 i++;
+            }
+        }
+
+        private void ClearSearchTextBox() {
+            Iterator<Control> iterator = ChatsControls.Iterator();
+            while (iterator.HasNext()) {
+                Control control = iterator.Next();
+                if(control is TextBox textBox) {
+                    textBox.Clear();
+                }
             }
         }
 
