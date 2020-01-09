@@ -9,7 +9,6 @@ namespace Chat_Virtual___Cliente.Communication {
         public bool Visible { get; set; }
         public int NumNewMessages { get; set; }
         public ShippingData.Message LastMessage { get; set; }
-
         public Panel Panel { get; set; }
     }
 }

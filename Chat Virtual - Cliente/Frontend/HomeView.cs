@@ -48,7 +48,6 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         //Chats-Grupos
         private Panel ActiveChat;                           //Panel que muestra la información del chat o grupo que está activo
-        private DynamicArray<Panel> ActiveChats;            //Paneles con la informacion de los chats o grupos que se están mostrando
         private ShippingData.Message FirstMessage;          //Primer mensaje del cual se creó un panel en el grupo o chat
         private Panel OldestMessage;                        //Panel con el mensaje que se está mostrando que tiene la fecha más antigua (Se usa para posicionar si llega otro mensaje más antiguo)
         private LinkedStack<Panel> RecentMessages;          //Paneles con los mensajes que se están mostrando
@@ -80,7 +79,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             ChatsControls = new LinkedList<Control>();
             HomeControls = new LinkedList<Control>();
             RecentMessages = new LinkedStack<Panel>();
-            ActiveChats = new DynamicArray<Panel>();
             SGraficControl = new Semaphore(1, 1);
             FirstMessage = null;
             this.currentView = this.lastView = CurrentView.InHome;
@@ -257,7 +255,6 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void RemoveActiveChats() {
             DeleteControls(actionPanel);
-            ActiveChats = new DynamicArray<Panel>();
             model.SearchedChats = new LinkedList<UserChat>();
             model.SearchedGroups = new LinkedList<Group>();
 
@@ -782,7 +779,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             CopyParameters(line, cp);
 
             chatBase.Visible = true;
-            ActiveChats.Add(newPanel);
         }
 
         private void AddActiveChatPanel(Panel ClickPanel) {
@@ -863,10 +859,25 @@ namespace Chat_Virtual___Cliente.Frontend {
             return default;
         }
 
-        private void OrganizeChats() {
-            for (int i = 0; i < ActiveChats.Size; i++) {
-                Panel chat = ActiveChats.Get(i);
+        private void OrganizeChats(bool InChats) {
+            ArrayMaxHeap<Panel> ActiveChats = new ArrayMaxHeap<Panel>();
+            Iterator<ChatBase> iterator;
+            if (InChats) 
+                iterator = model.Chats.Iterator() as Iterator<ChatBase>;
+            else
+                iterator = model.Groups.Iterator() as Iterator<ChatBase>;
+
+            while (iterator.HasNext()) {
+                ChatBase chat = iterator.Next();
+                if(chat.Panel != null)
+                    ActiveChats.Insert((int)chat.LastMessage.date.ToLong(), chat.Panel);
+            }
+
+            int i = 0;
+            while(!ActiveChats.IsEmpty()) {
+                Panel chat = ActiveChats.ExtractMax();
                 ChangeLocation(chat, new Point(0, i*chat.Height));
+                i++;
             }
         }
 
@@ -913,15 +924,19 @@ namespace Chat_Virtual___Cliente.Frontend {
                 if(currentView == CurrentView.InChat || currentView == CurrentView.ViewChats) {
                     Iterator<UserChat> iterator = model.Chats.Iterator();
                     int count = 0;
+                    bool NeedChange = false;
                     while (iterator.HasNext()) {
                         UserChat chat = iterator.Next();
                         if (!chat.Visible) {
                             AddChat(chat, count);
+                            NeedChange = true;
                         }
                         count++;
                     }
                     if (currentView == CurrentView.InChat)
                         AddChatMessage(SearchChat(model.CurrentChat));
+                    if (NeedChange) 
+                        OrganizeChats(true);
                 } else if (currentView == CurrentView.SearchingChats) {
                     Iterator<UserChat> iterator = model.SearchedChats.Iterator();
                     int count = 0;
@@ -934,20 +949,19 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if (currentView == CurrentView.InGroup || currentView == CurrentView.ViewGroups) {
                     Iterator<Group> iterator = model.Groups.Iterator();
                     int count = 0;
+                    bool NeedChange = false;
                     while (iterator.HasNext()) {
                         Group chat = iterator.Next();
-                        if (!chat.Visible)
+                        if (!chat.Visible) { 
                             AddChat(chat, count);
-                        else
-                            foreach (Control c in chat.Panel.Controls)
-                                if (c is PictureBox photo)
-                                    if (photo.Image == null && chat.Photo != null)
-                                        photo.Image = Serializer.DeserializeImage(chat.Photo);
+                            NeedChange = true;
+                        }
                         count++;
                     }
                     if (currentView == CurrentView.InGroup)
                         AddGroupMessage(SearchGroup(model.CurrentGroup));
-                    
+                    if (NeedChange)
+                        OrganizeChats(false);
                 } else if (currentView == CurrentView.SearchingGroups) {
                     Iterator<Group> iterator = model.SearchedGroups.Iterator();
                     int count = 0;
@@ -995,6 +1009,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                             model.ToWriteEnqueue(new Chat(model.singleton.userName, user, false));
                         }
                         SearchedChat.NewMessagesEnqueue(chatMessage);
+                        if (SearchedChat.Panel != null)
+                            OrganizeChats(true);
                     } else if (data is GroupMessage groupMessage) {
                         
                     }
