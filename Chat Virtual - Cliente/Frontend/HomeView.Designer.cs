@@ -500,7 +500,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             for (int i = 0; i < 5; i++) {
                 ShippingData.Profile p = new ShippingData.Profile();
                 p.Name = chats[i];
-                model.ToReadEnqueue(new Chat("Tu", p, false));
+                model.ToReadEnqueue(new Chat("Tu", p));
             }
             for (int i = 0; i < 5; i++) {
                 ChatMessage ms = new ChatMessage();

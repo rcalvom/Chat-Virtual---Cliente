@@ -39,6 +39,21 @@ namespace Chat_Virtual___Cliente.Communication {
             this.LastMessage.date = new Message.Date(DateTime.Now);
         }
 
+        public Group(ChatGroup group) {
+            this.code = group.idGroup;
+            this.Name = group.name;
+            this.Photo = group.photo;
+            members = new LinkedList<string>();
+            Messages = new LinkedStack<GroupMessage>();
+            NewMessages = new LinkedQueue<GroupMessage>();
+            SMessages = new Semaphore(1, 1);
+            SNewMessages = new Semaphore(1, 1);
+            this.NumNewMessages = 0;
+            this.LastMessage = new Message();
+            this.LastMessage.Content = "¡Bienvenido al grupo!";
+            this.LastMessage.date = new Message.Date(DateTime.Now);
+        }
+
         public void OldMessagesPush(GroupMessage a) {
             SMessages.WaitOne();
             Messages.Push(a);

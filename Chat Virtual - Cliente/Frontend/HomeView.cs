@@ -285,7 +285,6 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         //Events
-
         private void Send_Click(object sender, EventArgs e) {
             string content = chat.Text.Trim();
             ClearSearchTextBox();
@@ -321,30 +320,27 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void SearchChat(object sender, EventArgs e) {
-            if (sender is TextBox textBox) {
-                if (textBox.Text.Length == 0) {
-                    if (currentView == CurrentView.SearchingChats)
-                        currentView = CurrentView.ViewChats;
-                    else if (currentView == CurrentView.SearchingGroups)
-                        currentView = CurrentView.ViewGroups;
-                } else {
-                    SGraficControl.WaitOne();
-                    if (currentView == CurrentView.ViewChats || currentView == CurrentView.InChat) {
-                        currentView = CurrentView.SearchingChats;
-                    } else {
-                        currentView = CurrentView.SearchingGroups;
-                    }
-                    lastView = currentView;
-
-                    if (currentView == CurrentView.SearchingChats) {
-                        ShippingData.Profile p = new ShippingData.Profile();
-                        p.Name = textBox.Text;
-                        model.ToWriteEnqueue(new Chat(model.singleton.userName, p, true));
-                    } else {
-                        model.ToWriteEnqueue(new ChatGroup(-1, textBox.Text, true));
-                    }
-                    SGraficControl.Release();
+            TextBox textBox = sender as TextBox;
+            if (textBox.Text.Length == 0) {
+                if (currentView == CurrentView.SearchingChats)
+                    currentView = CurrentView.ViewChats;
+                else if (currentView == CurrentView.SearchingGroups)
+                    currentView = CurrentView.ViewGroups;
+            } else {
+                SGraficControl.WaitOne();
+                if (currentView == CurrentView.ViewChats || currentView == CurrentView.InChat) {
+                    currentView = CurrentView.SearchingChats;
+                } else if (currentView == CurrentView.ViewGroups || currentView == CurrentView.InGroup) {
+                    currentView = CurrentView.SearchingGroups;
                 }
+                lastView = currentView;
+
+                if (currentView == CurrentView.SearchingChats) {
+                    model.ToWriteEnqueue(new Search(ToSearch.Chat, textBox.Text));
+                } else {
+                    model.ToWriteEnqueue(new Search(ToSearch.Group, textBox.Text));
+                }
+                SGraficControl.Release();
             }
         }
 
@@ -1029,29 +1025,29 @@ namespace Chat_Virtual___Cliente.Frontend {
                         if (SearchedChat == default) {
                             SearchedChat = new UserChat(user);
                             model.Chats.Add(SearchedChat);
-                            model.ToWriteEnqueue(new Chat(model.singleton.userName, user, false));
+                            model.ToWriteEnqueue(new Chat(model.singleton.userName, user));
                         }
                         SearchedChat.NewMessagesEnqueue(chatMessage);
                         if (SearchedChat.Panel != null)
                             OrganizeChats();
                     } else if (data is GroupMessage groupMessage) {
-                        
+
                     }
                 } else if (data is ChatGroup chatGroup) {
-                    
-                } else if (data is Chat chat) {
-                    UserChat newChat = new UserChat(chat.memberTwo);
-                    if (chat.Searched) {
-                        model.SearchedChats.RemoveElement(newChat);
-                        model.SearchedChats.Add(newChat);
+                    Group oldGroup = SearchGroup(chatGroup.idGroup);
+                    if (oldGroup == default) {
+                        model.Groups.Add(new Group(chatGroup));
                     } else {
-                        UserChat oldChat = SearchChat(newChat.Name);
-                        if (oldChat != default) {
-                            oldChat.Photo = newChat.Photo;
-                            oldChat.Status = newChat.Status;
-                        } else { 
-                            model.Chats.Add(newChat);
-                        }
+                        oldGroup.Photo = chatGroup.photo;
+                        oldGroup.Name = chatGroup.name;
+                    }
+                } else if (data is Chat chat) {
+                    UserChat oldChat = SearchChat(chat.memberTwo.Name);
+                    if (oldChat != default) {
+                        oldChat.Photo = chat.memberTwo.Image;
+                        oldChat.Status = chat.memberTwo.Status;
+                    } else {
+                        model.Chats.Add(new UserChat(chat.memberTwo));
                     }
                 } else if (data is RequestAnswer requestAnswer) {
 
@@ -1063,6 +1059,24 @@ namespace Chat_Virtual___Cliente.Frontend {
                     ChangeImage(Profile, Serializer.DeserializeImage(model.singleton.ProfilePicture));
                 } else if (data is TreeActivities tree) {
                     Singleton.GetSingleton().tree = tree.Node;
+                } else if (data is ChatsResult chatsResult) {
+                    SGraficControl.WaitOne();
+                    RemoveActiveChats();
+                    model.SearchedChats = new LinkedList<UserChat>();
+                    if (chatsResult.Chats != null) {
+                        for (int i = 0; i < chatsResult.Chats.Length; i++) {
+                            model.SearchedChats.Add(new UserChat(chatsResult.Chats[i]));
+                        }
+                    }
+                    SGraficControl.Release();
+                } else if(data is GroupResult groupResult) {
+                    SGraficControl.WaitOne();
+                    RemoveActiveChats();
+                    model.SearchedGroups = new LinkedList<Group>();
+                    for (int i = 0; i < groupResult.Groups.Length; i++) {
+                        model.SearchedGroups.Add(new Group(groupResult.Groups[i]));
+                    }
+                    SGraficControl.Release();
                 }
             }
             while (!model.toWrite.IsEmpty())
