@@ -39,28 +39,34 @@ enum CurrentView {
 namespace Chat_Virtual___Cliente.Frontend {
     public partial class HomeView : Form {
 
+        //Control de vista
         private bool maximized;
         private bool subprocess;
         private MainModel model;
-        private ShippingData.Message FirstMessage;
         private CurrentView lastView;
         private CurrentView currentView;
 
-        private Panel ActiveChat;
-        private LinkedList<Control> ChatsControls;
-        private LinkedList<Control> HomeControls;
-        private LinkedStack<Panel> RecentMessages;
-        private LinkedStack<Panel> OldMessages;
-        private DynamicArray<Panel> ActiveChats;
+        //Chats-Grupos
+        private Panel ActiveChat;                           //Panel que muestra la información del chat o grupo que está activo
+        private DynamicArray<Panel> ActiveChats;            //Paneles con la informacion de los chats o grupos que se están mostrando
+        private ShippingData.Message FirstMessage;          //Primer mensaje del cual se creó un panel en el grupo o chat
+        private Panel OldestMessage;                        //Panel con el mensaje que se está mostrando que tiene la fecha más antigua (Se usa para posicionar si llega otro mensaje más antiguo)
+        private LinkedStack<Panel> RecentMessages;          //Paneles con los mensajes que se están mostrando
 
+        //Controles
+        private LinkedList<Control> ChatsControls;          //Controles que se muestran cuando los chats o grupos están activos
+        private LinkedList<Control> HomeControls;           //Controles que se muestran cuando la vista principal está activa
+
+        //Delgados
         private delegate void AddIn(Control toAdd, Control In);
         private delegate void AddIn2(Control toAdd, Control In);
         private delegate void DeleteIn(Control toAdd, Control In);
-        private delegate void DeleteIn2(Control toAdd, Control In);
+        private delegate void DeleteControlsOf(Control control);
         private delegate void CopyParametersOf(Control controlOne, ControlParameters controlTwo);
         private delegate void ChangeImageOf(PictureBox pb, Image image);
         private delegate void ChangeVisibilityState(Control control, bool Visible);
         private delegate void ChangeSizeOf(Control control, Size size);
+        private delegate void ChangeLocationOf(Control control, Point point);
         private delegate void DisposeAControl(Control control);
 
         //Semaforos
@@ -74,7 +80,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             ChatsControls = new LinkedList<Control>();
             HomeControls = new LinkedList<Control>();
             RecentMessages = new LinkedStack<Panel>();
-            OldMessages = new LinkedStack<Panel>();
             ActiveChats = new DynamicArray<Panel>();
             SGraficControl = new Semaphore(1, 1);
             FirstMessage = null;
@@ -197,6 +202,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             if (FirstMessage == null)
                 return;
             FirstMessage = null;
+            OldestMessage = null;
+            DeleteControls(ViewPanel);
             if (lastView == CurrentView.InChat || lastView == CurrentView.ViewChats) {
                 ChatMessage ms;
                 UserChat uc = SearchChat(RecentMessages.Peek().Name);
@@ -224,12 +231,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
                     if (count < 20)
                         uc.OldMessagesPush(ms);
-                    DeleteControl(p, ViewPanel);
                     count++;
-                }
-                while (!OldMessages.IsEmpty()) {
-                    Panel p = OldMessages.Pop();
-                    DeleteControl(p, ViewPanel);
                 }
             } else if (lastView == CurrentView.InGroup || lastView == CurrentView.ViewGroups) {
                 GroupMessage gm;
@@ -249,19 +251,12 @@ namespace Chat_Virtual___Cliente.Frontend {
                         }
                     }
                     group.OldMessagesPush(gm);
-                    DeleteControl(p, ViewPanel);
-                }
-                while (!OldMessages.IsEmpty()) {
-                    Panel p = OldMessages.Pop();
-                    DeleteControl(p, ViewPanel);
                 }
             }
         }
 
         private void RemoveActiveChats() {
-            Iterator<Panel> i = ActiveChats.Iterator();
-            while (i.HasNext())
-                DeleteControl(i.Next(), actionPanel);
+            DeleteControls(actionPanel);
             ActiveChats = new DynamicArray<Panel>();
             model.SearchedChats = new LinkedList<UserChat>();
             model.SearchedGroups = new LinkedList<Group>();
@@ -592,12 +587,12 @@ namespace Chat_Virtual___Cliente.Frontend {
             if (FirstMessage == null) {
                 FirstMessage = ms;
                 cp.location = new Point(0, 0);
-                OldMessages.Push(message);
+                OldestMessage = message;
                 RecentMessages.Push(message);
             } else {
                 if (ms.date.CompareTo(FirstMessage.date) < 0) {
-                    cp.location = new Point(0, OldMessages.Peek().Location.Y - cp.size.Height);
-                    OldMessages.Push(message);
+                    cp.location = new Point(0, OldestMessage.Location.Y - cp.size.Height);
+                    OldestMessage = message;
                 } else {
                     cp.location = new Point(0, RecentMessages.Peek().Location.Y + RecentMessages.Peek().Height);
                     RecentMessages.Push(message);
@@ -683,12 +678,12 @@ namespace Chat_Virtual___Cliente.Frontend {
             if (FirstMessage == null) {
                 FirstMessage = ms;
                 cp.location = new Point(0, 0);
-                OldMessages.Push(message);
+                OldestMessage = message;
                 RecentMessages.Push(message);
             } else {
                 if (ms.date.CompareTo(FirstMessage.date) < 0) {
-                    cp.location = new Point(0, OldMessages.Peek().Location.Y - cp.size.Height);
-                    OldMessages.Push(message);
+                    cp.location = new Point(0, OldestMessage.Location.Y - cp.size.Height);
+                    OldestMessage = message;
                 } else {
                     cp.location = new Point(0, RecentMessages.Peek().Location.Y + RecentMessages.Peek().Height);
                     RecentMessages.Push(message);
@@ -838,7 +833,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             photo.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Left);
             photo.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            user.Font = status.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            user.Font = new Font("Microsoft Sans Serif", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            status.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             user.ForeColor = status.ForeColor = Color.FromArgb(200, 200, 200);
             user.Size = status.Size = new Size(ViewPanel.Width - photo.Width - 30, 20);
             user.Location = new Point(photo.Width + 20, 10); status.Location = new Point(photo.Width + 20, InfoPanel.Height - 30);
@@ -865,6 +861,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                 }
             }
             return default;
+        }
+
+        private void OrganizeChats() {
+            for (int i = 0; i < ActiveChats.Size; i++) {
+                Panel chat = ActiveChats.Get(i);
+                ChangeLocation(chat, new Point(0, i*chat.Height));
+            }
         }
 
         private void GraficControl() {
@@ -912,13 +915,9 @@ namespace Chat_Virtual___Cliente.Frontend {
                     int count = 0;
                     while (iterator.HasNext()) {
                         UserChat chat = iterator.Next();
-                        if (!chat.Visible)
+                        if (!chat.Visible) {
                             AddChat(chat, count);
-                        else
-                            foreach (Control c in chat.Panel.Controls)
-                                if (c is PictureBox photo)
-                                    if (photo.Image == null && chat.Photo != null)
-                                        photo.Image = Serializer.DeserializeImage(chat.Photo);
+                        }
                         count++;
                     }
                     if (currentView == CurrentView.InChat)
@@ -948,6 +947,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
                     if (currentView == CurrentView.InGroup)
                         AddGroupMessage(SearchGroup(model.CurrentGroup));
+                    
                 } else if (currentView == CurrentView.SearchingGroups) {
                     Iterator<Group> iterator = model.SearchedGroups.Iterator();
                     int count = 0;
@@ -989,11 +989,12 @@ namespace Chat_Virtual___Cliente.Frontend {
                             user.Name = chatMessage.Receiver;
                         else
                             user.Name = chatMessage.Sender;
-                        if (SearchChat(user.Name) == default) {
+                        UserChat SearchedChat = SearchChat(user.Name);
+                        if (SearchedChat == default) {
                             model.Chats.Add(new UserChat(user));
                             model.ToWriteEnqueue(new Chat(model.singleton.userName, user, false));
                         }
-                        SearchChat(user.Name).NewMessagesEnqueue(chatMessage);
+                        SearchedChat.NewMessagesEnqueue(chatMessage);
                     } else if (data is GroupMessage groupMessage) {
                         
                     }
@@ -1009,8 +1010,9 @@ namespace Chat_Virtual___Cliente.Frontend {
                         if (oldChat != default) {
                             oldChat.Photo = newChat.Photo;
                             oldChat.Status = newChat.Status;
-                        } else
+                        } else { 
                             model.Chats.Add(newChat);
+                        }
                     }
                 } else if (data is RequestAnswer requestAnswer) {
 
@@ -1053,6 +1055,15 @@ namespace Chat_Virtual___Cliente.Frontend {
                 In.Invoke(d, new object[] { toDelete, In });
             } else {
                 In.Controls.Remove(toDelete);
+            }
+        }
+
+        private void DeleteControls(Control control) {
+            if (control.InvokeRequired) {
+                var d = new DeleteControlsOf(DeleteControls);
+                control.Invoke(d, control);
+            } else {
+                control.Controls.Clear();
             }
         }
 
@@ -1115,6 +1126,15 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ToChange.Invoke(d, ToChange, size);
             } else {
                 ToChange.Size = new Size(size.Width, size.Height);
+            }
+        }
+
+        private void ChangeLocation(Control ToChange, Point Location) {
+            if (ToChange.InvokeRequired) {
+                var d = new ChangeLocationOf(ChangeLocation);
+                ToChange.Invoke(d, ToChange, Location);
+            } else {
+                ToChange.Location = Location;
             }
         }
 
