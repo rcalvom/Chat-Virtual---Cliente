@@ -37,6 +37,7 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void ExitButton_Click(object sender, EventArgs e) {
+            this.TaskTree.Nodes.Clear();
             this.Close();
         }
 
@@ -57,6 +58,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             };
             this.MainModel.ToWriteEnqueue(tree);
             this.Close();
+        }
+
+        private void EditTask_Click(object sender, EventArgs e) {
+            if(!this.NameText.Text.Equals("") && this.TaskTree.SelectedNode != null) {
+                this.TaskTree.SelectedNode.Text = this.NameText.Text;
+                this.NameText.Text = "";
+            }
         }
     }
 }

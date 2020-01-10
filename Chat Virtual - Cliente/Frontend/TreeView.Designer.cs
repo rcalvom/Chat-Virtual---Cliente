@@ -38,6 +38,7 @@
             this.ExitButton = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.PanelDrag = new Bunifu.Framework.UI.BunifuDragControl(this.components);
+            this.EditTask = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ExitButton)).BeginInit();
@@ -47,6 +48,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
+            this.panel1.Controls.Add(this.EditTask);
             this.panel1.Controls.Add(this.LTitleTB);
             this.panel1.Controls.Add(this.LTitle);
             this.panel1.Controls.Add(this.NameText);
@@ -66,11 +68,11 @@
             this.LTitleTB.AutoSize = true;
             this.LTitleTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTitleTB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.LTitleTB.Location = new System.Drawing.Point(450, 167);
+            this.LTitleTB.Location = new System.Drawing.Point(435, 167);
             this.LTitleTB.Name = "LTitleTB";
-            this.LTitleTB.Size = new System.Drawing.Size(181, 18);
+            this.LTitleTB.Size = new System.Drawing.Size(138, 18);
             this.LTitleTB.TabIndex = 10;
-            this.LTitleTB.Text = "Nombre de la nueva tarea:";
+            this.LTitleTB.Text = "Nombre de la tarea:";
             // 
             // LTitle
             // 
@@ -86,9 +88,9 @@
             // NameText
             // 
             this.NameText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NameText.Location = new System.Drawing.Point(453, 198);
+            this.NameText.Location = new System.Drawing.Point(438, 198);
             this.NameText.Name = "NameText";
-            this.NameText.Size = new System.Drawing.Size(318, 26);
+            this.NameText.Size = new System.Drawing.Size(345, 26);
             this.NameText.TabIndex = 8;
             // 
             // RemoveTask
@@ -103,9 +105,9 @@
             this.RemoveTask.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.RemoveTask.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RemoveTask.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.RemoveTask.Location = new System.Drawing.Point(625, 264);
+            this.RemoveTask.Location = new System.Drawing.Point(555, 239);
             this.RemoveTask.Name = "RemoveTask";
-            this.RemoveTask.Size = new System.Drawing.Size(146, 27);
+            this.RemoveTask.Size = new System.Drawing.Size(111, 27);
             this.RemoveTask.TabIndex = 7;
             this.RemoveTask.Text = "Eliminar Tarea";
             this.RemoveTask.UseVisualStyleBackColor = false;
@@ -123,9 +125,9 @@
             this.NewTask.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.NewTask.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NewTask.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.NewTask.Location = new System.Drawing.Point(453, 264);
+            this.NewTask.Location = new System.Drawing.Point(438, 239);
             this.NewTask.Name = "NewTask";
-            this.NewTask.Size = new System.Drawing.Size(166, 27);
+            this.NewTask.Size = new System.Drawing.Size(111, 27);
             this.NewTask.TabIndex = 6;
             this.NewTask.Text = "Nueva Tarea";
             this.NewTask.UseVisualStyleBackColor = false;
@@ -154,7 +156,7 @@
             this.SaveTree.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SaveTree.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveTree.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SaveTree.Location = new System.Drawing.Point(666, 374);
+            this.SaveTree.Location = new System.Drawing.Point(670, 364);
             this.SaveTree.Name = "SaveTree";
             this.SaveTree.Size = new System.Drawing.Size(112, 27);
             this.SaveTree.TabIndex = 4;
@@ -219,6 +221,26 @@
             this.PanelDrag.TargetControl = this.TopPanel;
             this.PanelDrag.Vertical = true;
             // 
+            // EditTask
+            // 
+            this.EditTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.EditTask.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.EditTask.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EditTask.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.EditTask.FlatAppearance.BorderSize = 0;
+            this.EditTask.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.EditTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.EditTask.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.EditTask.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EditTask.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.EditTask.Location = new System.Drawing.Point(672, 239);
+            this.EditTask.Name = "EditTask";
+            this.EditTask.Size = new System.Drawing.Size(111, 27);
+            this.EditTask.TabIndex = 11;
+            this.EditTask.Text = "Modificar Tarea";
+            this.EditTask.UseVisualStyleBackColor = false;
+            this.EditTask.Click += new System.EventHandler(this.EditTask_Click);
+            // 
             // TreeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,5 +277,6 @@
         public System.Windows.Forms.TextBox NameText;
         private System.Windows.Forms.Label LTitleTB;
         private Bunifu.Framework.UI.BunifuDragControl PanelDrag;
+        private System.Windows.Forms.Button EditTask;
     }
 }
