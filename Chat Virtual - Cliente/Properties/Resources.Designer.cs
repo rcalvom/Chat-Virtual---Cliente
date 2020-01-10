@@ -150,6 +150,7 @@ namespace Chat_Virtual___Cliente.Properties {
             }
         }
         
+
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>

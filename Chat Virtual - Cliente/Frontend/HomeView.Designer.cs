@@ -384,6 +384,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             // Settings
             // 
             this.Settings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Settings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Settings.Image = ((System.Drawing.Image)(resources.GetObject("Settings.Image")));
             this.Settings.Location = new System.Drawing.Point(5, 490);
             this.Settings.Margin = new System.Windows.Forms.Padding(2);

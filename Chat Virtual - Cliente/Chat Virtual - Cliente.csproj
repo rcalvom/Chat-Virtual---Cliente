@@ -186,6 +186,7 @@
   <ItemGroup>
     <Content Include="Resources\SadiriLogo2.ico" />
     <Content Include="Resources\SendIcon.png" />
+    <Content Include="Resources\SimboloAgregarGrupo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

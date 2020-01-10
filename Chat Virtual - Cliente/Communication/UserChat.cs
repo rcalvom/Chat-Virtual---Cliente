@@ -53,7 +53,7 @@ namespace Chat_Virtual___Cliente.Communication {
         public void NewMessagesEnqueue(ChatMessage a) {
             SNewMessages.WaitOne();
             NewMessages.Enqueue(a);
-            if (LastMessage.date.CompareTo(a.date) < 0) {
+            if (LastMessage.date.CompareTo(a.date) >= 0) {
                 LastMessage = a;
                 NumNewMessages++;
             }
