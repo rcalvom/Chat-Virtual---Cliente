@@ -113,6 +113,9 @@
     <Compile Include="Frontend\TreeView.Designer.cs">
       <DependentUpon>TreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frontend\GraphicElements\SelectUserInGroupPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Frontend\ChangePasswordView.resx">

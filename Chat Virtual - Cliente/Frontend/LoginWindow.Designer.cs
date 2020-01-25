@@ -42,6 +42,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.SingUp = new System.Windows.Forms.LinkLabel();
             this.Logo = new System.Windows.Forms.PictureBox();
+            this.Refresh = new System.ComponentModel.BackgroundWorker();
+            this.ServerDisconnected = new System.Windows.Forms.Label();
             this.topPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.CloseButtonPanel.SuspendLayout();
@@ -85,6 +87,7 @@
             this.SingIn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.SingIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.SingIn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SingIn.Enabled = false;
             this.SingIn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.SingIn.FlatAppearance.BorderSize = 0;
             this.SingIn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -248,6 +251,7 @@
             // 
             this.SingUp.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.SingUp.AutoSize = true;
+            this.SingUp.Enabled = false;
             this.SingUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SingUp.LinkColor = System.Drawing.Color.DarkCyan;
             this.SingUp.Location = new System.Drawing.Point(146, 237);
@@ -269,12 +273,31 @@
             this.Logo.TabIndex = 12;
             this.Logo.TabStop = false;
             // 
+            // Refresh
+            // 
+            this.Refresh.DoWork += new System.ComponentModel.DoWorkEventHandler(this.Refresh_DoWork);
+            // 
+            // ServerDisconnected
+            // 
+            this.ServerDisconnected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ServerDisconnected.AutoSize = true;
+            this.ServerDisconnected.BackColor = System.Drawing.Color.Transparent;
+            this.ServerDisconnected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerDisconnected.ForeColor = System.Drawing.Color.Maroon;
+            this.ServerDisconnected.Location = new System.Drawing.Point(282, 288);
+            this.ServerDisconnected.Name = "ServerDisconnected";
+            this.ServerDisconnected.Size = new System.Drawing.Size(228, 18);
+            this.ServerDisconnected.TabIndex = 19;
+            this.ServerDisconnected.Text = "Estas actualmente desconectado";
+            this.ServerDisconnected.Visible = false;
+            // 
             // LoginWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(34)))));
             this.ClientSize = new System.Drawing.Size(522, 315);
+            this.Controls.Add(this.ServerDisconnected);
             this.Controls.Add(this.SingUp);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -322,5 +345,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel SingUp;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.ComponentModel.BackgroundWorker Refresh;
+        private System.Windows.Forms.Label ServerDisconnected;
     }
 }

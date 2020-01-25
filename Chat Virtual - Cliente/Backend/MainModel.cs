@@ -3,6 +3,7 @@ using System.Threading;
 using DataStructures;
 using ShippingData;
 using Chat_Virtual___Cliente.Communication;
+using System.IO;
 
 namespace Chat_Virtual___Cliente.Backend {
     public class MainModel : Model {
@@ -10,8 +11,7 @@ namespace Chat_Virtual___Cliente.Backend {
         protected Semaphore CanRead;
         protected Semaphore CanWrite;
 
-        public int CurrentGroup { get; set; }
-        public string CurrentChat { get; set; }
+        public ChatBase CurrentChat { get; set; }
         public LinkedList<UserChat> Chats { get; set; }
         public LinkedList<UserChat> SearchedChats { get; set; }
         public LinkedList<Group> Groups { get; set; }
@@ -27,6 +27,7 @@ namespace Chat_Virtual___Cliente.Backend {
             SearchedGroups = new LinkedList<Group>();
             CanRead = new Semaphore(1, 1);
             CanWrite = new Semaphore(1, 1);
+            CurrentChat = null;
         }
 
         public void ToWriteEnqueue(Data a) {
@@ -64,7 +65,7 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         public new void Disconnect() {
-            this.singleton.Client.Close();
+            this.singleton.Disconnect();
         }
 
         public new bool Connect() {
@@ -84,6 +85,9 @@ namespace Chat_Virtual___Cliente.Backend {
                 singleton.Writer.Write(toSend.Length);
                 singleton.Writer.Write(toSend);
                 return true;
+            } catch (IOException) {
+                Disconnect();
+                return false;
             } catch (Exception) {
                 return false;
             }
@@ -102,6 +106,29 @@ namespace Chat_Virtual___Cliente.Backend {
             } catch (Exception) {
                 return false;
             }
+        }
+
+
+        public UserChat SearchChat(string name) {
+            Iterator<UserChat> i = Chats.Iterator();
+            while (i.HasNext()) {
+                UserChat c = i.Next();
+                if (c.Name.Equals(name)) {
+                    return c;
+                }
+            }
+            return default;
+        }
+
+        public Group SearchGroup(int code) {
+            Iterator<Group> i = Groups.Iterator();
+            while (i.HasNext()) {
+                Group c = i.Next();
+                if (c.code == code) {
+                    return c;
+                }
+            }
+            return default;
         }
     }
 }

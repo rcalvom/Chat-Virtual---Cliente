@@ -34,7 +34,7 @@ namespace Chat_Virtual___Cliente.Backend {
             return singleton;
         }
 
-        public void Disconect() {
+        public void Disconnect() {
             this.Client.Close();
             this.stream = null;
             this.Writer = null;

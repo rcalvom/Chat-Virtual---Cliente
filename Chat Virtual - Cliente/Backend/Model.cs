@@ -31,7 +31,7 @@ namespace Chat_Virtual___Cliente.Backend {
         }
 
         public void Disconnect() {
-            this.singleton.Disconect();
+            this.singleton.Disconnect();
         }
 
         public bool Write() {
@@ -42,6 +42,9 @@ namespace Chat_Virtual___Cliente.Backend {
                     singleton.Writer.Write(toSend);
                 }
                 return true;
+            } catch (System.IO.IOException) {
+                Disconnect();
+                return false;
             } catch (Exception) {
                 return false;
             }

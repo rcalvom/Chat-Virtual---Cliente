@@ -6,7 +6,8 @@ using System.Threading;
 namespace Chat_Virtual___Cliente.Communication {
     public class Group : ChatBase {
         public int code { get; set; }
-        public LinkedList<string> members { get; set; }
+        public LinkedList<Profile> members { get; set; }
+        public string Description { get; set; }
 
         private LinkedStack<GroupMessage> Messages;
         private LinkedQueue<GroupMessage> NewMessages;
@@ -14,7 +15,7 @@ namespace Chat_Virtual___Cliente.Communication {
         private Semaphore SNewMessages;
 
         public Group() {
-            members = new LinkedList<string>();
+            members = new LinkedList<Profile>();
             Messages = new LinkedStack<GroupMessage>();
             NewMessages = new LinkedQueue<GroupMessage>();
             SMessages = new Semaphore(1, 1);
@@ -28,7 +29,7 @@ namespace Chat_Virtual___Cliente.Communication {
         public Group(int code, string name) {
             this.code = code;
             this.Name = name;
-            members = new LinkedList<string>();
+            members = new LinkedList<Profile>();
             Messages = new LinkedStack<GroupMessage>();
             NewMessages = new LinkedQueue<GroupMessage>();
             SMessages = new Semaphore(1, 1);
@@ -40,10 +41,10 @@ namespace Chat_Virtual___Cliente.Communication {
         }
 
         public Group(ChatGroup group) {
-            this.code = group.idGroup;
-            this.Name = group.name;
-            this.Photo = group.photo;
-            members = new LinkedList<string>();
+            this.code = group.IdGroup;
+            this.Name = group.Name;
+            this.Photo = group.Photo;
+            members = new LinkedList<Profile>();
             Messages = new LinkedStack<GroupMessage>();
             NewMessages = new LinkedQueue<GroupMessage>();
             SMessages = new Semaphore(1, 1);
