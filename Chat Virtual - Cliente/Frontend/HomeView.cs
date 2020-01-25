@@ -371,9 +371,8 @@ namespace Chat_Virtual___Cliente.Frontend {
         }
 
         private void Group_Click(object sender, EventArgs e) {
-            int currentGroup = -1;
             if (sender is Panel sn) {
-                currentGroup = int.Parse(sn.Name);
+                int currentGroup = int.Parse(sn.Name);
                 if (model.CurrentChat == null || (!(model.CurrentChat is Group group) || group.code != currentGroup)) {
                     SGraficControl.WaitOne();
                     currentView = CurrentView.InGroup;
@@ -384,7 +383,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                     SGraficControl.Release();
                 }
             } else if (sender is Control c) {
-                Chat_Click(c.Parent, e);
+                Group_Click(c.Parent, e);
             }
         }
 
@@ -431,6 +430,20 @@ namespace Chat_Virtual___Cliente.Frontend {
             SGraficControl.Release();
         }
 
+        private void Select_GroupPhoto(object sender, EventArgs e) {
+            try {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "jpg files(.*jpg)|*.jpg| PNG files(.*png)|*.png| All Files(*.*)|*.*";
+
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                    (sender as PictureBox).ImageLocation = dialog.FileName;
+                }
+
+            } catch (Exception) {
+                MessageBox.Show("SASA", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void CreateGroupClick(object sender, EventArgs e) {
             CreateGroup newGroup = new CreateGroup();
             Button button = sender as Button;
@@ -444,6 +457,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if(c is SelectUserInGroupPanel users) {
                     if (users.Selected)
                         usersToAdd.Add(users.Name);
+                } else if (c is PictureBox Photo) {
+                    newGroup.Photo = Serializer.SerializeImage(Photo.Image);
                 }
             }
             if (usersToAdd.Size == 1) {
@@ -765,18 +780,19 @@ namespace Chat_Virtual___Cliente.Frontend {
                 user.Click += new EventHandler(Group_Click);
                 photo.Click += new EventHandler(Group_Click);
                 lastMessage.Click += new EventHandler(Group_Click);
+                newPanel.Click += new EventHandler(Group_Click);
                 cp.Name = group.code.ToString();
             } else {
                 user.Click += new EventHandler(Chat_Click);
                 photo.Click += new EventHandler(Chat_Click);
                 lastMessage.Click += new EventHandler(Chat_Click);
+                newPanel.Click += new EventHandler(Chat_Click);
                 cp.Name = chatBase.Name;
             }
             cp.TabStop = false;
             CopyParameters(newPanel, cp);
             newPanel.MouseEnter += new EventHandler(Chat_MouseEnter);
             newPanel.MouseLeave += new EventHandler(Chat_MouseLeave);
-            newPanel.Click += new EventHandler(Chat_Click);
             chatBase.Panel = newPanel;
 
             //pictureBox
@@ -785,9 +801,14 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.Size = new Size(40, 40);
             cp.Location = new Point(5, 5);
             cp.PictureBoxSizeMode = PictureBoxSizeMode.StretchImage;
-            if (chatBase.Photo != null) {
-                cp.Image = Serializer.DeserializeImage(chatBase.Photo);
+            if (chatBase.Photo == null) {
+                ComponentResourceManager resources = new ComponentResourceManager(typeof(HomeView));
+                if(chatBase is Group)
+                    chatBase.Photo = Serializer.SerializeImage((Image)(resources.GetObject("Group")));
+                else
+                    chatBase.Photo = Serializer.SerializeImage((Image)(resources.GetObject("Perfil")));
             }
+            cp.Image = Serializer.DeserializeImage(chatBase.Photo);
             CopyParameters(photo, cp);
             photo.MouseEnter += new EventHandler(Chat_MouseEnter);
             photo.MouseLeave += new EventHandler(Chat_MouseLeave);
@@ -883,7 +904,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
                 }
             }
-
             ChangeImage(photo, Serializer.DeserializeImage(ClickChat.Photo));
             ChangeText(user, ClickChat.Name);
             if (ClickChat is UserChat userChat)
@@ -921,6 +941,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.BackColor = Color.Transparent;
             CopyParameters(newLabel, cp);
 
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(HomeView));
             cp = new ControlParameters();
             cp.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             cp.Size = new Size(40, 40);
@@ -929,7 +950,6 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.BackColor = Color.Transparent;
             cp.PictureBoxSizeMode = PictureBoxSizeMode.Zoom;
             cp.TabStop = false;
-            ComponentResourceManager resources = new ComponentResourceManager(typeof(HomeView));
             cp.Image = ((Image)(resources.GetObject("SimboloAgregarGrupo")));
             CopyParameters(button, cp);
             button.Click += new EventHandler(CreateGroup);
@@ -940,6 +960,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             TextBox GroupName = new TextBox(), GroupDescription = new TextBox();
             Label NameLabel = new Label(), DescritionLabel = new Label(), Member = new Label();
             Button Create = new Button(), Cancel = new Button();
+            CircularPictureBox Photo = new CircularPictureBox();
             AddControl(GroupName, ViewPanel);
             AddControl(GroupDescription, ViewPanel);
             AddControl(NameLabel, ViewPanel);
@@ -947,20 +968,33 @@ namespace Chat_Virtual___Cliente.Frontend {
             AddControl(Member, ViewPanel);
             AddControl(Create, ViewPanel);
             AddControl(Cancel, ViewPanel);
+            AddControl(Photo, ViewPanel);
 
             ControlParameters cp = new ControlParameters();
+            //Photo pictureBox
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(HomeView));
             cp.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+            cp.Cursor = Cursors.Hand;
+            cp.Image = ((Image)(resources.GetObject("ImageAdd")));
+            cp.Location = new Point(ViewPanel.Width/20, 40);
+            cp.Name = "SelectPictureBox";
+            cp.Size = new Size(ViewPanel.Width * 3 / 20, ViewPanel.Width * 3 / 20);
+            cp.PictureBoxSizeMode = PictureBoxSizeMode.Zoom;
+            cp.TabStop = false;
+            CopyParameters(Photo, cp);
+            Photo.Click += new EventHandler(this.Select_GroupPhoto);
+
+            //GroupName label
             cp.AutoEllipsis = true;
+            cp.Cursor = Cursors.Default;
             cp.BackColor = Color.Transparent;
             cp.Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cp.ForeColor = Color.FromArgb(224, 224, 224);
-
-            //GroupName label
             cp.Name = "NameLabel";
             cp.BorderStyle = BorderStyle.None;
             cp.TabStop = false;
             cp.AutoSize = true;
-            cp.Location = new Point(ViewPanel.Width/10, 40);
+            cp.Location = new Point(ViewPanel.Width/ 4, 40);
             cp.Text = "Nombre del grupo:";
             CopyParameters(NameLabel, cp);
 
@@ -976,13 +1010,13 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.Name = "GroupName";
             cp.BorderStyle = BorderStyle.FixedSingle;
             cp.TabStop = true;
-            cp.Size = new Size(ViewPanel.Width/2, NameLabel.Height);
+            cp.Size = new Size(ViewPanel.Width*7/10 - DescritionLabel.Width, NameLabel.Height);
             cp.Location = new Point(DescritionLabel.Width + NameLabel.Location.X, NameLabel.Location.Y);
             CopyParameters(GroupName, cp);
 
             //Description TextBox
             cp.Name = "GroupDescription";
-            cp.Size = new Size(ViewPanel.Width / 2, NameLabel.Height*4);
+            cp.Size = new Size(GroupName.Width, NameLabel.Height*4);
             cp.Location = new Point(DescritionLabel.Width + NameLabel.Location.X, DescritionLabel.Location.Y);
             cp.Multiline = true;
             CopyParameters(GroupDescription, cp);
@@ -1028,6 +1062,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             while (model.Groups.Get(0).code == -2 && subprocess) {
                 continue;
             }
+
             Iterator<ShippingData.Profile> iterator = model.Groups.Remove(0).members.Iterator();
             int count = 0, Displacement = Member.Location.Y + Member.Height + 20;
             Panel lastPanel = null;
@@ -1399,6 +1434,7 @@ namespace Chat_Virtual___Cliente.Frontend {
                 } else if (inWhichIWillCopy is PictureBox pictureBox) {
                     pictureBox.Image = theOther.Image;
                     pictureBox.SizeMode = theOther.PictureBoxSizeMode;
+                    pictureBox.Cursor = Cursors.Hand;
                 } else if (inWhichIWillCopy is Label label) {
                     label.AutoSize = theOther.AutoSize;
                     label.AutoEllipsis = theOther.AutoEllipsis;
