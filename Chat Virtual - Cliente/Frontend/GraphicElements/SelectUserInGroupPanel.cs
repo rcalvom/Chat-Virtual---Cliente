@@ -16,7 +16,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             CircularPictureBox photo = new CircularPictureBox();
             Label user = new Label();
             Label status = new Label();
-            int size = 300;
+            int size = 200;
             this.Controls.Add(photo);
             this.Controls.Add(user);
             this.Controls.Add(status);

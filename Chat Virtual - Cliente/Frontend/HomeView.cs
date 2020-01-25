@@ -446,9 +446,13 @@ namespace Chat_Virtual___Cliente.Frontend {
                         usersToAdd.Add(users.Name);
                 }
             }
-            newGroup.Members = usersToAdd.ToArray();
-            model.ToWriteEnqueue(newGroup);
-            CancelCreateGroupClick(sender, e);
+            if (usersToAdd.Size == 1) {
+
+            } else {
+                newGroup.Members = usersToAdd.ToArray();
+                model.ToWriteEnqueue(newGroup);
+                CancelCreateGroupClick(sender, e);
+            }
         }
 
         private void CancelCreateGroupClick(object sender, EventArgs e) {
@@ -925,7 +929,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.BackColor = Color.Transparent;
             cp.PictureBoxSizeMode = PictureBoxSizeMode.Zoom;
             cp.TabStop = false;
-            ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeView));
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(HomeView));
             cp.Image = ((Image)(resources.GetObject("SimboloAgregarGrupo")));
             CopyParameters(button, cp);
             button.Click += new EventHandler(CreateGroup);
@@ -934,12 +938,13 @@ namespace Chat_Virtual___Cliente.Frontend {
 
         private void AddCreateGroupControls() {
             TextBox GroupName = new TextBox(), GroupDescription = new TextBox();
-            Label NameLabel = new Label(), DescritionLabel = new Label();
+            Label NameLabel = new Label(), DescritionLabel = new Label(), Member = new Label();
             Button Create = new Button(), Cancel = new Button();
             AddControl(GroupName, ViewPanel);
             AddControl(GroupDescription, ViewPanel);
             AddControl(NameLabel, ViewPanel);
             AddControl(DescritionLabel, ViewPanel);
+            AddControl(Member, ViewPanel);
             AddControl(Create, ViewPanel);
             AddControl(Cancel, ViewPanel);
 
@@ -982,6 +987,18 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.Multiline = true;
             CopyParameters(GroupDescription, cp);
 
+            //Member label
+            cp.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+            cp.AutoEllipsis = true;
+            cp.BackColor = Color.Transparent;
+            cp.Font = new Font("Microsoft Sans Serif", 13F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cp.ForeColor = Color.FromArgb(224, 224, 224);
+            cp.Size = new Size(ViewPanel.Width, 26);
+            cp.Location = new Point(0, GroupDescription.Height + GroupDescription.Location.Y + 30);
+            cp.Text = "Selecciona a tus nuevos seguidores del mal";
+            ChangeContentAlignment(Member, ContentAlignment.MiddleCenter);
+            CopyParameters(Member, cp);
+
             //Create Button
             cp.Cursor = Cursors.Hand;
             cp.Name = "CreateButton";
@@ -993,7 +1010,7 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.ButtonBorderSize = 2;
             cp.Text = "CREAR";
             cp.Size = new Size(89, 37);
-            cp.Location = new Point(GroupDescription.Location.X + GroupDescription.Width - cp.Size.Width, GroupDescription.Location.Y + GroupDescription.Height + 30);
+            cp.Location = new Point(GroupDescription.Location.X + GroupDescription.Width - cp.Size.Width, Member.Location.Y + Member.Height + 30);
             CopyParameters(Create, cp);
             Create.Click += new EventHandler(CreateGroupClick);
 
@@ -1008,24 +1025,25 @@ namespace Chat_Virtual___Cliente.Frontend {
             CopyParameters(Cancel, cp);
             Cancel.Click += new EventHandler(CancelCreateGroupClick);
 
-            while (model.Groups.Get(0).code == -2) {
+            while (model.Groups.Get(0).code == -2 && subprocess) {
                 continue;
             }
             Iterator<ShippingData.Profile> iterator = model.Groups.Remove(0).members.Iterator();
-            int count = 0;
+            int count = 0, Displacement = Member.Location.Y + Member.Height + 20;
             Panel lastPanel = null;
             while (iterator.HasNext()) {
                 ShippingData.Profile profile = iterator.Next();
-                SelectUserInGroupPanel panel = new SelectUserInGroupPanel(GroupDescription.Location.Y + GroupDescription.Height + 20);
+                SelectUserInGroupPanel panel = new SelectUserInGroupPanel(Displacement);
                 AddControl(panel, ViewPanel);
                 CreateUserInGroupSelection(panel, profile, count);
                 lastPanel = panel;
                 count++;
             }
-            ChangeLocation(Create, new Point(GroupDescription.Location.X + GroupDescription.Width - Create.Size.Width, lastPanel.Location.Y + lastPanel.Height + 30));
-            ChangeLocation(Cancel, new Point(Create.Location.X - Cancel.Size.Width - 15, Create.Location.Y));
-
-        } //Pendiente
+            if(lastPanel != null) {
+                ChangeLocation(Create, new Point(GroupDescription.Location.X + GroupDescription.Width - Create.Size.Width, lastPanel.Location.Y + lastPanel.Height + 30));
+                ChangeLocation(Cancel, new Point(Create.Location.X - Cancel.Size.Width - 15, Create.Location.Y));
+            }
+        }
 
         //Funciones
         private void OrganizeChats() {
