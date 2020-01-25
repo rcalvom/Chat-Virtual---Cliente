@@ -925,7 +925,8 @@ namespace Chat_Virtual___Cliente.Frontend {
             cp.BackColor = Color.Transparent;
             cp.PictureBoxSizeMode = PictureBoxSizeMode.Zoom;
             cp.TabStop = false;
-            cp.Image = Image.FromFile(@"C:\Users\Juan Diego\Desktop\General\Trabajos\Programacion\C#\Chat-Virtual---Cliente\Chat Virtual - Cliente\Resources\SimboloAgregarGrupo.png");
+            ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeView));
+            cp.Image = ((Image)(resources.GetObject("SimboloAgregarGrupo")));
             CopyParameters(button, cp);
             button.Click += new EventHandler(CreateGroup);
             ChatsControls.Add(newPanel);

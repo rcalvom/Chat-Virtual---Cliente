@@ -187,6 +187,7 @@
     <None Include="Resources\ImageAdd.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\AddGroup.bmp" />
     <Content Include="Resources\SadiriLogo2.ico" />
     <Content Include="Resources\SendIcon.png" />
     <Content Include="Resources\SimboloAgregarGrupo.png" />
