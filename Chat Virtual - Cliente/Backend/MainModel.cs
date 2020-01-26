@@ -126,6 +126,8 @@ namespace Chat_Virtual___Cliente.Backend {
                 Group c = i.Next();
                 if (c.code == code) {
                     return c;
+                } else if(c.code < 0) {
+                    Groups.RemoveElement(c);
                 }
             }
             return default;

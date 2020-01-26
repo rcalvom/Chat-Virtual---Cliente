@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Chat_Virtual___Cliente.Backend;
+using Chat_Virtual___Cliente.Frontend;
 
 namespace Chat_Virtual___Cliente {
     static class Program {
