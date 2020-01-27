@@ -308,7 +308,6 @@ namespace Chat_Virtual___Cliente.Frontend {
                 ms.Receiver = model.CurrentChat.Name;
                 ms.Content = content;
                 model.ToWriteEnqueue(ms);
-                model.ToReadEnqueue(ms);
             } else if (currentView == CurrentView.InGroup) {
                 GroupMessage ms = new GroupMessage((model.CurrentChat as Group).code, model.singleton.userName, content);
                 model.ToWriteEnqueue(ms);
@@ -362,9 +361,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                 string currentChat = s.Name;
                 if (model.CurrentChat == null || !currentChat.Equals(model.CurrentChat.Name) || lastView != CurrentView.InChat) {
                     SGraficControl.WaitOne();
-                    currentView = CurrentView.InChat;
-                    lastView = CurrentView.ViewChats;
+                    if (currentView == CurrentView.SearchingChats)
+                        model.Chats.AddFirst(model.SearchSearchedChat(currentChat));
                     model.CurrentChat = model.SearchChat(currentChat);
+                    currentView = CurrentView.InChat;
                     AddActiveChatPanel(model.CurrentChat);
                     SGraficControl.Release();
                 }
@@ -378,10 +378,11 @@ namespace Chat_Virtual___Cliente.Frontend {
                 int currentGroup = int.Parse(sn.Name);
                 if (model.CurrentChat == null || (!(model.CurrentChat is Group group) || group.code != currentGroup) || lastView != CurrentView.InChat) {
                     SGraficControl.WaitOne();
+                    if (currentView == CurrentView.SearchingChats)
+                        model.Groups.AddFirst(model.SearchSearchedGroup(currentGroup));
+                    model.CurrentChat = model.SearchGroup(currentGroup);
                     currentView = CurrentView.InGroup;
-                    lastView = CurrentView.ViewGroups;
                     group = model.SearchGroup(currentGroup);
-                    model.CurrentChat = group;
                     AddActiveChatPanel(group);
                     SGraficControl.Release();
                 }
@@ -840,7 +841,8 @@ namespace Chat_Virtual___Cliente.Frontend {
                     }
                 }
             }
-            ChangeImage(photo, Serializer.DeserializeImage(ClickChat.Photo));
+            if(ClickChat.Photo != null)
+                ChangeImage(photo, Serializer.DeserializeImage(ClickChat.Photo));
             ChangeText(user, ClickChat.Name);
             if (ClickChat is UserChat userChat)
                 ChangeText(status, userChat.Status);
@@ -1070,6 +1072,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     if (lastView == CurrentView.CreatingGroup) {
                         if (model.Groups.Get(0).code < 0)
                             model.Groups.Remove(0);
+                    } else if(lastView == CurrentView.SearchingGroups || lastView == CurrentView.SearchingChats) {
+                        RemoveActiveChats();
+                        model.SearchedChats = new LinkedList<UserChat>();
+                        model.SearchedGroups = new LinkedList<Group>();
                     }
 
                     if (currentView == CurrentView.InChat) {

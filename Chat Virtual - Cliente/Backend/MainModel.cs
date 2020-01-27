@@ -132,5 +132,29 @@ namespace Chat_Virtual___Cliente.Backend {
             }
             return default;
         }
+
+        public UserChat SearchSearchedChat(string name) {
+            Iterator<UserChat> i = SearchedChats.Iterator();
+            while (i.HasNext()) {
+                UserChat c = i.Next();
+                if (c.Name.Equals(name)) {
+                    return c;
+                }
+            }
+            return default;
+        }
+
+        public Group SearchSearchedGroup(int code) {
+            Iterator<Group> i = SearchedGroups.Iterator();
+            while (i.HasNext()) {
+                Group c = i.Next();
+                if (c.code == code) {
+                    return c;
+                } else if (c.code < 0) {
+                    Groups.RemoveElement(c);
+                }
+            }
+            return default;
+        }
     }
 }
