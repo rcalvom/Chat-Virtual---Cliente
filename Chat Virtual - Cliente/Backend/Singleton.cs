@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace Chat_Virtual___Cliente.Backend {
     public class Singleton {
         public bool ProfileHasChanged { get; set; }
-        public TcpClient Client { get; }
+        public TcpClient Client { get; private set; }
         public NetworkStream stream { get; set; }
         public BinaryWriter Writer { get; set; }
         public BinaryReader Reader { get; set; }
@@ -36,6 +36,7 @@ namespace Chat_Virtual___Cliente.Backend {
 
         public void Disconnect() {
             this.Client.Close();
+            this.Client = new TcpClient();
             this.stream = null;
             this.Writer = null;
             this.Reader = null;

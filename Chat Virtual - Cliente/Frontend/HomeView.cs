@@ -675,7 +675,10 @@ namespace Chat_Virtual___Cliente.Frontend {
                     RecentMessages.Push(message);
                 }
             }
-            cp.Name = chat.Name;
+            if(chat is Group group1)
+                cp.Name = group1.code.ToString();
+            else
+                cp.Name = chat.Name;
             cp.TabStop = false;
             CopyParameters(message, cp);
 
